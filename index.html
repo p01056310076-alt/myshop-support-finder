@@ -1,20 +1,6 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<!-- 공유용 대표 이미지 설정 -->
-<meta property="og:title" content="내 상점 지원사업 찾기">
-<meta property="og:description" content="영세소상공인 및 예비창업 소상공인을 위한 정부지원사업 정보를 한눈에 확인하세요.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://p01056310076-alt.github.io/myshop-support-finder/">
-<meta property="og:image" content="https://p01056310076-alt.github.io/myshop-support-finder/cover.png">
-<meta property="og:image:width" content="1536">
-<meta property="og:image:height" content="1024">
-<meta property="og:image:alt" content="내 상점 지원사업 찾기">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="내 상점 지원사업 찾기">
-<meta name="twitter:description" content="소상공인을 위한 정부지원사업 정보를 한눈에 확인하세요.">
-<meta name="twitter:image" content="https://p01056310076-alt.github.io/myshop-support-finder/cover.png">  
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="영세 소상공인과 예비창업자가 6문항으로 지원사업 확인 순서를 정리하는 무료 안내 미니앱">
@@ -336,6 +322,9 @@ h2{margin:0 0 12px;font-size:clamp(1.35rem,4.8vw,1.75rem);line-height:1.35;lette
 ================================ */
 const DATA_VERIFIED_AT = "2026-09-27";
 const PRE = "예비창업(사업자등록 전)";
+const GJ = "전남광주 · 옛 광주시 지역(5개 구)";
+const JN = "전남광주 · 옛 전남도 지역(22개 시·군)";
+function isJG(a){ return !!a && a.region === JN; }
 
 function isPreStartup(a){ return !!a && a.bizType === PRE; }
 function hasNeed(a, v){ return !!(a && Array.isArray(a.need) && a.need.includes(v)); }
@@ -441,6 +430,7 @@ const PROGRAMS = [
     docsNote:"필요서류는 직접대출·대리대출과 자금 종류에 따라 다릅니다. 정책자금 포털에서 신청하려는 자금의 공고를 확인하세요.",
     check:(a)=>{
       if (isPreStartup(a)) return {ok:false, reason:"운영 중인 소상공인 정책자금과 예비창업자 창업자금은 따로 봐야 합니다. 예비창업자는 K-Startup 공고를 먼저 확인하세요."};
+      if (hasNeed(a,"대출 갈아타기(대환)") || hasNeed(a,"재창업·재기 준비")) return {ok:true, reason:"대출 갈아타기나 재기 자금을 선택하셨습니다. 아래 '선택하신 상황에 맞는 정책자금'에서 대환대출·재도전특별자금 조건을 먼저 확인하세요. 모두 갚아야 하는 대출입니다."};
       if (hasNeed(a,"운영자금 대출")) return {ok:true, reason:"운영자금 대출이 필요하다고 답하셨습니다. 지원금이 아니라 갚아야 하는 대출이므로 금리·한도·상환조건을 비교한 뒤 신청하세요."};
       return {ok:false, reason:"운영자금 대출을 선택하지 않으셔서 대출성 정책자금은 우선순위를 낮췄습니다."};
     }
@@ -466,16 +456,25 @@ const PROGRAMS = [
   }
 ];
 
+const LOAN_NEEDS = ["운영자금 대출","대출 갈아타기(대환)","재창업·재기 준비"];
 const POPULAR_CREDIT_PROGRAMS = [
-  {name:"신용취약 소상공인 대상 정책자금",amount:"최신 공고 확인",
-   desc:"신용이 취약한 소상공인을 위한 직접대출 계열 자금이 따로 운영될 수 있습니다. 신용평점 기준, 사전교육, 업력 등 세부요건은 신청 시점 공고를 확인하세요.",
-   repay:"대출이므로 원금과 이자를 갚아야 하며 조건은 최신 공고·약정을 따릅니다."},
-  {name:"소상공인 대환대출",amount:"대상 채무·한도 공고 확인",
-   desc:"고금리 또는 만기연장이 어려운 기존 채무 부담을 낮추기 위한 대환 성격의 정책자금입니다. 대상 채무와 신용요건은 최신 공고를 확인하세요.",
-   repay:"새 대출로 갈아타는 구조이므로 상환 의무가 있습니다. 상환기간과 금리는 약정 전 확인하세요."},
-  {name:"재도전 관련 정책자금",amount:"유형별 한도 상이",
-   desc:"재창업, 채무조정 성실이행 등 재도전 상황에 맞춘 정책자금이 운영될 수 있습니다. 본인의 재기 단계와 세부요건을 함께 확인하세요.",
-   repay:"재기사업화 지원금과 달리 정책자금은 대출이므로 갚아야 합니다."}
+  {name:"소상공인 대환대출", needs:["대출 갈아타기(대환)"],
+   amount:"기업당 최대 5,000만원",
+   desc:"대표자 개인신용평점(NCB) 919점 이하 중·저신용 소상공인이 가진 연 7% 이상 고금리 대출이나, 은행에서 만기 연장이 어려운 대출을 정책자금으로 갈아타는 자금입니다.",
+   repay:"연 4.5% 고정금리, 10년 분할상환 조건으로 바뀌어 매달 갚는 부담이 줄어듭니다. 대상 대출의 실행 시기 등 세부 요건은 최신 변경 공고를 확인하세요.",
+   tip:"신청 전 준비: ① 신용점수(NCB)를 토스·카카오뱅크 앱이나 NICE지키미에서 무료 확인 ② 가진 대출의 금리·잔액·만기를 은행 앱에서 정리 ③ 금리가 7% 미만이면 은행의 '만기연장 애로 확인서'가 필요한지 공고에서 확인"},
+  {name:"재도전특별자금", needs:["재창업·재기 준비"],
+   amount:"유형별 최대 7,000만원~2억원",
+   desc:"폐업 후 재창업을 준비 중이거나, 채무조정을 성실히 이행 중인 소상공인을 위한 자금입니다. 재창업 준비·초기 단계, 채무조정 이행 등 유형에 따라 한도와 금리가 다릅니다.",
+   repay:"대출기간 5년 이내(거치기간 2년 포함)이며, 금리는 정책자금 기준금리에 유형별 0.4~1.6%p가 더해집니다. 정확한 조건은 신청 유형의 공고를 확인하세요."},
+  {name:"성장기반자금", needs:["운영자금 대출"],
+   amount:"최대 5억원 (용도별 상이)",
+   desc:"성장 가능성이 있는 소상공인의 사업 확장을 돕는 자금으로, 대리대출·직접대출로 운영됩니다. 한도가 큰 대신 매출·업력·사업계획 등 요건과 심사가 까다로운 편입니다.",
+   repay:"대출기간과 상환방식은 시설자금·운전자금 등 용도에 따라 다르므로 신청 전 공고에서 확인해야 합니다."},
+  {name:"신용취약 소상공인 대상 정책자금", needs:["운영자금 대출"],
+   amount:"최신 공고 확인",
+   desc:"신용이 취약한 소상공인을 위한 직접대출 계열 자금입니다. 신용평점 기준, 사전교육, 업력 등 세부요건은 신청 시점 공고를 확인하세요.",
+   repay:"대출이므로 원금과 이자를 갚아야 하며 조건은 최신 공고·약정을 따릅니다."}
 ];
 
 const PRESTARTUP_NOTE = {
@@ -531,13 +530,14 @@ const QUESTIONS = [
    type:"single",skipIfPre:true,
    options:["매출 없음/창업 전","2026년에 개업함","3천만원 미만","3천만~1억원","1억~1억400만원 미만","1억400만원 이상"]},
   {id:"region",title:"사업장 또는 창업 예정지는 어느 지역인가요?",type:"single",
-   options:["서울","경기도","인천","비수도권"]},
+   help:"전남광주통합특별시(2026년 7월 출범) 중 옛 전남도 22개 시·군 지역은 전용 지원을 따로 안내합니다.",
+   options:["서울","경기도","인천",JN,"그 밖의 비수도권"]},
   {id:"employees",title:"사장님 본인 외에 직원이 있나요?",help:"예비창업자는 예상 기준으로 골라주세요.",type:"single",
    options:["없음(1인 운영)","1~2명","3~9명","10명 이상"]},
   {id:"cardSales",title:"현재 신용카드 매출이 있나요?",type:"single",skipIfPre:true,
    options:["예","아니요/거의 없음"]},
   {id:"need",title:"지금 가장 필요한 것은 무엇인가요?",help:"여러 개 골라도 됩니다.",type:"multi",
-   options:["고정비 부담 완화","매장 기기·디지털화","배달·택배비 부담","절세","운영자금 대출","창업 준비 지원"]}
+   options:["고정비 부담 완화","매장 기기·디지털화","배달·택배비 부담","절세","운영자금 대출","대출 갈아타기(대환)","재창업·재기 준비","창업 준비 지원"]}
 ];
 
 const PRE_DEFAULTS = {revenue:"매출 없음/창업 전", cardSales:"아니요/거의 없음"};
@@ -716,11 +716,22 @@ function showResults(){
 
   if (isPreStartup(answers) || hasNeed(answers,"창업 준비 지원")) list.appendChild(renderInfoCard(PRESTARTUP_NOTE,"info"));
   if (hasNeed(answers,"배달·택배비 부담")) list.appendChild(renderSimpleNote(DELIVERY_NOTE));
-  list.appendChild(renderRegionNote());
+  if (isJG(answers)) list.appendChild(renderJGSection());
+  else list.appendChild(renderRegionNote());
 
-  if (!isPreStartup(answers) && hasNeed(answers,"운영자금 대출")){
-    list.appendChild(sectionTitle("대출이 필요할 때 추가로 확인할 정책자금 (모두 상환 필요)"));
-    POPULAR_CREDIT_PROGRAMS.forEach(p=>list.appendChild(renderLoanCard(p)));
+  if (!isPreStartup(answers) && LOAN_NEEDS.some(n=>hasNeed(answers,n))){
+    list.appendChild(sectionTitle("선택하신 상황에 맞는 정책자금 (모두 대출 · 상환 필요)"));
+    const match = (p)=>p.needs.some(n=>hasNeed(answers,n));
+    POPULAR_CREDIT_PROGRAMS.filter(match).forEach(p=>list.appendChild(renderLoanCard(p,true)));
+    const rest = POPULAR_CREDIT_PROGRAMS.filter(p=>!match(p));
+    if (rest.length){
+      list.appendChild(sectionTitle("함께 알아두면 좋은 정책자금"));
+      rest.forEach(p=>list.appendChild(renderLoanCard(p,false)));
+    }
+    const warn = document.createElement("div");
+    warn.className = "tip-box";
+    warn.textContent = "정책자금은 소상공인정책자금 누리집에서 본인이 직접, 무료로 신청합니다. '승인 보장', '수수료 받고 대신 신청'을 내세우는 업체는 불법 브로커일 수 있으니 주의하세요. 상담은 소상공인 콜센터 1533-0100.";
+    list.appendChild(warn);
   }
 
   if (!isPreStartup(answers)) list.appendChild(renderShopCard());
@@ -767,16 +778,17 @@ function renderNotice(e,isPriority){
   return div;
 }
 
-function renderLoanCard(p){
+function renderLoanCard(p, matched){
   const div = document.createElement("article");
   div.className = "notice status-loan";
   div.innerHTML = `
     <div class="notice-top">
-      <div><p class="notice-name">${p.name}</p><span class="badge loan">대출 · 상환 필요</span></div>
+      <div><p class="notice-name">${p.name}</p>${matched?`<span class="badge ok">선택 상황에 맞음</span>`:""}<span class="badge loan">대출 · 상환 필요</span></div>
       <div class="notice-amount">${p.amount}</div>
     </div>
     <p class="notice-desc">${p.desc}</p>
     <p class="notice-reason"><strong>상환 안내.</strong> ${p.repay}</p>
+    ${p.tip ? `<div class="tip-box">${p.tip}</div>` : ""}
     <a class="notice-link" href="https://ols.semas.or.kr/" target="_blank" rel="noopener noreferrer">정책자금 포털에서 최신 조건 확인하기</a>
     <div class="agency-line">주관 · <a href="https://www.semas.or.kr" target="_blank" rel="noopener noreferrer">중소벤처기업부·소상공인시장진흥공단</a></div>`;
   return div;
@@ -842,6 +854,111 @@ function renderShopCard(){
     </ul>
     <p class="notice-reason">위 상품은 지원사업 결과와 관계없는 구경GO의 추천이며, 정부·공단이 추천하는 상품이 아닙니다.</p>`;
   return box;
+}
+
+
+/* ================================
+   전남광주통합특별시 지역 전용 (기준일 2026-09-27)
+================================ */
+const JG_PROGRAMS = [
+  {
+    area:"both", kind:"free",
+    name:"민생회복 대출 안심보험 (무료)",
+    amount:"대출 최대 1,000만원 대신 상환",
+    badge:"무료 보험 · 신청 필요",
+    desc:"대출이 1,000만원 이상 있는 20~65세 소상공인이 사망하거나 암·뇌출혈·급성심근경색·고도후유장해 진단을 받으면, 보험사가 대출 금융기관에 최대 1,000만원을 직접 갚아줍니다. 다른 보험과 중복 보상이 됩니다.",
+    who:"전남광주 지역 소상공인, 20~65세, 대출 1,000만원 이상",
+    how:"옛 광주 지역·옛 전남 지역 각 5,000명 선착순(예산 소진 시 조기 마감). 지역 기관 누리집에서 직접 신청",
+    linkGJ:"https://www.gjep.or.kr/", linkJN:"https://www.jepa.kr/",
+    linkLabelGJ:"광주경제진흥상생일자리재단에서 신청", linkLabelJN:"전남중소기업일자리경제진흥원에서 신청"
+  },
+  {
+    area:"GJ", kind:"free",
+    name:"영업배상 책임보험 (자동 가입)",
+    amount:"대인 1인 최대 2,000만원",
+    badge:"무료 · 자동 가입",
+    desc:"가게에서 우연한 사고로 손님 등 다른 사람에게 배상책임이 생기면 보상합니다. 대인 1인당 최대 2,000만원(사고당 최대 3,000만원), 대물 최대 150만원입니다.",
+    who:"옛 광주 지역에 사업장이 있는 연매출 30억원 이하 소상공인",
+    how:"따로 신청하지 않아도 자동 가입됩니다. 사고가 나면 사고일로부터 3년 안에 청구하세요.",
+    link:"https://www.gjep.or.kr/", linkLabel:"광주경제진흥상생일자리재단에서 청구 방법 확인"
+  },
+  {
+    area:"JN", kind:"free",
+    name:"청년소상공인 안심보험 (자동 가입)",
+    amount:"최대 300만원",
+    badge:"무료 · 자동 가입",
+    desc:"사망·고도후유장해 시 300만원, 업무 중 다치면 정도에 따라 20만~40만원 위로금, 출산 시 10만원 축하금을 드립니다.",
+    who:"옛 전남 지역에 사업장이 있는 15~49세 청년소상공인",
+    how:"따로 신청하지 않아도 자동 가입됩니다. 사고일로부터 3년 안에 청구하세요.",
+    link:"https://www.jepa.kr/", linkLabel:"전남중소기업일자리경제진흥원에서 청구 방법 확인"
+  },
+  {
+    area:"both", kind:"defer",
+    name:"기존 정책대출 원금 상환 1년 유예",
+    amount:"원금 상환 1년 미룸",
+    badge:"상환 유예 · 이자는 계속 납부",
+    desc:"지금 받은 소상공인 자금의 금리 등 조건은 그대로 두고, 원금 갚는 것을 1년 미루고 만기를 1년 늘려줍니다. 아직 원금 상환이 시작되지 않은 대출은 거치기간이 1년 늘어납니다.",
+    who:"전남광주 소상공인 자금을 이미 이용 중인 소상공인",
+    how:"옛 광주 지역: 대출받은 은행(광주·신한·농협·하나·국민·우리)에서 신청 / 옛 전남 지역: 전남신용보증재단에서 신청",
+    closesAt:"2026-12-31T23:59:59+09:00", deadline:"신청기간 2026년 12월 31일까지",
+    linkGJ:"https://www.gjsinbo.or.kr/", linkJN:"https://www.jnsinbo.or.kr/",
+    linkLabelGJ:"광주신용보증재단 안내 확인", linkLabelJN:"전남신용보증재단에서 신청"
+  },
+  {
+    area:"both", kind:"loan", needLoan:true,
+    name:"소상공인 특례보증 + 이자 지원",
+    amountGJ:"1년간 이자 3~4% 지원", amountJN:"2년간 이자 3% 지원",
+    badge:"대출 · 상환 필요",
+    desc:"2026년 9월 1,000억원(옛 광주·옛 전남 각 500억원)이 추가 공급되었습니다. 신용보증재단 보증으로 은행 대출을 받고, 이자 일부를 시가 대신 내주는 방식입니다.",
+    who:"전남광주 지역 소상공인 (보증 심사 있음)",
+    how:"옛 광주 지역: 광주신용보증재단·협약은행 / 옛 전남 지역: 전남신용보증재단. 예산 소진 시 마감",
+    linkGJ:"https://www.gjsinbo.or.kr/", linkJN:"https://www.jnsinbo.or.kr/",
+    linkLabelGJ:"광주신용보증재단에서 확인", linkLabelJN:"전남신용보증재단에서 확인"
+  }
+];
+
+function renderJGSection(){
+  const frag = document.createDocumentFragment();
+  const isGJ = answers.region === GJ;
+  const key = isGJ ? "GJ" : "JN";
+  frag.appendChild(sectionTitle("전남광주통합특별시 지역 전용 지원 (" + (isGJ ? "옛 광주 지역" : "옛 전남 지역") + ")"));
+  JG_PROGRAMS.forEach(p=>{
+    if (p.area !== "both" && p.area !== key) return;
+    if (p.needLoan && !LOAN_NEEDS.some(n=>hasNeed(answers,n))) return;
+    if (isPreStartup(answers)) return;
+    const closed = isClosed(p.closesAt);
+    const amount = p["amount"+key] || p.amount;
+    const link = p["link"+key] || p.link;
+    const label = p["linkLabel"+key] || p.linkLabel;
+    const cls = p.kind === "loan" ? "status-loan" : (closed ? "status-muted" : "status-ok");
+    const badgeCls = p.kind === "loan" ? "loan" : "ok";
+    const el = document.createElement("article");
+    el.className = "notice " + cls;
+    el.innerHTML = `
+      <div class="notice-top">
+        <div><p class="notice-name">${p.name}</p>
+          ${closed ? `<span class="badge neutral">접수 마감</span>` : `<span class="badge ok">지역 전용</span>`}
+          <span class="badge ${badgeCls}">${p.badge}</span></div>
+        <div class="notice-amount">${amount}</div>
+      </div>
+      <p class="notice-desc">${p.desc}</p>
+      <p class="notice-reason"><strong>대상.</strong> ${p.who}</p>
+      <p class="notice-reason"><strong>방법.</strong> ${p.how}</p>
+      ${p.deadline ? `<div class="notice-deadline">${p.deadline}</div>` : ""}
+      <a class="notice-link" href="${link}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+    frag.appendChild(el);
+  });
+  if (isPreStartup(answers)){
+    const tip = document.createElement("div");
+    tip.className = "tip-box";
+    tip.textContent = "전남광주 지역 소상공인 보험·자금 지원은 사업자등록 후 대상이 됩니다. 창업 지원은 전남광주특별시 기업지원시스템과 K-Startup에서 확인하세요.";
+    frag.appendChild(tip);
+  }
+  const more = document.createElement("div");
+  more.className = "tip-box";
+  more.innerHTML = `통합 이후에도 시·군·구별 소액 지원(임차료·환경개선·홍보 등)은 따로 공고됩니다. <a class="notice-link" style="margin-top:6px" href="https://www.gjbizinfo.or.kr/" target="_blank" rel="noopener noreferrer">전남광주특별시 기업지원시스템에서 공고 확인</a>`;
+  frag.appendChild(more);
+  return frag;
 }
 
 /* 운영 정보 화면 */
