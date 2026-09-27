@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="영세 소상공인과 예비창업자가 6문항으로 지원사업 확인 순서를 정리하는 무료 안내 미니앱">
+<title>내 가게 지원사업 찾기</title>
+<style>
+:root{
+  --bg:#f4f7f5;--surface:#ffffff;--surface-soft:#f8faf9;
+  --text:#1d2a26;--muted:#5e6c67;--line:#dfe7e3;
+  --brand:#196b4a;--brand-dark:#125239;--brand-soft:#e9f5ef;--on-brand:#ffffff;
+  --warn-bg:#fff8e8;--warn-line:#ead6a1;--warn-text:#5b4b26;
+  --info-bg:#eef6fb;--info-line:#cbdfea;
+  --loan-bg:#fff1ef;--loan-line:#ebc9c3;--loan-badge:#f9ded9;--loan-text:#7d352b;
+  --neutral-badge:#edf0ef;--neutral-text:#59635f;
+  --track:#e8eeeb;--closed-bg:#f1f1f1;
+  --shadow:0 14px 40px rgba(25,54,42,.08);
+  --radius-lg:24px;--radius-md:16px;--radius-sm:12px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101614;--surface:#18211e;--surface-soft:#1d2825;
+    --text:#e6eeea;--muted:#a3b3ad;--line:#2d3a36;
+    --brand:#3fa77a;--brand-dark:#7fd0aa;--brand-soft:#1c3329;--on-brand:#0b1a13;
+    --warn-bg:#2a2414;--warn-line:#5a4a22;--warn-text:#ecd9a6;
+    --info-bg:#15232c;--info-line:#2b4150;
+    --loan-bg:#2b1a18;--loan-line:#5a3530;--loan-badge:#4a2723;--loan-text:#f2c2ba;
+    --neutral-badge:#27312e;--neutral-text:#b3c0bb;
+    --track:#26302d;--closed-bg:#1e2422;
+    --shadow:0 14px 40px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101614;--surface:#18211e;--surface-soft:#1d2825;
+  --text:#e6eeea;--muted:#a3b3ad;--line:#2d3a36;
+  --brand:#3fa77a;--brand-dark:#7fd0aa;--brand-soft:#1c3329;--on-brand:#0b1a13;
+  --warn-bg:#2a2414;--warn-line:#5a4a22;--warn-text:#ecd9a6;
+  --info-bg:#15232c;--info-line:#2b4150;
+  --loan-bg:#2b1a18;--loan-line:#5a3530;--loan-badge:#4a2723;--loan-text:#f2c2ba;
+  --neutral-badge:#27312e;--neutral-text:#b3c0bb;
+  --track:#26302d;--closed-bg:#1e2422;
+  --shadow:0 14px 40px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic","Segoe UI",Roboto,sans-serif;
+  line-height:1.65;word-break:keep-all;font-size:17px}
+button,a{font:inherit}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,[tabindex="-1"]:focus-visible{outline:3px solid rgba(25,107,74,.35);outline-offset:3px}
+[hidden]{display:none!important}
+.skip-link{position:fixed;top:8px;left:8px;z-index:999;padding:10px 14px;border-radius:8px;background:var(--text);color:var(--bg);transform:translateY(-150%)}
+.skip-link:focus{transform:translateY(0)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.app-shell{width:min(100% - 32px,760px);margin:0 auto;padding:48px 0 28px}
+.hero-card,.content-card,.quiz-card,.result-header{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);box-shadow:var(--shadow)}
+.hero-card{padding:38px 34px}
+.content-card,.quiz-card,.result-header{margin-top:18px;padding:30px}
+.eyebrow{margin:0 0 8px;color:var(--brand);font-size:.9rem;font-weight:800}
+h1,h2,h3,p{overflow-wrap:anywhere}
+h1{margin:0;font-size:clamp(2rem,7vw,3rem);line-height:1.2;letter-spacing:-.04em}
+h2{margin:0 0 12px;font-size:clamp(1.35rem,4.8vw,1.75rem);line-height:1.35;letter-spacing:-.025em}
+.hero-copy{margin:18px 0 0;color:var(--muted);font-size:1.06rem}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}
+.trust-item{display:flex;min-height:82px;flex-direction:column;justify-content:center;padding:12px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-soft);text-align:center}
+.trust-item strong{color:var(--brand-dark);font-size:1rem}
+.trust-item span{margin-top:3px;color:var(--muted);font-size:.85rem}
+.important-note,.tip-box{border:1px solid var(--warn-line);border-radius:var(--radius-md);background:var(--warn-bg);color:var(--warn-text)}
+.important-note{margin:22px 0;padding:16px 18px;font-size:.95rem}
+.btn-primary,.btn-secondary{width:100%;min-height:54px;border-radius:14px;font-weight:800;transition:background .15s ease,border-color .15s ease}
+.btn-primary{border:1px solid var(--brand);background:var(--brand);color:var(--on-brand)}
+.btn-primary:hover{background:var(--brand-dark);border-color:var(--brand-dark)}
+.btn-secondary{margin-top:18px;border:1px solid var(--line);background:var(--surface);color:var(--brand-dark)}
+.btn-secondary:hover{border-color:var(--brand);background:var(--brand-soft)}
+.btn-large{min-height:60px;font-size:1.06rem}
+.btn-back{display:inline-flex;align-items:center;gap:6px;margin:0 0 18px;padding:10px 14px;min-height:46px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font-weight:750}
+.btn-back:hover{border-color:var(--brand);background:var(--brand-soft)}
+.privacy-note,.data-date,.field-hint,.result-sub{color:var(--muted);font-size:.9rem}
+.privacy-note{margin:10px 0 0;text-align:center}
+.content-card p:last-child{margin-bottom:0}
+.section-head{margin-bottom:8px}
+.faq-list{border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{display:flex;width:100%;align-items:center;justify-content:space-between;gap:18px;padding:18px 2px;border:0;background:transparent;color:var(--text);text-align:left;font-weight:750}
+.mark{flex:0 0 auto;color:var(--brand);font-size:1.4rem;line-height:1}
+.faq-a{padding:0 2px 18px;color:var(--muted);font-size:.95rem}
+.quiz-screen{min-height:70vh}
+.quiz-card{margin-top:0}
+.quiz-meta{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.q-count,.data-date{margin:0}
+.q-count{color:var(--brand-dark);font-weight:800}
+.progress-track{height:9px;margin:13px 0 26px;overflow:hidden;border-radius:999px;background:var(--track)}
+.progress-fill{width:0;height:100%;border-radius:inherit;background:var(--brand);transition:width .22s ease}
+.q-title{margin-bottom:8px}
+.q-help{margin:0 0 20px;color:var(--muted);font-size:.93rem}
+.option-list{display:grid;gap:11px}
+.option-btn{min-height:58px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);text-align:left;font-weight:700;transition:border-color .15s ease,background .15s ease}
+.option-btn:hover{border-color:var(--brand);background:var(--surface-soft)}
+.option-btn.selected,.option-btn[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-dark)}
+.option-btn.selected::before,.option-btn[aria-pressed="true"]::before{content:"✓ ";font-weight:900}
+.multi-actions{margin-top:20px}
+.field-hint{margin:14px 0 0}
+.result-header{margin-top:0}
+.result-header h1{font-size:clamp(1.8rem,6vw,2.45rem)}
+.result-sub{margin:14px 0 0}
+.result-list{display:grid;gap:14px;margin-top:18px}
+.result-section-title{margin:18px 0 0;font-size:1.1rem;line-height:1.4}
+.notice{padding:22px;border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface)}
+.status-ok{border-color:var(--brand);border-width:1.5px}
+.status-muted{background:var(--surface-soft)}
+.status-info{border-color:var(--info-line);background:var(--info-bg)}
+.status-warn{border-color:var(--warn-line);background:var(--warn-bg)}
+.status-loan{border-color:var(--loan-line);background:var(--loan-bg)}
+.notice-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.notice-name{margin:0 0 9px;color:var(--text);font-size:1.1rem;font-weight:850;line-height:1.4}
+.notice-amount{flex:0 0 auto;max-width:42%;color:var(--brand-dark);font-size:1rem;font-weight:850;text-align:right}
+.badge{display:inline-block;margin:0 5px 6px 0;padding:5px 9px;border-radius:999px;font-size:.78rem;font-weight:800;line-height:1.2}
+.badge.ok{background:var(--brand-soft);color:var(--brand-dark)}
+.badge.loan{background:var(--loan-badge);color:var(--loan-text)}
+.badge.neutral{background:var(--neutral-badge);color:var(--neutral-text)}
+.notice-type{margin:10px 0 0;color:var(--brand-dark);font-size:.85rem;font-weight:750}
+.notice-desc,.notice-reason{margin:12px 0 0;color:var(--muted);font-size:.95rem}
+.notice-reason strong{color:var(--text)}
+.notice-deadline{margin-top:14px;padding:11px 12px;border-radius:10px;background:var(--surface-soft);border:1px solid var(--line);color:var(--text);font-size:.88rem;font-weight:700}
+.tip-box{margin-top:14px;padding:14px 15px;font-size:.9rem}
+.notice-link{display:inline-flex;margin-top:15px;align-items:center;color:var(--brand-dark);font-size:.92rem;font-weight:800;text-underline-offset:3px}
+.secondary-link{margin-left:14px}
+.agency-line{margin-top:11px;color:var(--muted);font-size:.82rem}
+.agency-line a{color:inherit;text-underline-offset:2px}
+.info-list{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:.94rem}
+.info-list li+li{margin-top:7px}
+.link-row{display:flex;flex-wrap:wrap;align-items:center;gap:2px 0}
+.result-actions{margin-top:20px;display:grid;gap:10px}
+.result-actions .btn-secondary{margin-top:0}
+.site-footer{width:min(100% - 32px,760px);margin:0 auto;padding:6px 0 44px;color:var(--muted);font-size:.84rem;text-align:center}
+.site-footer p{margin:7px 0}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:12px}
+.footer-links a{color:var(--brand-dark);font-weight:700}
+.shop-card{padding:22px;border:1px dashed var(--line);border-radius:var(--radius-md);background:var(--surface)}
+.shop-disclosure{margin:6px 0 14px;padding:10px 12px;border-radius:10px;background:var(--neutral-badge);color:var(--neutral-text);font-size:.85rem;font-weight:700}
+.shop-list{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.shop-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface-soft)}
+.shop-item strong{display:block;font-size:.98rem}
+.shop-item span{display:block;color:var(--muted);font-size:.86rem}
+.shop-go{flex:0 0 auto;padding:10px 14px;min-height:44px;border-radius:10px;border:1px solid var(--brand);color:var(--brand-dark);font-weight:800;font-size:.9rem;text-decoration:none;background:var(--surface)}
+.shop-go:hover{background:var(--brand-soft)}
+.info-page h2{margin-top:6px}
+.info-page h3{margin:22px 0 6px;font-size:1.05rem}
+.info-page p,.info-page li{color:var(--muted);font-size:.96rem}
+.info-page ul{padding-left:20px}
+.info-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.info-tab{padding:9px 14px;min-height:44px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--text);font-weight:750}
+.info-tab[aria-selected="true"]{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-dark)}
+.footer-btn{border:0;background:none;padding:4px 2px;color:var(--brand-dark);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.mail-link{font-weight:800;color:var(--brand-dark)}
+@media (max-width:600px){
+  .shop-item{flex-direction:column;align-items:flex-start}
+  .app-shell{width:min(100% - 20px,760px);padding-top:18px}
+  .hero-card,.content-card,.quiz-card,.result-header{border-radius:20px;padding:22px 18px}
+  .trust-grid{grid-template-columns:1fr}
+  .trust-item{min-height:64px}
+  .notice-top{flex-direction:column}
+  .notice-amount{max-width:none;text-align:left}
+  .secondary-link{margin-left:0}
+  .link-row{gap:0 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important}
+}
+@media print{
+  .result-actions,.skip-link{display:none}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 바로가기</a>
+
+<main id="main" class="app-shell">
+  <section id="screen-intro" class="screen" aria-labelledby="intro-title">
+    <div class="hero-card">
+      <p class="eyebrow">영세 소상공인·예비창업자 무료 안내</p>
+      <h1 id="intro-title">내 가게 지원사업 찾기</h1>
+      <p class="hero-copy">6개 질문에 답하면 <strong>지원금·바우처·환급·보험료 지원·대출</strong>을 구분해 지금 먼저 확인할 항목을 정리해드립니다.</p>
+      <div class="trust-grid" aria-label="서비스 특징">
+        <div class="trust-item"><strong>6문항</strong><span>간단한 확인</span></div>
+        <div class="trust-item"><strong>무료</strong><span>가입 없이 이용</span></div>
+        <div class="trust-item"><strong>구분 안내</strong><span>무상지원·대출 분리</span></div>
+      </div>
+      <div class="important-note" role="note">
+        <strong>꼭 확인하세요.</strong>
+        이 서비스는 정부기관의 자격 판정 서비스가 아니라 공공정보를 정리한 무료 안내 도구입니다.
+        결과는 신청·선정·지급을 보장하지 않으며, 실제 신청 전 최신 공식 공고를 확인해야 합니다.
+      </div>
+      <button type="button" class="btn-primary btn-large" id="btn-start">6문항 시작하기</button>
+      <p class="privacy-note">답변은 이 화면 안에서만 사용하며 서버로 전송하거나 저장하지 않습니다.</p>
+    </div>
+
+    <section class="content-card" aria-labelledby="how-title">
+      <h2 id="how-title">이 앱에서 알려드리는 범위</h2>
+      <p>영세 소상공인이 체감하기 쉬운 소액 바우처·환급·보험료 지원과 매장 디지털화 지원을 먼저 보여주고, 대출을 선택한 경우에만 정책자금 대출 정보를 따로 안내합니다. 예비창업자는 기존 사업체 지원과 섞지 않고 창업지원 공고를 먼저 확인하도록 안내합니다.</p>
+    </section>
+
+    <section class="content-card" aria-labelledby="faq-title">
+      <div class="section-head">
+        <p class="eyebrow">자주 묻는 질문</p>
+        <h2 id="faq-title">헷갈리기 쉬운 점</h2>
+      </div>
+      <div id="faq-list" class="faq-list"></div>
+      <button type="button" class="btn-secondary" id="btn-start-2">확인하고 시작하기</button>
+    </section>
+  </section>
+
+  <section id="screen-quiz" class="screen quiz-screen" aria-labelledby="quiz-title" hidden>
+    <h1 id="quiz-title" class="sr-only">지원사업 확인 질문</h1>
+    <div class="quiz-card">
+      <div class="quiz-meta">
+        <p id="q-count" class="q-count" aria-live="polite">질문 1 / 6</p>
+        <p class="data-date">정보 기준 <span class="js-date"></span></p>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="질문 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+      <div id="quiz-body" class="quiz-body"></div>
+    </div>
+  </section>
+
+  <section id="screen-result" class="screen" aria-labelledby="result-heading" hidden>
+    <div class="result-header">
+      <p class="eyebrow">6문항 간이 안내 결과</p>
+      <h1 id="result-heading" tabindex="-1">우선 확인할 항목 <span id="result-count">0</span>개</h1>
+      <p class="result-sub">‘우선 확인’은 자격 확정이 아닙니다. 금액·접수상태·세부요건은 신청 직전 공식 페이지에서 다시 확인하세요.</p>
+    </div>
+    <div id="result-list" class="result-list" aria-live="polite"></div>
+    <div class="result-actions">
+      <button type="button" class="btn-secondary" id="btn-edit">마지막 답변 고치기</button>
+      <button type="button" class="btn-primary" id="btn-restart">처음부터 다시 확인</button>
+    </div>
+  </section>
+
+  <section id="screen-info" class="screen" aria-labelledby="info-title" hidden>
+    <div class="content-card info-page" style="margin-top:0">
+      <button type="button" class="btn-back" id="btn-info-back">← 돌아가기</button>
+      <h1 id="info-title" class="sr-only">운영 정보</h1>
+      <div class="info-tabs" role="tablist" aria-label="운영 정보">
+        <button type="button" class="info-tab" role="tab" data-tab="about">운영자 소개</button>
+        <button type="button" class="info-tab" role="tab" data-tab="contact">문의</button>
+        <button type="button" class="info-tab" role="tab" data-tab="privacy">개인정보처리방침</button>
+        <button type="button" class="info-tab" role="tab" data-tab="affiliate">제휴 안내</button>
+      </div>
+
+      <div data-panel="about">
+        <h2>운영자 소개</h2>
+        <p><strong>구경GO</strong>는 경기도에서 1인 카페를 운영하는 소상공인이 만든 생활·가게 정보 브랜드입니다.</p>
+        <p>직접 지원사업을 찾아보며 헷갈렸던 점을 정리해, 같은 처지의 사장님들이 무엇부터 확인하면 되는지 쉽게 알 수 있도록 이 무료 안내 도구를 만들었습니다.</p>
+        <p>구경GO는 정부기관·공단과 관계없는 개인 운영 비공식 서비스이며, 지원 자격 판정·신청 대행·정책자금 알선을 하지 않고 이와 관련한 비용도 받지 않습니다.</p>
+      </div>
+
+      <div data-panel="contact" hidden>
+        <h2>문의</h2>
+        <p>잘못된 정보, 바뀐 공고, 개선 의견을 알려주시면 확인 후 반영하겠습니다.</p>
+        <p>이메일: <a class="mail-link" href="mailto:p01056310076@gmail.com?subject=%5B%EB%82%B4%20%EA%B0%80%EA%B2%8C%20%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85%20%EC%B0%BE%EA%B8%B0%5D%20%EB%AC%B8%EC%9D%98">p01056310076@gmail.com</a></p>
+        <div class="tip-box">개인별 지원 자격 판정, 신청서 대리 작성, 대출 상담은 하지 않습니다. 사업별 문의는 소상공인24, 소상공인정책자금 포털 등 각 공식 기관으로 해주세요. 메일에 주민등록번호·계좌번호 같은 민감한 정보는 적지 마세요.</div>
+      </div>
+
+      <div data-panel="privacy" hidden>
+        <h2>개인정보처리방침</h2>
+        <p>시행일: 2026년 9월 27일</p>
+        <h3>1. 수집하는 개인정보</h3>
+        <p>구경GO(이하 '운영자')는 이 안내 도구에서 이름, 연락처, 사업자등록번호 등 개인정보를 수집하지 않습니다. 회원가입도 없습니다.</p>
+        <h3>2. 6문항 답변의 처리</h3>
+        <p>질문에 대한 답변은 이용자의 화면 안에서 결과를 보여주는 데에만 쓰이며, 운영자에게 전송되거나 저장되지 않습니다. 화면을 닫으면 사라집니다.</p>
+        <h3>3. 이메일 문의</h3>
+        <p>이메일로 문의하시면 보내주신 이메일 주소와 내용은 답변에만 사용하며, 답변 완료 후 지체 없이 삭제합니다. 다른 목적으로 쓰거나 제3자에게 제공하지 않습니다.</p>
+        <h3>4. 외부 링크와 호스팅</h3>
+        <ul>
+          <li>공식 기관 링크나 제휴 쇼핑 링크를 누르면 해당 사이트로 이동하며, 이후에는 그 사이트의 개인정보처리방침이 적용됩니다.</li>
+          <li>이 페이지를 제공하는 호스팅 서비스는 서비스 운영을 위해 접속 기록 등을 처리할 수 있으며, 이는 해당 서비스 제공자의 방침을 따릅니다. 운영자는 이 기록을 받거나 이용하지 않습니다.</li>
+        </ul>
+        <h3>5. 문의처</h3>
+        <p>개인정보 관련 문의: p01056310076@gmail.com</p>
+        <p>방침이 바뀌면 이 페이지에 시행일과 함께 알립니다.</p>
+      </div>
+
+      <div data-panel="affiliate" hidden>
+        <h2>제휴 안내</h2>
+        <p>결과 화면 아래쪽의 '매장 운영에 도움 되는 물품' 구역에는 쿠팡 파트너스 링크가 포함되어 있습니다. 이 링크로 구매가 이루어지면 운영자가 일정액의 수수료를 받으며, 구매 가격은 달라지지 않습니다.</p>
+        <p>제휴 상품은 지원사업 안내 결과와 관계가 없으며, 정부·공단이 추천하는 상품이 아닙니다. 대출·보험·카드발급 등 금융상품 제휴는 하지 않습니다.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p><strong>정보 기준일: <span class="js-date"></span></strong></p>
+  <p>본 미니앱은 공공 지원정보를 쉽게 확인하기 위한 무료 비공식 안내 서비스이며 정부기관·공단을 대리하지 않습니다.</p>
+  <p>운영 · 구경GO (개인 운영 비공식 서비스)</p>
+  <nav aria-label="운영 정보" class="footer-links">
+    <button type="button" class="footer-btn" data-open="about">운영자 소개</button>
+    <button type="button" class="footer-btn" data-open="contact">문의</button>
+    <button type="button" class="footer-btn" data-open="privacy">개인정보처리방침</button>
+    <button type="button" class="footer-btn" data-open="affiliate">제휴 안내</button>
+  </nav>
+  <nav aria-label="공식 확인처" class="footer-links">
+    <a href="https://www.sbiz24.kr/" target="_blank" rel="noopener noreferrer">소상공인24</a>
+    <a href="https://www.mss.go.kr/" target="_blank" rel="noopener noreferrer">중소벤처기업부</a>
+    <a href="https://www.k-startup.go.kr/" target="_blank" rel="noopener noreferrer">K-Startup</a>
+    <a href="https://www.bizinfo.go.kr/" target="_blank" rel="noopener noreferrer">기업마당</a>
+  </nav>
+</footer>
+
+<script>
+"use strict";
+
+/* ================================
+   데이터 (기준일은 여기 한 곳만 수정)
+================================ */
+const DATA_VERIFIED_AT = "2026-09-27";
+const PRE = "예비창업(사업자등록 전)";
+
+function isPreStartup(a){ return !!a && a.bizType === PRE; }
+function hasNeed(a, v){ return !!(a && Array.isArray(a.need) && a.need.includes(v)); }
+function isClosed(iso){ return !!iso && Date.now() > new Date(iso).getTime(); }
+
+const PROGRAMS = [
+  {
+    id:"stability_voucher",
+    agency:"중소벤처기업부·소상공인시장진흥공단",
+    agencyLink:"https://www.semas.or.kr",
+    name:"소상공인 경영안정 바우처",
+    type:"바우처(카드 사용)",
+    amount:"최대 25만원",
+    moneyBadge:"바우처 · 상환 없음",
+    desc:"전기·가스·수도요금, 4대 보험료, 차량 연료비, 전통시장 화재공제료 등 지정된 고정비에 쓸 수 있는 바우처입니다. 대표자 1명당 1개 사업체만 신청할 수 있으니, 사업자가 여러 개라면 가장 유리한 곳 하나를 고르세요.",
+    deadline:"2026년 예산 소진 시까지 신청 · 바우처 사용기한 2026-12-31",
+    closesAt:"2026-12-31T23:59:59+09:00",
+    link:"https://credit.sbiz24.kr/",
+    repay:{type:"none",text:"대출이 아니므로 원금 상환 의무는 없습니다. 다만 지정 사용처와 사용기한 등 사업 조건을 지켜야 합니다."},
+    docsNote:"공식 안내상 별도 서류 없이 온라인 신청이 가능하며, 국세청 과세정보 등으로 요건을 확인합니다. 신청 화면에서 본인인증과 카드사 선택 절차를 확인하세요. 카드사는 신청 후 바꾸기 어려우니 자주 쓰는 카드로 고르세요.",
+    check:(a)=>{
+      if (isPreStartup(a) || a.revenue === "매출 없음/창업 전")
+        return {ok:false, reason:"이 바우처는 2025년 12월 31일 이전 개업하고 2025년 연매출이 0원을 넘는 영업 중 소상공인이 대상입니다. 예비창업자는 바로 신청 대상이 아닙니다."};
+      if (a.revenue === "2026년에 개업함")
+        return {ok:false, reason:"2026년에 개업한 사업자는 이번 바우처 대상(2025년 12월 31일 이전 개업)이 아닙니다."};
+      if (a.revenue === "1억400만원 이상")
+        return {ok:false, reason:"2025년 연매출 1억400만원 미만 기준을 넘어 우선순위에서 제외했습니다."};
+      return {ok:true, reason:"답하신 2025년 매출 구간은 기준(0원 초과 1억400만원 미만)에 들어갑니다. 현재 영업 중인지, 제외업종이 아닌지만 공식 페이지에서 확인하세요. 매출은 배달앱 매출까지 합친 세금 신고 금액 기준입니다."};
+    }
+  },
+  {
+    id:"card_fee_refund",
+    agency:"금융위원회·여신금융협회",
+    agencyLink:"https://www.crefia.or.kr",
+    name:"카드 우대수수료율·신규가맹점 환급 확인",
+    type:"수수료 우대·환급 확인",
+    amount:"가맹점별 상이",
+    moneyBadge:"환급 · 상환 없음",
+    desc:"영세·중소 카드가맹점에는 우대수수료율이 적용되며, 반기 중 새로 개업한 가맹점이 이후 영세·중소가맹점으로 확인되면 기존 수수료율과 우대수수료율의 차액을 환급받을 수 있습니다.",
+    deadline:"반기별 선정·환급 · 적용 여부는 카드매출 통합조회에서 확인",
+    link:"https://www.cardsales.or.kr/",
+    repay:{type:"none",text:"대출이 아닙니다. 신규가맹점 환급 대상이면 카드사가 수수료 차액을 돌려주는 구조이며, 기존 가맹점은 현재 적용 수수료율을 확인하는 용도입니다."},
+    docsNote:"별도 지원금 신청이 아닙니다. 여신금융협회 카드매출 통합조회에서 우대수수료율·환급 대상 여부를 조회하세요.",
+    check:(a)=> a.cardSales === "예"
+      ? {ok:true, reason:"카드 매출이 있다고 답하셔서 현재 적용 수수료율과 신규가맹점 환급 여부를 조회해볼 만합니다. 카드 매출이 있다는 이유만으로 환급 대상이 되는 것은 아닙니다."}
+      : {ok:false, reason:"카드 매출이 없거나 거의 없다고 답하셔서 우선순위를 낮췄습니다."}
+  },
+  {
+    id:"smart_store",
+    agency:"중소벤처기업부·소상공인시장진흥공단",
+    agencyLink:"https://www.semas.or.kr",
+    name:"소상공인 스마트상점 기술보급사업",
+    type:"구입·렌탈·S/W 도입 지원",
+    amount:"유형별 상이",
+    moneyBadge:"보조 · 상환 없음",
+    desc:"정상 영업 중인 소상공인이 키오스크·서빙로봇·경영 S/W 같은 스마트기술을 도입할 때 구입형·렌탈형·S/W형 유형에 따라 비용 일부를 지원합니다.",
+    deadline:"2026년 2차 모집 2026-08-26 10:00 ~ 2026-09-30 17:00",
+    closesAt:"2026-09-30T17:00:00+09:00",
+    closedText:"2026년 2차 모집(9월 30일 17시)이 마감되었습니다. 다음 회차 공고를 소상공인24·스마트상점 누리집에서 확인하세요.",
+    link:"https://www.sbiz.or.kr/smst/index.do",
+    repay:{type:"none",text:"국비 지원분은 대출이 아닙니다. 다만 유형별 지원비율·자부담·사후관리 조건이 있으니 공고문을 확인해야 합니다."},
+    docsNote:"신청서, 소상공인 확인, 도입계획 등 세부 제출자료는 모집공고의 유형별 안내를 기준으로 준비하세요. 이미 스마트상점 지원을 받았다면 '추가지원 전용' 공고를 확인하세요.",
+    check:(a)=>{
+      if (isPreStartup(a))
+        return {ok:false, reason:"신청일 현재 정상 영업 중인 소상공인이 대상이라 사업자등록 전 예비창업자는 제외했습니다."};
+      if (hasNeed(a,"매장 기기·디지털화"))
+        return {ok:true, reason:"매장 기기·디지털화가 필요하다고 답하셨습니다. 구입·렌탈·S/W 유형 중 맞는 방식을 비교해보세요. 마감이 가까우니 서두르세요."};
+      return {ok:false, reason:"이번에 매장 기기·디지털화를 선택하지 않으셔서 우선순위를 낮췄습니다."};
+    }
+  },
+  {
+    id:"doorunuri",
+    agency:"고용노동부·근로복지공단·국민연금공단",
+    agencyLink:"https://www.insurancesupport.or.kr",
+    name:"두루누리 사회보험료 지원",
+    type:"고용보험·국민연금 보험료 지원",
+    amount:"보험료의 80% 지원",
+    moneyBadge:"보험료 지원 · 상환 없음",
+    desc:"근로자 10명 미만 사업의 월평균보수 270만원 미만 신규가입 근로자와 사업주의 고용보험·국민연금 보험료 일부를 지원합니다.",
+    deadline:"신청 가능 여부·지원기간은 공식 안내 확인",
+    link:"https://www.insurancesupport.or.kr/",
+    repay:{type:"none",text:"대출이 아니라 사회보험료 지원입니다. 신규가입 이력, 보수, 재산·소득 등 제외요건과 지원기간을 확인해야 합니다."},
+    docsNote:"직원 수만으로 대상이 정해지지 않습니다. 직원별 월평균보수, 직전 1년 보험 가입이력, 지원제외 기준을 공식 사이트에서 확인하세요.",
+    check:(a)=>{
+      if (isPreStartup(a)) return {ok:false, reason:"사업자등록 전에는 해당이 없습니다. 창업 후 직원을 뽑을 때 다시 확인하세요."};
+      if (a.employees === "없음(1인 운영)") return {ok:false, reason:"직원이 없다고 답하셔서 우선순위를 낮췄습니다. 직원을 고용하면 다시 확인하세요."};
+      if (a.employees === "10명 이상") return {ok:false, reason:"기본 사업장 규모 기준이 근로자 10명 미만이라 우선순위가 낮습니다."};
+      return {ok:true, reason:"직원이 있고 10명 미만이라고 답하셨습니다. 직원별 월평균보수와 신규가입 이력 등 추가 요건을 확인하세요."};
+    }
+  },
+  {
+    id:"policy_fund",
+    agency:"중소벤처기업부·소상공인시장진흥공단",
+    agencyLink:"https://www.semas.or.kr",
+    name:"소상공인 정책자금(운영자금 등) 확인",
+    type:"융자(대출)",
+    amount:"자금별 한도 상이",
+    moneyBadge:"대출 · 상환 필요",
+    desc:"소상공인 정책자금은 자금 종류별로 대상, 한도, 금리, 접수기간, 상환조건이 다릅니다. 운영자금이 필요할 때 현재 접수 중인 자금을 공식 포털에서 비교하세요.",
+    deadline:"자금별 접수기간·예산 소진 여부 확인",
+    link:"https://ols.semas.or.kr/",
+    repay:{type:"loan",text:"정책자금은 대출이므로 원금과 이자를 갚아야 합니다. 금리·거치기간·상환기간은 최신 공고와 약정을 기준으로 확인하세요."},
+    docsNote:"필요서류는 직접대출·대리대출과 자금 종류에 따라 다릅니다. 정책자금 포털에서 신청하려는 자금의 공고를 확인하세요.",
+    check:(a)=>{
+      if (isPreStartup(a)) return {ok:false, reason:"운영 중인 소상공인 정책자금과 예비창업자 창업자금은 따로 봐야 합니다. 예비창업자는 K-Startup 공고를 먼저 확인하세요."};
+      if (hasNeed(a,"운영자금 대출")) return {ok:true, reason:"운영자금 대출이 필요하다고 답하셨습니다. 지원금이 아니라 갚아야 하는 대출이므로 금리·한도·상환조건을 비교한 뒤 신청하세요."};
+      return {ok:false, reason:"운영자금 대출을 선택하지 않으셔서 대출성 정책자금은 우선순위를 낮췄습니다."};
+    }
+  },
+  {
+    id:"yellow_umbrella",
+    agency:"중소기업중앙회",
+    agencyLink:"https://www.kbiz.or.kr",
+    name:"노란우산",
+    type:"공제(본인 납입)·소득공제",
+    amount:"소득공제 연 최대 600만원",
+    moneyBadge:"공제 납입 · 지원금 아님",
+    desc:"소기업·소상공인 대표가 스스로 부금을 넣어 폐업·노후에 대비하는 공제제도이며, 납입부금에 대해 소득공제를 받을 수 있습니다.",
+    deadline:"상시 가입 가능 여부 확인",
+    link:"https://www.8899.or.kr/",
+    repay:{type:"savings",text:"정부가 주는 지원금이나 대출이 아니라 본인이 납입하는 공제입니다. 소득공제 한도와 해약 조건을 확인하고 가입하세요."},
+    docsNote:"가입 가능 여부는 소기업·소상공인 해당 여부와 사업 형태 등에 따라 확인해야 합니다.",
+    check:(a)=>{
+      if (isPreStartup(a)) return {ok:false, reason:"사업자등록 후 가입대상을 다시 확인하세요."};
+      if (hasNeed(a,"절세")) return {ok:true, reason:"절세를 선택하셔서 소득공제와 목돈 마련 목적에서 확인할 가치가 있습니다. 정부 무상지원금은 아니라는 점을 구분하세요."};
+      return {ok:false, reason:"절세를 선택하지 않으셔서 우선순위를 낮췄습니다. 노란우산은 본인이 납입하는 공제제도입니다."};
+    }
+  }
+];
+
+const POPULAR_CREDIT_PROGRAMS = [
+  {name:"신용취약 소상공인 대상 정책자금",amount:"최신 공고 확인",
+   desc:"신용이 취약한 소상공인을 위한 직접대출 계열 자금이 따로 운영될 수 있습니다. 신용평점 기준, 사전교육, 업력 등 세부요건은 신청 시점 공고를 확인하세요.",
+   repay:"대출이므로 원금과 이자를 갚아야 하며 조건은 최신 공고·약정을 따릅니다."},
+  {name:"소상공인 대환대출",amount:"대상 채무·한도 공고 확인",
+   desc:"고금리 또는 만기연장이 어려운 기존 채무 부담을 낮추기 위한 대환 성격의 정책자금입니다. 대상 채무와 신용요건은 최신 공고를 확인하세요.",
+   repay:"새 대출로 갈아타는 구조이므로 상환 의무가 있습니다. 상환기간과 금리는 약정 전 확인하세요."},
+  {name:"재도전 관련 정책자금",amount:"유형별 한도 상이",
+   desc:"재창업, 채무조정 성실이행 등 재도전 상황에 맞춘 정책자금이 운영될 수 있습니다. 본인의 재기 단계와 세부요건을 함께 확인하세요.",
+   repay:"재기사업화 지원금과 달리 정책자금은 대출이므로 갚아야 합니다."}
+];
+
+const PRESTARTUP_NOTE = {
+  title:"예비창업자라면 이쪽을 먼저 확인하세요",
+  items:[
+    "2026년 중앙부처·지자체 창업지원사업은 예비창업자 대상 사업을 포함해 통합 공고됩니다.",
+    "사업자등록 전에는 기존 매출·영업 상태를 전제로 하는 경영안정 바우처, 스마트상점 등의 대상이 되기 어렵습니다.",
+    "K-Startup에서 '예비창업' 조건으로 모집 중인 사업을 검색하고, 지역 지자체 창업지원 공고도 함께 확인하세요."
+  ],
+  note:"예비창업 지원은 업종, 연령, 지역, 사업화 단계 등에 따라 조건이 크게 달라 이 6문항만으로 선정 가능성을 단정하지 않습니다.",
+  link:"https://www.k-startup.go.kr/"
+};
+
+const DELIVERY_NOTE = {
+  title:"배달·택배비 부담을 선택하셨다면",
+  text:"전국 단위 '소상공인 배달·택배비 지원'은 공식 전용 페이지에서 종료 안내가 확인됩니다. 같은 조건의 전국 사업이 지금 신청 가능하다고 단정하지 않으며, 소상공인24와 지역 지자체의 추가·유사 공고를 확인하도록 안내합니다.",
+  link:"https://www.sbiz24.kr/"
+};
+
+const CRISIS_SUPPORT_NOTE = {
+  title:"경영이 어렵거나 폐업·재창업을 고민 중이라면",
+  items:[
+    "희망리턴패키지 재기사업화: 2026년 정부지원 한도는 최대 2,000만원이며 자부담 조건이 있습니다. 모집 회차와 선정 절차를 확인하세요.",
+    "원스톱폐업지원: 점포철거비는 2026년 최대 600만원으로 늘었지만 실제 비용·면적·대상요건에 따라 달라질 수 있습니다.",
+    "사업화 지원금과 재도전 정책대출은 다릅니다. 지원금은 공고 조건에 따른 보조이고, 정책대출은 반드시 갚아야 합니다."
+  ],
+  note:"폐업·재창업 지원은 상황별 요건이 복잡하므로 희망리턴패키지와 소상공인24의 최신 모집공고를 기준으로 확인하세요.",
+  link:"https://hope.sbiz.or.kr/"
+};
+
+const FAQS = [
+  {q:"'우선 확인'이라고 나오면 지원받을 수 있다는 뜻인가요?",a:"아니요. 이 앱은 6개 답변으로 확인 순서를 좁혀주는 무료 안내 도구입니다. 실제 자격·선정·지급은 개업일, 매출 신고자료, 업종, 영업 상태, 중복수혜 제한, 예산 잔액 등 각 사업의 공고와 심사로 결정됩니다."},
+  {q:"지원금·바우처와 정책자금 대출은 어떻게 다른가요?",a:"바우처·보조·보험료 지원·환급은 요건과 용도에 따라 지원되는 비대출성 제도이고, 정책자금은 원금과 이자를 갚아야 하는 대출입니다. 결과 카드에 '상환 없음', '상환 필요', '지원금 아님'을 구분해 표시했습니다."},
+  {q:"사업자가 두 개면 바우처를 두 번 받을 수 있나요?",a:"아니요. 경영안정 바우처는 대표자 1명당 1개 사업체만 신청할 수 있습니다. 예를 들어 카페와 온라인 판매 사업자를 따로 갖고 있다면 둘 중 하나만 고르세요."},
+  {q:"예비창업자도 이용할 수 있나요?",a:"네. 첫 질문에서 '예비창업(사업자등록 전)'을 고르면 매출·카드 질문은 자동으로 건너뜁니다. 기존 사업체 매출을 요구하는 지원은 바로 신청하기 어렵고, K-Startup과 지자체 창업지원 공고를 먼저 안내합니다."},
+  {q:"소상공인은 직원 수만 적으면 되나요?",a:"아니요. 상시근로자 수 기준은 광업·제조업·건설업·운수업 10명 미만, 그 밖의 업종 5명 미만이지만, 소기업 규모요건도 함께 충족해야 합니다. 사업별 요건이 추가될 수 있습니다."},
+  {q:"여러 지원사업을 동시에 받을 수 있나요?",a:"사업마다 다릅니다. 목적이 달라도 같은 비용 항목의 중복지원 금지, 유사사업 수혜 제한 등이 있을 수 있어 일괄적으로 '중복 가능'이라고 단정할 수 없습니다. 각 공고의 중복수혜 제한을 확인하세요."},
+  {q:"배달·택배비 최대 30만원 지원은 지금도 신청할 수 있나요?",a:"전국 단위 전용 페이지에는 종료 안내가 표시되어 있어, 이 앱에서는 현재 신청 가능한 지원금으로 추천하지 않습니다. 소상공인24와 지역 지자체의 추가·유사 사업을 따로 확인하세요."},
+  {q:"카드수수료 환급은 카드 매출이 있으면 누구나 받나요?",a:"아니요. 우대수수료율과 신규가맹점 환급은 선정 시점과 매출 구간에 따라 달라집니다. 여신금융협회 카드매출 통합조회에서 적용 수수료율과 환급 여부를 확인하세요."},
+  {q:"신용점수가 낮으면 정책자금을 못 받나요?",a:"자금별 신용요건이 다릅니다. 신용취약 소상공인 자금이나 대환자금이 따로 운영되기도 하므로, 점수 하나로 가능·불가를 단정하지 않습니다. 정책자금 포털의 최신 공고를 확인하세요."},
+  {q:"상담이나 최신 공고는 어디서 확인하나요?",a:"소상공인24, 소상공인정책자금, 중소벤처기업부·소상공인시장진흥공단 공식 사이트를 우선 확인하세요. 사업별 문의처가 가장 정확합니다."},
+  {q:"이 앱의 정보는 언제 기준인가요?",a:`기준일은 ${DATA_VERIFIED_AT}입니다. 예산 소진, 추가모집, 금리·한도·요건 변경이 있을 수 있으니 신청 직전 공식 공고를 다시 확인하세요. 마감일이 지난 사업은 자동으로 '마감'으로 표시됩니다.`}
+];
+
+/* ================================
+   질문
+================================ */
+const QUESTIONS = [
+  {id:"bizType",title:"현재 상황과 가장 가까운 항목은 무엇인가요?",type:"single",
+   options:[PRE,"카페/외식업","소매/판매업","서비스업","기타"]},
+  {id:"revenue",title:"2025년 연매출(세금 신고 기준)은 어느 구간인가요?",
+   help:"배달앱 매출까지 합친 금액입니다. 2025년 중간에 개업했다면 월평균 매출 × 12로 계산해 고르세요.",
+   type:"single",skipIfPre:true,
+   options:["매출 없음/창업 전","2026년에 개업함","3천만원 미만","3천만~1억원","1억~1억400만원 미만","1억400만원 이상"]},
+  {id:"region",title:"사업장 또는 창업 예정지는 어느 지역인가요?",type:"single",
+   options:["서울","경기도","인천","비수도권"]},
+  {id:"employees",title:"사장님 본인 외에 직원이 있나요?",help:"예비창업자는 예상 기준으로 골라주세요.",type:"single",
+   options:["없음(1인 운영)","1~2명","3~9명","10명 이상"]},
+  {id:"cardSales",title:"현재 신용카드 매출이 있나요?",type:"single",skipIfPre:true,
+   options:["예","아니요/거의 없음"]},
+  {id:"need",title:"지금 가장 필요한 것은 무엇인가요?",help:"여러 개 골라도 됩니다.",type:"multi",
+   options:["고정비 부담 완화","매장 기기·디지털화","배달·택배비 부담","절세","운영자금 대출","창업 준비 지원"]}
+];
+
+const PRE_DEFAULTS = {revenue:"매출 없음/창업 전", cardSales:"아니요/거의 없음"};
+
+const answers = {};
+let currentQ = 0;
+let history = [];           // 지나온 질문 번호(이전 버튼용)
+const multiSelections = new Set();
+
+const $ = (id)=>document.getElementById(id);
+const screenIntro=$("screen-intro"), screenQuiz=$("screen-quiz"), screenResult=$("screen-result");
+const quizBody=$("quiz-body"), progressFill=$("progress-fill"), qCount=$("q-count");
+const progressBar=document.querySelector(".progress-track");
+
+document.querySelectorAll(".js-date").forEach(el=>{ el.textContent = DATA_VERIFIED_AT; });
+
+function show(screen){
+  [screenIntro,screenQuiz,screenResult].forEach(s=>{ s.hidden = s !== screen; });
+  const inf = document.getElementById("screen-info"); if (inf) inf.hidden = true;
+  window.scrollTo({top:0,behavior:"auto"});
+}
+
+function activeQuestions(){
+  return QUESTIONS.filter(q=> !(q.skipIfPre && isPreStartup(answers)));
+}
+
+function startQuiz(){
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  multiSelections.clear();
+  currentQ = 0; history = [];
+  show(screenQuiz);
+  renderQuestion();
+}
+$("btn-start").addEventListener("click",startQuiz);
+$("btn-start-2").addEventListener("click",startQuiz);
+
+$("btn-restart").addEventListener("click",()=>{
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  multiSelections.clear();
+  currentQ = 0; history = [];
+  show(screenIntro);
+  $("btn-start").focus();
+});
+
+$("btn-edit").addEventListener("click",()=>{
+  if (history.length) currentQ = history.pop();
+  show(screenQuiz);
+  renderQuestion();
+});
+
+/* FAQ */
+(function renderFaqs(){
+  const box = $("faq-list");
+  FAQS.forEach((item,i)=>{
+    const el = document.createElement("div");
+    el.className = "faq-item";
+    el.innerHTML = `<button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-${i}">
+        <span>${item.q}</span><span class="mark" aria-hidden="true">+</span></button>
+      <div class="faq-a" id="faq-a-${i}" hidden>${item.a}</div>`;
+    const btn = el.querySelector(".faq-q"), ans = el.querySelector(".faq-a"), mark = el.querySelector(".mark");
+    btn.addEventListener("click",()=>{
+      const open = ans.hidden;
+      ans.hidden = !open;
+      btn.setAttribute("aria-expanded",String(open));
+      mark.textContent = open ? "−" : "+";
+    });
+    box.appendChild(el);
+  });
+})();
+
+/* 질문 렌더링 */
+function renderQuestion(){
+  const q = QUESTIONS[currentQ];
+  const list = activeQuestions();
+  const pos = list.indexOf(q);
+  const progress = Math.round((pos / list.length) * 100);
+  progressFill.style.width = progress + "%";
+  progressBar.setAttribute("aria-valuenow",String(progress));
+  qCount.textContent = `질문 ${pos+1} / ${list.length}`;
+
+  if (q.type === "multi"){
+    multiSelections.clear();
+    (answers[q.id] || []).forEach(v=>multiSelections.add(v));
+  }
+
+  let html = "";
+  if (history.length) html += `<button type="button" class="btn-back" id="btn-prev">← 이전 질문</button>`;
+  html += `<h2 class="q-title">${q.title}</h2>`;
+  html += q.help ? `<p class="q-help">${q.help}</p>` : `<div style="height:14px"></div>`;
+  html += `<div class="option-list">`;
+  q.options.forEach(opt=>{
+    const sel = q.type === "multi" ? multiSelections.has(opt) : answers[q.id] === opt;
+    html += `<button type="button" class="option-btn${sel?" selected":""}" data-value="${opt}" aria-pressed="${sel}">${opt}</button>`;
+  });
+  html += `</div>`;
+  if (q.type === "multi"){
+    html += `<p class="field-hint">해당하는 항목이 없으면 고르지 않고 바로 결과를 봐도 됩니다.</p>
+      <div class="multi-actions"><button type="button" class="btn-primary" id="btn-multi-next">결과 보기</button></div>`;
+  }
+  quizBody.innerHTML = html;
+
+  $("btn-prev")?.addEventListener("click",()=>{
+    currentQ = history.pop();
+    renderQuestion();
+    window.scrollTo({top:0,behavior:"auto"});
+  });
+
+  const btns = quizBody.querySelectorAll(".option-btn");
+  if (q.type === "single"){
+    btns.forEach(b=>b.addEventListener("click",()=>{
+      answers[q.id] = b.dataset.value;
+      goNext();
+    }));
+  } else {
+    btns.forEach(b=>b.addEventListener("click",()=>{
+      const v = b.dataset.value;
+      if (multiSelections.has(v)){ multiSelections.delete(v); b.classList.remove("selected"); b.setAttribute("aria-pressed","false"); }
+      else { multiSelections.add(v); b.classList.add("selected"); b.setAttribute("aria-pressed","true"); }
+    }));
+    $("btn-multi-next").addEventListener("click",()=>{
+      answers[q.id] = Array.from(multiSelections);
+      goNext();
+    });
+  }
+  quizBody.querySelector("h2")?.setAttribute("tabindex","-1");
+  quizBody.querySelector("h2")?.focus({preventScroll:true});
+}
+
+function goNext(){
+  const q = QUESTIONS[currentQ];
+  // 예비창업자면 매출·카드 답을 자동 채움, 아니면 자동값 제거
+  if (q.id === "bizType"){
+    if (isPreStartup(answers)) Object.assign(answers, PRE_DEFAULTS);
+    else {
+      if (answers.revenue === PRE_DEFAULTS.revenue && !history.length) delete answers.revenue;
+    }
+  }
+  let next = currentQ + 1;
+  while (next < QUESTIONS.length && QUESTIONS[next].skipIfPre && isPreStartup(answers)) next++;
+  history.push(currentQ);
+  window.scrollTo({top:0,behavior:"auto"});
+  if (next < QUESTIONS.length){
+    currentQ = next;
+    renderQuestion();
+    return;
+  }
+  progressFill.style.width = "100%";
+  progressBar.setAttribute("aria-valuenow","100");
+  showResults();
+}
+
+/* 결과 */
+function evaluate(p){
+  if (isClosed(p.closesAt)){
+    return {ok:false, closed:true, reason: p.closedText || "공고상 접수기간이 지났습니다. 추가·다음 회차 공고를 확인하세요."};
+  }
+  return p.check(answers);
+}
+
+function showResults(){
+  show(screenResult);
+  const evaluated = PROGRAMS.map(p=>({program:p,result:evaluate(p)}));
+  const good = evaluated.filter(e=>e.result.ok);
+  const low = evaluated.filter(e=>!e.result.ok);
+  $("result-count").textContent = String(good.length);
+
+  const list = $("result-list");
+  list.innerHTML = "";
+
+  if (!good.length){
+    const empty = document.createElement("div");
+    empty.className = "tip-box";
+    empty.textContent = "지금 답변만으로는 바로 우선 추천할 전국 공통 항목이 없습니다. 아래 지역 지원과 공식 공고에서 상황에 맞는 지원을 확인하세요.";
+    list.appendChild(empty);
+  } else good.forEach(e=>list.appendChild(renderNotice(e,true)));
+
+  if (isPreStartup(answers) || hasNeed(answers,"창업 준비 지원")) list.appendChild(renderInfoCard(PRESTARTUP_NOTE,"info"));
+  if (hasNeed(answers,"배달·택배비 부담")) list.appendChild(renderSimpleNote(DELIVERY_NOTE));
+  list.appendChild(renderRegionNote());
+
+  if (!isPreStartup(answers) && hasNeed(answers,"운영자금 대출")){
+    list.appendChild(sectionTitle("대출이 필요할 때 추가로 확인할 정책자금 (모두 상환 필요)"));
+    POPULAR_CREDIT_PROGRAMS.forEach(p=>list.appendChild(renderLoanCard(p)));
+  }
+
+  if (!isPreStartup(answers)) list.appendChild(renderShopCard());
+
+  if (low.length){
+    list.appendChild(sectionTitle("지금 답변 기준 우선순위가 낮은 항목"));
+    low.forEach(e=>list.appendChild(renderNotice(e,false)));
+  }
+
+  if (!isPreStartup(answers)) list.appendChild(renderInfoCard(CRISIS_SUPPORT_NOTE,"warn"));
+
+  $("result-heading").focus();
+}
+
+function sectionTitle(t){
+  const h = document.createElement("h3");
+  h.className = "result-section-title";
+  h.textContent = t;
+  return h;
+}
+
+function renderNotice(e,isPriority){
+  const p = e.program, r = e.result;
+  const div = document.createElement("article");
+  div.className = "notice " + (isPriority ? "status-ok" : "status-muted");
+  const moneyClass = p.repay.type === "loan" ? "loan" : p.repay.type === "savings" ? "neutral" : "ok";
+  const statusBadge = r.closed ? `<span class="badge neutral">접수 마감</span>`
+    : `<span class="badge ${isPriority?"ok":"neutral"}">${isPriority?"우선 확인":"조건 확인 필요"}</span>`;
+  div.innerHTML = `
+    <div class="notice-top">
+      <div><p class="notice-name">${p.name}</p>${statusBadge}<span class="badge ${moneyClass}">${p.moneyBadge}</span></div>
+      <div class="notice-amount">${p.amount}</div>
+    </div>
+    <p class="notice-type">${p.type}</p>
+    ${isPriority ? `<p class="notice-desc">${p.desc}</p>` : ""}
+    <p class="notice-reason">${r.reason}</p>
+    ${isPriority ? `
+      <p class="notice-reason"><strong>${p.repay.type==="loan"?"상환 안내.":"자금 성격."}</strong> ${p.repay.text}</p>
+      <div class="notice-deadline">${p.deadline}</div>
+      ${p.docsNote ? `<div class="tip-box">${p.docsNote}</div>` : ""}
+      <a class="notice-link" href="${p.link}" target="_blank" rel="noopener noreferrer">공식 페이지에서 최신 조건 확인하기</a>
+      <div class="agency-line">주관 · <a href="${p.agencyLink}" target="_blank" rel="noopener noreferrer">${p.agency}</a></div>` : ""}
+  `;
+  return div;
+}
+
+function renderLoanCard(p){
+  const div = document.createElement("article");
+  div.className = "notice status-loan";
+  div.innerHTML = `
+    <div class="notice-top">
+      <div><p class="notice-name">${p.name}</p><span class="badge loan">대출 · 상환 필요</span></div>
+      <div class="notice-amount">${p.amount}</div>
+    </div>
+    <p class="notice-desc">${p.desc}</p>
+    <p class="notice-reason"><strong>상환 안내.</strong> ${p.repay}</p>
+    <a class="notice-link" href="https://ols.semas.or.kr/" target="_blank" rel="noopener noreferrer">정책자금 포털에서 최신 조건 확인하기</a>
+    <div class="agency-line">주관 · <a href="https://www.semas.or.kr" target="_blank" rel="noopener noreferrer">중소벤처기업부·소상공인시장진흥공단</a></div>`;
+  return div;
+}
+
+function renderInfoCard(note,tone){
+  const div = document.createElement("aside");
+  div.className = "notice " + (tone==="warn" ? "status-warn" : "status-info");
+  div.innerHTML = `
+    <p class="notice-name">${note.title}</p>
+    <ul class="info-list">${note.items.map(i=>`<li>${i}</li>`).join("")}</ul>
+    <p class="notice-reason">${note.note}</p>
+    <a class="notice-link" href="${note.link}" target="_blank" rel="noopener noreferrer">공식 페이지 확인하기</a>`;
+  return div;
+}
+
+function renderSimpleNote(note){
+  const div = document.createElement("aside");
+  div.className = "notice status-info";
+  div.innerHTML = `<p class="notice-name">${note.title}</p><p class="notice-desc">${note.text}</p>
+    <a class="notice-link" href="${note.link}" target="_blank" rel="noopener noreferrer">소상공인24에서 최신 공고 확인하기</a>`;
+  return div;
+}
+
+function renderRegionNote(){
+  const region = answers.region || "선택 지역";
+  const div = document.createElement("aside");
+  div.className = "notice status-info";
+  div.innerHTML = `
+    <p class="notice-name">${region} 지역의 소액 지원사업도 확인하세요</p>
+    <p class="notice-desc">지자체의 임차료·홍보·환경개선·교육·창업 지원은 지역과 예산에 따라 수시로 바뀌어 6문항만으로 자동 판정하지 않습니다. 기업마당·소상공인24와 해당 지자체 공고에서 지금 모집 중인 사업을 확인하세요.</p>
+    <div class="link-row">
+      <a class="notice-link" href="https://www.bizinfo.go.kr/" target="_blank" rel="noopener noreferrer">기업마당 확인</a>
+      <a class="notice-link secondary-link" href="https://www.sbiz24.kr/" target="_blank" rel="noopener noreferrer">소상공인24 확인</a>
+    </div>`;
+  return div;
+}
+
+/* ================================
+   제휴 상품 (쿠팡 파트너스 링크로 교체해서 사용)
+================================ */
+const COUPANG_DISCLOSURE = "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.";
+const cps = (q)=>"https://www.coupang.com/np/search?q=" + encodeURIComponent(q);
+const PRODUCTS = [
+  {name:"스마트 플러그(타이머·전력량 표시)", why:"쓰지 않는 기기 대기전력을 줄여 전기요금 부담을 덜어줍니다.", need:"고정비 부담 완화", url:"https://link.coupang.com/a/hnmB1tyNKC"},
+  {name:"무선 카드단말기", why:"테이블·배달·행사 결제에 편리합니다. 가맹 수수료율도 함께 확인하세요.", need:null, url:"https://link.coupang.com/a/hnmN9t7w6K"},
+  {name:"라벨 프린터", why:"제조일자·유통기한·원재료 표시 라벨을 깔끔하게 뽑을 수 있습니다.", need:"매장 기기·디지털화", url:"https://link.coupang.com/a/hnm2N2nIOW"},
+  {name:"태블릿 거치대(매장용)", why:"주문·메뉴판·예약 확인용 태블릿을 카운터에 고정할 때 씁니다.", need:"매장 기기·디지털화", url:"https://link.coupang.com/a/hnnGHM8jqC"},
+  {name:"개인사업자 세금 입문서", why:"부가세·종합소득세 신고와 절세 기본기를 쉽게 익힐 수 있습니다.", need:"절세", url:"https://link.coupang.com/a/hnnWvkY52y"}
+];
+
+function renderShopCard(){
+  const sorted = PRODUCTS.filter(p=>p.url).sort((a,b)=>(hasNeed(answers,b.need)?1:0)-(hasNeed(answers,a.need)?1:0));
+  const box = document.createElement("aside");
+  box.className = "shop-card";
+  box.setAttribute("aria-label","제휴 상품");
+  box.innerHTML = `
+    <p class="notice-name">매장 운영에 도움 되는 물품</p>
+    <p class="shop-disclosure">광고 · ${COUPANG_DISCLOSURE}</p>
+    <ul class="shop-list">${sorted.map(p=>`
+      <li class="shop-item"><div><strong>${p.name}</strong><span>${p.why}</span></div>
+      <a class="shop-go" href="${p.url}" target="_blank" rel="sponsored noopener noreferrer">쿠팡에서 보기</a></li>`).join("")}
+    </ul>
+    <p class="notice-reason">위 상품은 지원사업 결과와 관계없는 구경GO의 추천이며, 정부·공단이 추천하는 상품이 아닙니다.</p>`;
+  return box;
+}
+
+/* 운영 정보 화면 */
+let infoReturnTo = null;
+function openInfo(tab){
+  infoReturnTo = [screenIntro,screenQuiz,screenResult].find(s=>!s.hidden) || screenIntro;
+  [screenIntro,screenQuiz,screenResult].forEach(s=>s.hidden=true);
+  const info = $("screen-info");
+  info.hidden = false;
+  selectTab(tab);
+  window.scrollTo({top:0,behavior:"auto"});
+  $("btn-info-back").focus();
+}
+function selectTab(tab){
+  document.querySelectorAll(".info-tab").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===tab)));
+  document.querySelectorAll("[data-panel]").forEach(p=>p.hidden = p.dataset.panel !== tab);
+}
+document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openInfo(b.dataset.open)));
+document.querySelectorAll(".info-tab").forEach(b=>b.addEventListener("click",()=>selectTab(b.dataset.tab)));
+$("btn-info-back").addEventListener("click",()=>{
+  $("screen-info").hidden = true;
+  (infoReturnTo || screenIntro).hidden = false;
+  window.scrollTo({top:0,behavior:"auto"});
+});
+</script>
+</body>
+</html>
