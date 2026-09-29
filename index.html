@@ -172,6 +172,14 @@ h2{margin:0 0 12px;font-size:clamp(1.35rem,4.8vw,1.75rem);line-height:1.35;lette
 .info-tab[aria-selected="true"]{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-dark)}
 .footer-btn{border:0;background:none;padding:4px 2px;color:var(--brand-dark);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .mail-link{font-weight:800;color:var(--brand-dark)}
+.gate-card{max-width:460px;margin:8vh auto 0;text-align:center}
+.gate-brand{margin:0 0 6px;color:var(--brand);font-weight:900;letter-spacing:.02em}
+.gate-input{width:100%;max-width:240px;margin:22px auto 10px;display:block;padding:14px;border:2px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);font-size:1.8rem;font-weight:800;letter-spacing:.5em;text-align:center}
+.gate-input:focus{outline:none;border-color:var(--brand)}
+.gate-error{min-height:1.6em;margin:0 0 10px;color:#c0392b;font-weight:700;font-size:.95rem}
+.brand-mark{margin:14px 0 0;color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:.01em;text-align:center}
+.brand-mark b{color:var(--brand-dark)}
+.brand-corner{position:fixed;right:10px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:5;padding:4px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted);font-size:.72rem;font-weight:800;opacity:.85;pointer-events:none}
 @media (max-width:600px){
   .shop-item{flex-direction:column;align-items:flex-start}
   .app-shell{width:min(100% - 20px,760px);padding-top:18px}
@@ -196,7 +204,21 @@ h2{margin:0 0 12px;font-size:clamp(1.35rem,4.8vw,1.75rem);line-height:1.35;lette
 <a class="skip-link" href="#main">본문으로 바로가기</a>
 
 <main id="main" class="app-shell">
-  <section id="screen-intro" class="screen" aria-labelledby="intro-title">
+  <section id="screen-gate" class="screen" aria-labelledby="gate-title">
+    <div class="hero-card gate-card">
+      <p class="gate-brand">구경GO</p>
+      <h1 id="gate-title" style="font-size:clamp(1.7rem,6vw,2.3rem)">내 가게 지원사업 찾기</h1>
+      <p class="hero-copy">입장코드 4자리를 입력해 주세요.</p>
+      <label for="gate-input" class="sr-only">입장코드</label>
+      <input id="gate-input" class="gate-input" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off">
+      <p id="gate-error" class="gate-error" role="alert"></p>
+      <button type="button" class="btn-primary btn-large" id="gate-btn">입장하기</button>
+      <p class="privacy-note">입장코드 문의 · p01056310076@gmail.com</p>
+      <p class="brand-mark" data-brand="line"></p>
+    </div>
+  </section>
+
+  <section id="screen-intro" class="screen" aria-labelledby="intro-title" hidden>
     <div class="hero-card">
       <p class="eyebrow">영세 소상공인·예비창업자 무료 안내</p>
       <h1 id="intro-title">내 가게 지원사업 찾기</h1>
@@ -213,6 +235,7 @@ h2{margin:0 0 12px;font-size:clamp(1.35rem,4.8vw,1.75rem);line-height:1.35;lette
       </div>
       <button type="button" class="btn-primary btn-large" id="btn-start">6문항 시작하기</button>
       <p class="privacy-note">답변은 이 화면 안에서만 사용하며 서버로 전송하거나 저장하지 않습니다.</p>
+      <p class="brand-mark" data-brand="line"></p>
     </div>
 
     <section class="content-card" aria-labelledby="how-title">
@@ -241,6 +264,7 @@ h2{margin:0 0 12px;font-size:clamp(1.35rem,4.8vw,1.75rem);line-height:1.35;lette
         <div id="progress-fill" class="progress-fill"></div>
       </div>
       <div id="quiz-body" class="quiz-body"></div>
+      <p class="brand-mark" data-brand="line"></p>
     </div>
   </section>
 
@@ -251,6 +275,7 @@ h2{margin:0 0 12px;font-size:clamp(1.35rem,4.8vw,1.75rem);line-height:1.35;lette
       <p class="result-sub">‘우선 확인’은 자격 확정이 아닙니다. 금액·접수상태·세부요건은 신청 직전 공식 페이지에서 다시 확인하세요.</p>
     </div>
     <div id="result-list" class="result-list" aria-live="polite"></div>
+    <p class="brand-mark" data-brand="line"></p>
     <div class="result-actions">
       <button type="button" class="btn-secondary" id="btn-edit">마지막 답변 고치기</button>
       <button type="button" class="btn-primary" id="btn-restart">처음부터 다시 확인</button>
@@ -311,6 +336,7 @@ h2{margin:0 0 12px;font-size:clamp(1.35rem,4.8vw,1.75rem);line-height:1.35;lette
 </main>
 
 <footer class="site-footer">
+  <p class="brand-mark" data-brand="copy" style="font-size:.85rem"></p>
   <p><strong>정보 기준일: <span class="js-date"></span></strong></p>
   <p>본 미니앱은 공공 지원정보를 쉽게 확인하기 위한 무료 비공식 안내 서비스이며 정부기관·공단을 대리하지 않습니다.</p>
   <p>운영 · 구경GO (개인 운영 비공식 서비스)</p>
@@ -327,676 +353,8 @@ h2{margin:0 0 12px;font-size:clamp(1.35rem,4.8vw,1.75rem);line-height:1.35;lette
     <a href="https://www.bizinfo.go.kr/" target="_blank" rel="noopener noreferrer">기업마당</a>
   </nav>
 </footer>
+<div class="brand-corner" data-brand="corner" aria-hidden="true"></div>
 
-<script>
-"use strict";
-
-/* ================================
-   데이터 (기준일은 여기 한 곳만 수정)
-================================ */
-const DATA_VERIFIED_AT = "2026-09-27";
-const PRE = "예비창업(사업자등록 전)";
-const GJ = "전남광주 · 옛 광주시 지역(5개 구)";
-const JN = "전남광주 · 옛 전남도 지역(22개 시·군)";
-function isJG(a){ return !!a && a.region === JN; }
-
-function isPreStartup(a){ return !!a && a.bizType === PRE; }
-function hasNeed(a, v){ return !!(a && Array.isArray(a.need) && a.need.includes(v)); }
-function isClosed(iso){ return !!iso && Date.now() > new Date(iso).getTime(); }
-
-const PROGRAMS = [
-  {
-    id:"stability_voucher",
-    agency:"중소벤처기업부·소상공인시장진흥공단",
-    agencyLink:"https://www.semas.or.kr",
-    name:"소상공인 경영안정 바우처",
-    type:"바우처(카드 사용)",
-    amount:"최대 25만원",
-    moneyBadge:"바우처 · 상환 없음",
-    desc:"전기·가스·수도요금, 4대 보험료, 차량 연료비, 전통시장 화재공제료 등 지정된 고정비에 쓸 수 있는 바우처입니다. 대표자 1명당 1개 사업체만 신청할 수 있으니, 사업자가 여러 개라면 가장 유리한 곳 하나를 고르세요.",
-    deadline:"2026년 예산 소진 시까지 신청 · 바우처 사용기한 2026-12-31",
-    closesAt:"2026-12-31T23:59:59+09:00",
-    link:"https://credit.sbiz24.kr/",
-    repay:{type:"none",text:"대출이 아니므로 원금 상환 의무는 없습니다. 다만 지정 사용처와 사용기한 등 사업 조건을 지켜야 합니다."},
-    docsNote:"공식 안내상 별도 서류 없이 온라인 신청이 가능하며, 국세청 과세정보 등으로 요건을 확인합니다. 신청 화면에서 본인인증과 카드사 선택 절차를 확인하세요. 카드사는 신청 후 바꾸기 어려우니 자주 쓰는 카드로 고르세요.",
-    check:(a)=>{
-      if (isPreStartup(a) || a.revenue === "매출 없음/창업 전")
-        return {ok:false, reason:"이 바우처는 2025년 12월 31일 이전 개업하고 2025년 연매출이 0원을 넘는 영업 중 소상공인이 대상입니다. 예비창업자는 바로 신청 대상이 아닙니다."};
-      if (a.revenue === "2026년에 개업함")
-        return {ok:false, reason:"2026년에 개업한 사업자는 이번 바우처 대상(2025년 12월 31일 이전 개업)이 아닙니다."};
-      if (a.revenue === "1억400만원 이상")
-        return {ok:false, reason:"2025년 연매출 1억400만원 미만 기준을 넘어 우선순위에서 제외했습니다."};
-      return {ok:true, reason:"답하신 2025년 매출 구간은 기준(0원 초과 1억400만원 미만)에 들어갑니다. 현재 영업 중인지, 제외업종이 아닌지만 공식 페이지에서 확인하세요. 매출은 배달앱 매출까지 합친 세금 신고 금액 기준입니다."};
-    }
-  },
-  {
-    id:"card_fee_refund",
-    agency:"금융위원회·여신금융협회",
-    agencyLink:"https://www.crefia.or.kr",
-    name:"카드 우대수수료율·신규가맹점 환급 확인",
-    type:"수수료 우대·환급 확인",
-    amount:"가맹점별 상이",
-    moneyBadge:"환급 · 상환 없음",
-    desc:"영세·중소 카드가맹점에는 우대수수료율이 적용되며, 반기 중 새로 개업한 가맹점이 이후 영세·중소가맹점으로 확인되면 기존 수수료율과 우대수수료율의 차액을 환급받을 수 있습니다.",
-    deadline:"반기별 선정·환급 · 적용 여부는 카드매출 통합조회에서 확인",
-    link:"https://www.cardsales.or.kr/",
-    repay:{type:"none",text:"대출이 아닙니다. 신규가맹점 환급 대상이면 카드사가 수수료 차액을 돌려주는 구조이며, 기존 가맹점은 현재 적용 수수료율을 확인하는 용도입니다."},
-    docsNote:"별도 지원금 신청이 아닙니다. 여신금융협회 카드매출 통합조회에서 우대수수료율·환급 대상 여부를 조회하세요.",
-    check:(a)=> a.cardSales === "예"
-      ? {ok:true, reason:"카드 매출이 있다고 답하셔서 현재 적용 수수료율과 신규가맹점 환급 여부를 조회해볼 만합니다. 카드 매출이 있다는 이유만으로 환급 대상이 되는 것은 아닙니다."}
-      : {ok:false, reason:"카드 매출이 없거나 거의 없다고 답하셔서 우선순위를 낮췄습니다."}
-  },
-  {
-    id:"smart_store",
-    agency:"중소벤처기업부·소상공인시장진흥공단",
-    agencyLink:"https://www.semas.or.kr",
-    name:"소상공인 스마트상점 기술보급사업",
-    type:"구입·렌탈·S/W 도입 지원",
-    amount:"유형별 상이",
-    moneyBadge:"보조 · 상환 없음",
-    desc:"정상 영업 중인 소상공인이 키오스크·서빙로봇·경영 S/W 같은 스마트기술을 도입할 때 구입형·렌탈형·S/W형 유형에 따라 비용 일부를 지원합니다.",
-    deadline:"2026년 2차 모집 2026-08-26 10:00 ~ 2026-09-30 17:00",
-    closesAt:"2026-09-30T17:00:00+09:00",
-    closedText:"2026년 2차 모집(9월 30일 17시)이 마감되었습니다. 다음 회차 공고를 소상공인24·스마트상점 누리집에서 확인하세요.",
-    link:"https://www.sbiz.or.kr/smst/index.do",
-    repay:{type:"none",text:"국비 지원분은 대출이 아닙니다. 다만 유형별 지원비율·자부담·사후관리 조건이 있으니 공고문을 확인해야 합니다."},
-    docsNote:"신청서, 소상공인 확인, 도입계획 등 세부 제출자료는 모집공고의 유형별 안내를 기준으로 준비하세요. 이미 스마트상점 지원을 받았다면 '추가지원 전용' 공고를 확인하세요.",
-    check:(a)=>{
-      if (isPreStartup(a))
-        return {ok:false, reason:"신청일 현재 정상 영업 중인 소상공인이 대상이라 사업자등록 전 예비창업자는 제외했습니다."};
-      if (hasNeed(a,"매장 기기·디지털화"))
-        return {ok:true, reason:"매장 기기·디지털화가 필요하다고 답하셨습니다. 구입·렌탈·S/W 유형 중 맞는 방식을 비교해보세요. 마감이 가까우니 서두르세요."};
-      return {ok:false, reason:"이번에 매장 기기·디지털화를 선택하지 않으셔서 우선순위를 낮췄습니다."};
-    }
-  },
-  {
-    id:"doorunuri",
-    agency:"고용노동부·근로복지공단·국민연금공단",
-    agencyLink:"https://www.insurancesupport.or.kr",
-    name:"두루누리 사회보험료 지원",
-    type:"고용보험·국민연금 보험료 지원",
-    amount:"보험료의 80% 지원",
-    moneyBadge:"보험료 지원 · 상환 없음",
-    desc:"근로자 10명 미만 사업의 월평균보수 270만원 미만 신규가입 근로자와 사업주의 고용보험·국민연금 보험료 일부를 지원합니다.",
-    deadline:"신청 가능 여부·지원기간은 공식 안내 확인",
-    link:"https://www.insurancesupport.or.kr/",
-    repay:{type:"none",text:"대출이 아니라 사회보험료 지원입니다. 신규가입 이력, 보수, 재산·소득 등 제외요건과 지원기간을 확인해야 합니다."},
-    docsNote:"직원 수만으로 대상이 정해지지 않습니다. 직원별 월평균보수, 직전 1년 보험 가입이력, 지원제외 기준을 공식 사이트에서 확인하세요.",
-    check:(a)=>{
-      if (isPreStartup(a)) return {ok:false, reason:"사업자등록 전에는 해당이 없습니다. 창업 후 직원을 뽑을 때 다시 확인하세요."};
-      if (a.employees === "없음(1인 운영)") return {ok:false, reason:"직원이 없다고 답하셔서 우선순위를 낮췄습니다. 직원을 고용하면 다시 확인하세요."};
-      if (a.employees === "10명 이상") return {ok:false, reason:"기본 사업장 규모 기준이 근로자 10명 미만이라 우선순위가 낮습니다."};
-      return {ok:true, reason:"직원이 있고 10명 미만이라고 답하셨습니다. 직원별 월평균보수와 신규가입 이력 등 추가 요건을 확인하세요."};
-    }
-  },
-  {
-    id:"policy_fund",
-    agency:"중소벤처기업부·소상공인시장진흥공단",
-    agencyLink:"https://www.semas.or.kr",
-    name:"소상공인 정책자금(운영자금 등) 확인",
-    type:"융자(대출)",
-    amount:"자금별 한도 상이",
-    moneyBadge:"대출 · 상환 필요",
-    desc:"소상공인 정책자금은 자금 종류별로 대상, 한도, 금리, 접수기간, 상환조건이 다릅니다. 운영자금이 필요할 때 현재 접수 중인 자금을 공식 포털에서 비교하세요.",
-    deadline:"자금별 접수기간·예산 소진 여부 확인",
-    link:"https://ols.semas.or.kr/",
-    repay:{type:"loan",text:"정책자금은 대출이므로 원금과 이자를 갚아야 합니다. 금리·거치기간·상환기간은 최신 공고와 약정을 기준으로 확인하세요."},
-    docsNote:"필요서류는 직접대출·대리대출과 자금 종류에 따라 다릅니다. 정책자금 포털에서 신청하려는 자금의 공고를 확인하세요.",
-    check:(a)=>{
-      if (isPreStartup(a)) return {ok:false, reason:"운영 중인 소상공인 정책자금과 예비창업자 창업자금은 따로 봐야 합니다. 예비창업자는 K-Startup 공고를 먼저 확인하세요."};
-      if (hasNeed(a,"대출 갈아타기(대환)") || hasNeed(a,"재창업·재기 준비")) return {ok:true, reason:"대출 갈아타기나 재기 자금을 선택하셨습니다. 아래 '선택하신 상황에 맞는 정책자금'에서 대환대출·재도전특별자금 조건을 먼저 확인하세요. 모두 갚아야 하는 대출입니다."};
-      if (hasNeed(a,"운영자금 대출")) return {ok:true, reason:"운영자금 대출이 필요하다고 답하셨습니다. 지원금이 아니라 갚아야 하는 대출이므로 금리·한도·상환조건을 비교한 뒤 신청하세요."};
-      return {ok:false, reason:"운영자금 대출을 선택하지 않으셔서 대출성 정책자금은 우선순위를 낮췄습니다."};
-    }
-  },
-  {
-    id:"yellow_umbrella",
-    agency:"중소기업중앙회",
-    agencyLink:"https://www.kbiz.or.kr",
-    name:"노란우산",
-    type:"공제(본인 납입)·소득공제",
-    amount:"소득공제 연 최대 600만원",
-    moneyBadge:"공제 납입 · 지원금 아님",
-    desc:"소기업·소상공인 대표가 스스로 부금을 넣어 폐업·노후에 대비하는 공제제도이며, 납입부금에 대해 소득공제를 받을 수 있습니다.",
-    deadline:"상시 가입 가능 여부 확인",
-    link:"https://www.8899.or.kr/",
-    repay:{type:"savings",text:"정부가 주는 지원금이나 대출이 아니라 본인이 납입하는 공제입니다. 소득공제 한도와 해약 조건을 확인하고 가입하세요."},
-    docsNote:"가입 가능 여부는 소기업·소상공인 해당 여부와 사업 형태 등에 따라 확인해야 합니다.",
-    check:(a)=>{
-      if (isPreStartup(a)) return {ok:false, reason:"사업자등록 후 가입대상을 다시 확인하세요."};
-      if (hasNeed(a,"절세")) return {ok:true, reason:"절세를 선택하셔서 소득공제와 목돈 마련 목적에서 확인할 가치가 있습니다. 정부 무상지원금은 아니라는 점을 구분하세요."};
-      return {ok:false, reason:"절세를 선택하지 않으셔서 우선순위를 낮췄습니다. 노란우산은 본인이 납입하는 공제제도입니다."};
-    }
-  }
-];
-
-const LOAN_NEEDS = ["운영자금 대출","대출 갈아타기(대환)","재창업·재기 준비"];
-const POPULAR_CREDIT_PROGRAMS = [
-  {name:"소상공인 대환대출", needs:["대출 갈아타기(대환)"],
-   amount:"기업당 최대 5,000만원",
-   desc:"대표자 개인신용평점(NCB) 919점 이하 중·저신용 소상공인이 가진 연 7% 이상 고금리 대출이나, 은행에서 만기 연장이 어려운 대출을 정책자금으로 갈아타는 자금입니다.",
-   repay:"연 4.5% 고정금리, 10년 분할상환 조건으로 바뀌어 매달 갚는 부담이 줄어듭니다. 대상 대출의 실행 시기 등 세부 요건은 최신 변경 공고를 확인하세요.",
-   tip:"신청 전 준비: ① 신용점수(NCB)를 토스·카카오뱅크 앱이나 NICE지키미에서 무료 확인 ② 가진 대출의 금리·잔액·만기를 은행 앱에서 정리 ③ 금리가 7% 미만이면 은행의 '만기연장 애로 확인서'가 필요한지 공고에서 확인"},
-  {name:"재도전특별자금", needs:["재창업·재기 준비"],
-   amount:"유형별 최대 7,000만원~2억원",
-   desc:"폐업 후 재창업을 준비 중이거나, 채무조정을 성실히 이행 중인 소상공인을 위한 자금입니다. 재창업 준비·초기 단계, 채무조정 이행 등 유형에 따라 한도와 금리가 다릅니다.",
-   repay:"대출기간 5년 이내(거치기간 2년 포함)이며, 금리는 정책자금 기준금리에 유형별 0.4~1.6%p가 더해집니다. 정확한 조건은 신청 유형의 공고를 확인하세요."},
-  {name:"성장기반자금", needs:["운영자금 대출"],
-   amount:"최대 5억원 (용도별 상이)",
-   desc:"성장 가능성이 있는 소상공인의 사업 확장을 돕는 자금으로, 대리대출·직접대출로 운영됩니다. 한도가 큰 대신 매출·업력·사업계획 등 요건과 심사가 까다로운 편입니다.",
-   repay:"대출기간과 상환방식은 시설자금·운전자금 등 용도에 따라 다르므로 신청 전 공고에서 확인해야 합니다."},
-  {name:"신용취약 소상공인 대상 정책자금", needs:["운영자금 대출"],
-   amount:"최신 공고 확인",
-   desc:"신용이 취약한 소상공인을 위한 직접대출 계열 자금입니다. 신용평점 기준, 사전교육, 업력 등 세부요건은 신청 시점 공고를 확인하세요.",
-   repay:"대출이므로 원금과 이자를 갚아야 하며 조건은 최신 공고·약정을 따릅니다."}
-];
-
-const PRESTARTUP_NOTE = {
-  title:"예비창업자라면 이쪽을 먼저 확인하세요",
-  items:[
-    "2026년 중앙부처·지자체 창업지원사업은 예비창업자 대상 사업을 포함해 통합 공고됩니다.",
-    "사업자등록 전에는 기존 매출·영업 상태를 전제로 하는 경영안정 바우처, 스마트상점 등의 대상이 되기 어렵습니다.",
-    "K-Startup에서 '예비창업' 조건으로 모집 중인 사업을 검색하고, 지역 지자체 창업지원 공고도 함께 확인하세요."
-  ],
-  note:"예비창업 지원은 업종, 연령, 지역, 사업화 단계 등에 따라 조건이 크게 달라 이 6문항만으로 선정 가능성을 단정하지 않습니다.",
-  link:"https://www.k-startup.go.kr/"
-};
-
-const DELIVERY_NOTE = {
-  title:"배달·택배비 부담을 선택하셨다면",
-  text:"전국 단위 '소상공인 배달·택배비 지원'은 공식 전용 페이지에서 종료 안내가 확인됩니다. 같은 조건의 전국 사업이 지금 신청 가능하다고 단정하지 않으며, 소상공인24와 지역 지자체의 추가·유사 공고를 확인하도록 안내합니다.",
-  link:"https://www.sbiz24.kr/"
-};
-
-const CRISIS_SUPPORT_NOTE = {
-  title:"경영이 어렵거나 폐업·재창업을 고민 중이라면",
-  items:[
-    "희망리턴패키지 재기사업화: 2026년 정부지원 한도는 최대 2,000만원이며 자부담 조건이 있습니다. 모집 회차와 선정 절차를 확인하세요.",
-    "원스톱폐업지원: 점포철거비는 2026년 최대 600만원으로 늘었지만 실제 비용·면적·대상요건에 따라 달라질 수 있습니다.",
-    "사업화 지원금과 재도전 정책대출은 다릅니다. 지원금은 공고 조건에 따른 보조이고, 정책대출은 반드시 갚아야 합니다."
-  ],
-  note:"폐업·재창업 지원은 상황별 요건이 복잡하므로 희망리턴패키지와 소상공인24의 최신 모집공고를 기준으로 확인하세요.",
-  link:"https://hope.sbiz.or.kr/"
-};
-
-const FAQS = [
-  {q:"'우선 확인'이라고 나오면 지원받을 수 있다는 뜻인가요?",a:"아니요. 이 앱은 6개 답변으로 확인 순서를 좁혀주는 무료 안내 도구입니다. 실제 자격·선정·지급은 개업일, 매출 신고자료, 업종, 영업 상태, 중복수혜 제한, 예산 잔액 등 각 사업의 공고와 심사로 결정됩니다."},
-  {q:"지원금·바우처와 정책자금 대출은 어떻게 다른가요?",a:"바우처·보조·보험료 지원·환급은 요건과 용도에 따라 지원되는 비대출성 제도이고, 정책자금은 원금과 이자를 갚아야 하는 대출입니다. 결과 카드에 '상환 없음', '상환 필요', '지원금 아님'을 구분해 표시했습니다."},
-  {q:"사업자가 두 개면 바우처를 두 번 받을 수 있나요?",a:"아니요. 경영안정 바우처는 대표자 1명당 1개 사업체만 신청할 수 있습니다. 예를 들어 카페와 온라인 판매 사업자를 따로 갖고 있다면 둘 중 하나만 고르세요."},
-  {q:"예비창업자도 이용할 수 있나요?",a:"네. 첫 질문에서 '예비창업(사업자등록 전)'을 고르면 매출·카드 질문은 자동으로 건너뜁니다. 기존 사업체 매출을 요구하는 지원은 바로 신청하기 어렵고, K-Startup과 지자체 창업지원 공고를 먼저 안내합니다."},
-  {q:"소상공인은 직원 수만 적으면 되나요?",a:"아니요. 상시근로자 수 기준은 광업·제조업·건설업·운수업 10명 미만, 그 밖의 업종 5명 미만이지만, 소기업 규모요건도 함께 충족해야 합니다. 사업별 요건이 추가될 수 있습니다."},
-  {q:"여러 지원사업을 동시에 받을 수 있나요?",a:"사업마다 다릅니다. 목적이 달라도 같은 비용 항목의 중복지원 금지, 유사사업 수혜 제한 등이 있을 수 있어 일괄적으로 '중복 가능'이라고 단정할 수 없습니다. 각 공고의 중복수혜 제한을 확인하세요."},
-  {q:"배달·택배비 최대 30만원 지원은 지금도 신청할 수 있나요?",a:"전국 단위 전용 페이지에는 종료 안내가 표시되어 있어, 이 앱에서는 현재 신청 가능한 지원금으로 추천하지 않습니다. 소상공인24와 지역 지자체의 추가·유사 사업을 따로 확인하세요."},
-  {q:"카드수수료 환급은 카드 매출이 있으면 누구나 받나요?",a:"아니요. 우대수수료율과 신규가맹점 환급은 선정 시점과 매출 구간에 따라 달라집니다. 여신금융협회 카드매출 통합조회에서 적용 수수료율과 환급 여부를 확인하세요."},
-  {q:"신용점수가 낮으면 정책자금을 못 받나요?",a:"자금별 신용요건이 다릅니다. 신용취약 소상공인 자금이나 대환자금이 따로 운영되기도 하므로, 점수 하나로 가능·불가를 단정하지 않습니다. 정책자금 포털의 최신 공고를 확인하세요."},
-  {q:"상담이나 최신 공고는 어디서 확인하나요?",a:"소상공인24, 소상공인정책자금, 중소벤처기업부·소상공인시장진흥공단 공식 사이트를 우선 확인하세요. 사업별 문의처가 가장 정확합니다."},
-  {q:"이 앱의 정보는 언제 기준인가요?",a:`기준일은 ${DATA_VERIFIED_AT}입니다. 예산 소진, 추가모집, 금리·한도·요건 변경이 있을 수 있으니 신청 직전 공식 공고를 다시 확인하세요. 마감일이 지난 사업은 자동으로 '마감'으로 표시됩니다.`}
-];
-
-/* ================================
-   질문
-================================ */
-const QUESTIONS = [
-  {id:"bizType",title:"현재 상황과 가장 가까운 항목은 무엇인가요?",type:"single",
-   options:[PRE,"카페/외식업","소매/판매업","서비스업","기타"]},
-  {id:"revenue",title:"2025년 연매출(세금 신고 기준)은 어느 구간인가요?",
-   help:"배달앱 매출까지 합친 금액입니다. 2025년 중간에 개업했다면 월평균 매출 × 12로 계산해 고르세요.",
-   type:"single",skipIfPre:true,
-   options:["매출 없음/창업 전","2026년에 개업함","3천만원 미만","3천만~1억원","1억~1억400만원 미만","1억400만원 이상"]},
-  {id:"region",title:"사업장 또는 창업 예정지는 어느 지역인가요?",type:"single",
-   help:"전남광주통합특별시(2026년 7월 출범) 중 옛 전남도 22개 시·군 지역은 전용 지원을 따로 안내합니다.",
-   options:["서울","경기도","인천",JN,"그 밖의 비수도권"]},
-  {id:"employees",title:"사장님 본인 외에 직원이 있나요?",help:"예비창업자는 예상 기준으로 골라주세요.",type:"single",
-   options:["없음(1인 운영)","1~2명","3~9명","10명 이상"]},
-  {id:"cardSales",title:"현재 신용카드 매출이 있나요?",type:"single",skipIfPre:true,
-   options:["예","아니요/거의 없음"]},
-  {id:"need",title:"지금 가장 필요한 것은 무엇인가요?",help:"여러 개 골라도 됩니다.",type:"multi",
-   options:["고정비 부담 완화","매장 기기·디지털화","배달·택배비 부담","절세","운영자금 대출","대출 갈아타기(대환)","재창업·재기 준비","창업 준비 지원"]}
-];
-
-const PRE_DEFAULTS = {revenue:"매출 없음/창업 전", cardSales:"아니요/거의 없음"};
-
-const answers = {};
-let currentQ = 0;
-let history = [];           // 지나온 질문 번호(이전 버튼용)
-const multiSelections = new Set();
-
-const $ = (id)=>document.getElementById(id);
-const screenIntro=$("screen-intro"), screenQuiz=$("screen-quiz"), screenResult=$("screen-result");
-const quizBody=$("quiz-body"), progressFill=$("progress-fill"), qCount=$("q-count");
-const progressBar=document.querySelector(".progress-track");
-
-document.querySelectorAll(".js-date").forEach(el=>{ el.textContent = DATA_VERIFIED_AT; });
-
-function show(screen){
-  [screenIntro,screenQuiz,screenResult].forEach(s=>{ s.hidden = s !== screen; });
-  const inf = document.getElementById("screen-info"); if (inf) inf.hidden = true;
-  window.scrollTo({top:0,behavior:"auto"});
-}
-
-function activeQuestions(){
-  return QUESTIONS.filter(q=> !(q.skipIfPre && isPreStartup(answers)));
-}
-
-function startQuiz(){
-  Object.keys(answers).forEach(k=>delete answers[k]);
-  multiSelections.clear();
-  currentQ = 0; history = [];
-  show(screenQuiz);
-  renderQuestion();
-}
-$("btn-start").addEventListener("click",startQuiz);
-$("btn-start-2").addEventListener("click",startQuiz);
-
-$("btn-restart").addEventListener("click",()=>{
-  Object.keys(answers).forEach(k=>delete answers[k]);
-  multiSelections.clear();
-  currentQ = 0; history = [];
-  show(screenIntro);
-  $("btn-start").focus();
-});
-
-$("btn-edit").addEventListener("click",()=>{
-  if (history.length) currentQ = history.pop();
-  show(screenQuiz);
-  renderQuestion();
-});
-
-/* FAQ */
-(function renderFaqs(){
-  const box = $("faq-list");
-  FAQS.forEach((item,i)=>{
-    const el = document.createElement("div");
-    el.className = "faq-item";
-    el.innerHTML = `<button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-${i}">
-        <span>${item.q}</span><span class="mark" aria-hidden="true">+</span></button>
-      <div class="faq-a" id="faq-a-${i}" hidden>${item.a}</div>`;
-    const btn = el.querySelector(".faq-q"), ans = el.querySelector(".faq-a"), mark = el.querySelector(".mark");
-    btn.addEventListener("click",()=>{
-      const open = ans.hidden;
-      ans.hidden = !open;
-      btn.setAttribute("aria-expanded",String(open));
-      mark.textContent = open ? "−" : "+";
-    });
-    box.appendChild(el);
-  });
-})();
-
-/* 질문 렌더링 */
-function renderQuestion(){
-  const q = QUESTIONS[currentQ];
-  const list = activeQuestions();
-  const pos = list.indexOf(q);
-  const progress = Math.round((pos / list.length) * 100);
-  progressFill.style.width = progress + "%";
-  progressBar.setAttribute("aria-valuenow",String(progress));
-  qCount.textContent = `질문 ${pos+1} / ${list.length}`;
-
-  if (q.type === "multi"){
-    multiSelections.clear();
-    (answers[q.id] || []).forEach(v=>multiSelections.add(v));
-  }
-
-  let html = "";
-  if (history.length) html += `<button type="button" class="btn-back" id="btn-prev">← 이전 질문</button>`;
-  html += `<h2 class="q-title">${q.title}</h2>`;
-  html += q.help ? `<p class="q-help">${q.help}</p>` : `<div style="height:14px"></div>`;
-  html += `<div class="option-list">`;
-  q.options.forEach(opt=>{
-    const sel = q.type === "multi" ? multiSelections.has(opt) : answers[q.id] === opt;
-    html += `<button type="button" class="option-btn${sel?" selected":""}" data-value="${opt}" aria-pressed="${sel}">${opt}</button>`;
-  });
-  html += `</div>`;
-  if (q.type === "multi"){
-    html += `<p class="field-hint">해당하는 항목이 없으면 고르지 않고 바로 결과를 봐도 됩니다.</p>
-      <div class="multi-actions"><button type="button" class="btn-primary" id="btn-multi-next">결과 보기</button></div>`;
-  }
-  quizBody.innerHTML = html;
-
-  $("btn-prev")?.addEventListener("click",()=>{
-    currentQ = history.pop();
-    renderQuestion();
-    window.scrollTo({top:0,behavior:"auto"});
-  });
-
-  const btns = quizBody.querySelectorAll(".option-btn");
-  if (q.type === "single"){
-    btns.forEach(b=>b.addEventListener("click",()=>{
-      answers[q.id] = b.dataset.value;
-      goNext();
-    }));
-  } else {
-    btns.forEach(b=>b.addEventListener("click",()=>{
-      const v = b.dataset.value;
-      if (multiSelections.has(v)){ multiSelections.delete(v); b.classList.remove("selected"); b.setAttribute("aria-pressed","false"); }
-      else { multiSelections.add(v); b.classList.add("selected"); b.setAttribute("aria-pressed","true"); }
-    }));
-    $("btn-multi-next").addEventListener("click",()=>{
-      answers[q.id] = Array.from(multiSelections);
-      goNext();
-    });
-  }
-  quizBody.querySelector("h2")?.setAttribute("tabindex","-1");
-  quizBody.querySelector("h2")?.focus({preventScroll:true});
-}
-
-function goNext(){
-  const q = QUESTIONS[currentQ];
-  // 예비창업자면 매출·카드 답을 자동 채움, 아니면 자동값 제거
-  if (q.id === "bizType"){
-    if (isPreStartup(answers)) Object.assign(answers, PRE_DEFAULTS);
-    else {
-      if (answers.revenue === PRE_DEFAULTS.revenue && !history.length) delete answers.revenue;
-    }
-  }
-  let next = currentQ + 1;
-  while (next < QUESTIONS.length && QUESTIONS[next].skipIfPre && isPreStartup(answers)) next++;
-  history.push(currentQ);
-  window.scrollTo({top:0,behavior:"auto"});
-  if (next < QUESTIONS.length){
-    currentQ = next;
-    renderQuestion();
-    return;
-  }
-  progressFill.style.width = "100%";
-  progressBar.setAttribute("aria-valuenow","100");
-  showResults();
-}
-
-/* 결과 */
-function evaluate(p){
-  if (isClosed(p.closesAt)){
-    return {ok:false, closed:true, reason: p.closedText || "공고상 접수기간이 지났습니다. 추가·다음 회차 공고를 확인하세요."};
-  }
-  return p.check(answers);
-}
-
-function showResults(){
-  show(screenResult);
-  const evaluated = PROGRAMS.map(p=>({program:p,result:evaluate(p)}));
-  const good = evaluated.filter(e=>e.result.ok);
-  const low = evaluated.filter(e=>!e.result.ok);
-  $("result-count").textContent = String(good.length);
-
-  const list = $("result-list");
-  list.innerHTML = "";
-
-  if (!good.length){
-    const empty = document.createElement("div");
-    empty.className = "tip-box";
-    empty.textContent = "지금 답변만으로는 바로 우선 추천할 전국 공통 항목이 없습니다. 아래 지역 지원과 공식 공고에서 상황에 맞는 지원을 확인하세요.";
-    list.appendChild(empty);
-  } else good.forEach(e=>list.appendChild(renderNotice(e,true)));
-
-  if (isPreStartup(answers) || hasNeed(answers,"창업 준비 지원")) list.appendChild(renderInfoCard(PRESTARTUP_NOTE,"info"));
-  if (hasNeed(answers,"배달·택배비 부담")) list.appendChild(renderSimpleNote(DELIVERY_NOTE));
-  if (isJG(answers)) list.appendChild(renderJGSection());
-  else list.appendChild(renderRegionNote());
-
-  if (!isPreStartup(answers) && LOAN_NEEDS.some(n=>hasNeed(answers,n))){
-    list.appendChild(sectionTitle("선택하신 상황에 맞는 정책자금 (모두 대출 · 상환 필요)"));
-    const match = (p)=>p.needs.some(n=>hasNeed(answers,n));
-    POPULAR_CREDIT_PROGRAMS.filter(match).forEach(p=>list.appendChild(renderLoanCard(p,true)));
-    const rest = POPULAR_CREDIT_PROGRAMS.filter(p=>!match(p));
-    if (rest.length){
-      list.appendChild(sectionTitle("함께 알아두면 좋은 정책자금"));
-      rest.forEach(p=>list.appendChild(renderLoanCard(p,false)));
-    }
-    const warn = document.createElement("div");
-    warn.className = "tip-box";
-    warn.textContent = "정책자금은 소상공인정책자금 누리집에서 본인이 직접, 무료로 신청합니다. '승인 보장', '수수료 받고 대신 신청'을 내세우는 업체는 불법 브로커일 수 있으니 주의하세요. 상담은 소상공인 콜센터 1533-0100.";
-    list.appendChild(warn);
-  }
-
-  if (!isPreStartup(answers)) list.appendChild(renderShopCard());
-
-  if (low.length){
-    list.appendChild(sectionTitle("지금 답변 기준 우선순위가 낮은 항목"));
-    low.forEach(e=>list.appendChild(renderNotice(e,false)));
-  }
-
-  if (!isPreStartup(answers)) list.appendChild(renderInfoCard(CRISIS_SUPPORT_NOTE,"warn"));
-
-  $("result-heading").focus();
-}
-
-function sectionTitle(t){
-  const h = document.createElement("h3");
-  h.className = "result-section-title";
-  h.textContent = t;
-  return h;
-}
-
-function renderNotice(e,isPriority){
-  const p = e.program, r = e.result;
-  const div = document.createElement("article");
-  div.className = "notice " + (isPriority ? "status-ok" : "status-muted");
-  const moneyClass = p.repay.type === "loan" ? "loan" : p.repay.type === "savings" ? "neutral" : "ok";
-  const statusBadge = r.closed ? `<span class="badge neutral">접수 마감</span>`
-    : `<span class="badge ${isPriority?"ok":"neutral"}">${isPriority?"우선 확인":"조건 확인 필요"}</span>`;
-  div.innerHTML = `
-    <div class="notice-top">
-      <div><p class="notice-name">${p.name}</p>${statusBadge}<span class="badge ${moneyClass}">${p.moneyBadge}</span></div>
-      <div class="notice-amount">${p.amount}</div>
-    </div>
-    <p class="notice-type">${p.type}</p>
-    ${isPriority ? `<p class="notice-desc">${p.desc}</p>` : ""}
-    <p class="notice-reason">${r.reason}</p>
-    ${isPriority ? `
-      <p class="notice-reason"><strong>${p.repay.type==="loan"?"상환 안내.":"자금 성격."}</strong> ${p.repay.text}</p>
-      <div class="notice-deadline">${p.deadline}</div>
-      ${p.docsNote ? `<div class="tip-box">${p.docsNote}</div>` : ""}
-      <a class="notice-link" href="${p.link}" target="_blank" rel="noopener noreferrer">공식 페이지에서 최신 조건 확인하기</a>
-      <div class="agency-line">주관 · <a href="${p.agencyLink}" target="_blank" rel="noopener noreferrer">${p.agency}</a></div>` : ""}
-  `;
-  return div;
-}
-
-function renderLoanCard(p, matched){
-  const div = document.createElement("article");
-  div.className = "notice status-loan";
-  div.innerHTML = `
-    <div class="notice-top">
-      <div><p class="notice-name">${p.name}</p>${matched?`<span class="badge ok">선택 상황에 맞음</span>`:""}<span class="badge loan">대출 · 상환 필요</span></div>
-      <div class="notice-amount">${p.amount}</div>
-    </div>
-    <p class="notice-desc">${p.desc}</p>
-    <p class="notice-reason"><strong>상환 안내.</strong> ${p.repay}</p>
-    ${p.tip ? `<div class="tip-box">${p.tip}</div>` : ""}
-    <a class="notice-link" href="https://ols.semas.or.kr/" target="_blank" rel="noopener noreferrer">정책자금 포털에서 최신 조건 확인하기</a>
-    <div class="agency-line">주관 · <a href="https://www.semas.or.kr" target="_blank" rel="noopener noreferrer">중소벤처기업부·소상공인시장진흥공단</a></div>`;
-  return div;
-}
-
-function renderInfoCard(note,tone){
-  const div = document.createElement("aside");
-  div.className = "notice " + (tone==="warn" ? "status-warn" : "status-info");
-  div.innerHTML = `
-    <p class="notice-name">${note.title}</p>
-    <ul class="info-list">${note.items.map(i=>`<li>${i}</li>`).join("")}</ul>
-    <p class="notice-reason">${note.note}</p>
-    <a class="notice-link" href="${note.link}" target="_blank" rel="noopener noreferrer">공식 페이지 확인하기</a>`;
-  return div;
-}
-
-function renderSimpleNote(note){
-  const div = document.createElement("aside");
-  div.className = "notice status-info";
-  div.innerHTML = `<p class="notice-name">${note.title}</p><p class="notice-desc">${note.text}</p>
-    <a class="notice-link" href="${note.link}" target="_blank" rel="noopener noreferrer">소상공인24에서 최신 공고 확인하기</a>`;
-  return div;
-}
-
-function renderRegionNote(){
-  const region = answers.region || "선택 지역";
-  const div = document.createElement("aside");
-  div.className = "notice status-info";
-  div.innerHTML = `
-    <p class="notice-name">${region} 지역의 소액 지원사업도 확인하세요</p>
-    <p class="notice-desc">지자체의 임차료·홍보·환경개선·교육·창업 지원은 지역과 예산에 따라 수시로 바뀌어 6문항만으로 자동 판정하지 않습니다. 기업마당·소상공인24와 해당 지자체 공고에서 지금 모집 중인 사업을 확인하세요.</p>
-    <div class="link-row">
-      <a class="notice-link" href="https://www.bizinfo.go.kr/" target="_blank" rel="noopener noreferrer">기업마당 확인</a>
-      <a class="notice-link secondary-link" href="https://www.sbiz24.kr/" target="_blank" rel="noopener noreferrer">소상공인24 확인</a>
-    </div>`;
-  return div;
-}
-
-/* ================================
-   제휴 상품 (쿠팡 파트너스 링크로 교체해서 사용)
-================================ */
-const COUPANG_DISCLOSURE = "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.";
-const cps = (q)=>"https://www.coupang.com/np/search?q=" + encodeURIComponent(q);
-const PRODUCTS = [
-  {name:"스마트 플러그(타이머·전력량 표시)", why:"쓰지 않는 기기 대기전력을 줄여 전기요금 부담을 덜어줍니다.", need:"고정비 부담 완화", url:"https://link.coupang.com/a/hnmB1tyNKC"},
-  {name:"무선 카드단말기", why:"테이블·배달·행사 결제에 편리합니다. 가맹 수수료율도 함께 확인하세요.", need:null, url:"https://link.coupang.com/a/hnmN9t7w6K"},
-  {name:"라벨 프린터", why:"제조일자·유통기한·원재료 표시 라벨을 깔끔하게 뽑을 수 있습니다.", need:"매장 기기·디지털화", url:"https://link.coupang.com/a/hnm2N2nIOW"},
-  {name:"태블릿 거치대(매장용)", why:"주문·메뉴판·예약 확인용 태블릿을 카운터에 고정할 때 씁니다.", need:"매장 기기·디지털화", url:"https://link.coupang.com/a/hnnGHM8jqC"},
-  {name:"개인사업자 세금 입문서", why:"부가세·종합소득세 신고와 절세 기본기를 쉽게 익힐 수 있습니다.", need:"절세", url:"https://link.coupang.com/a/hnnWvkY52y"}
-];
-
-function renderShopCard(){
-  const sorted = PRODUCTS.filter(p=>p.url).sort((a,b)=>(hasNeed(answers,b.need)?1:0)-(hasNeed(answers,a.need)?1:0));
-  const box = document.createElement("aside");
-  box.className = "shop-card";
-  box.setAttribute("aria-label","제휴 상품");
-  box.innerHTML = `
-    <p class="notice-name">매장 운영에 도움 되는 물품</p>
-    <p class="shop-disclosure">광고 · ${COUPANG_DISCLOSURE}</p>
-    <ul class="shop-list">${sorted.map(p=>`
-      <li class="shop-item"><div><strong>${p.name}</strong><span>${p.why}</span></div>
-      <a class="shop-go" href="${p.url}" target="_blank" rel="sponsored noopener noreferrer">쿠팡에서 보기</a></li>`).join("")}
-    </ul>
-    <p class="notice-reason">위 상품은 지원사업 결과와 관계없는 구경GO의 추천이며, 정부·공단이 추천하는 상품이 아닙니다.</p>`;
-  return box;
-}
-
-
-/* ================================
-   전남광주통합특별시 지역 전용 (기준일 2026-09-27)
-================================ */
-const JG_PROGRAMS = [
-  {
-    area:"both", kind:"free",
-    name:"민생회복 대출 안심보험 (무료)",
-    amount:"대출 최대 1,000만원 대신 상환",
-    badge:"무료 보험 · 신청 필요",
-    desc:"대출이 1,000만원 이상 있는 20~65세 소상공인이 사망하거나 암·뇌출혈·급성심근경색·고도후유장해 진단을 받으면, 보험사가 대출 금융기관에 최대 1,000만원을 직접 갚아줍니다. 다른 보험과 중복 보상이 됩니다.",
-    who:"전남광주 지역 소상공인, 20~65세, 대출 1,000만원 이상",
-    how:"옛 광주 지역·옛 전남 지역 각 5,000명 선착순(예산 소진 시 조기 마감). 지역 기관 누리집에서 직접 신청",
-    linkGJ:"https://www.gjep.or.kr/", linkJN:"https://www.jepa.kr/",
-    linkLabelGJ:"광주경제진흥상생일자리재단에서 신청", linkLabelJN:"전남중소기업일자리경제진흥원에서 신청"
-  },
-  {
-    area:"GJ", kind:"free",
-    name:"영업배상 책임보험 (자동 가입)",
-    amount:"대인 1인 최대 2,000만원",
-    badge:"무료 · 자동 가입",
-    desc:"가게에서 우연한 사고로 손님 등 다른 사람에게 배상책임이 생기면 보상합니다. 대인 1인당 최대 2,000만원(사고당 최대 3,000만원), 대물 최대 150만원입니다.",
-    who:"옛 광주 지역에 사업장이 있는 연매출 30억원 이하 소상공인",
-    how:"따로 신청하지 않아도 자동 가입됩니다. 사고가 나면 사고일로부터 3년 안에 청구하세요.",
-    link:"https://www.gjep.or.kr/", linkLabel:"광주경제진흥상생일자리재단에서 청구 방법 확인"
-  },
-  {
-    area:"JN", kind:"free",
-    name:"청년소상공인 안심보험 (자동 가입)",
-    amount:"최대 300만원",
-    badge:"무료 · 자동 가입",
-    desc:"사망·고도후유장해 시 300만원, 업무 중 다치면 정도에 따라 20만~40만원 위로금, 출산 시 10만원 축하금을 드립니다.",
-    who:"옛 전남 지역에 사업장이 있는 15~49세 청년소상공인",
-    how:"따로 신청하지 않아도 자동 가입됩니다. 사고일로부터 3년 안에 청구하세요.",
-    link:"https://www.jepa.kr/", linkLabel:"전남중소기업일자리경제진흥원에서 청구 방법 확인"
-  },
-  {
-    area:"both", kind:"defer",
-    name:"기존 정책대출 원금 상환 1년 유예",
-    amount:"원금 상환 1년 미룸",
-    badge:"상환 유예 · 이자는 계속 납부",
-    desc:"지금 받은 소상공인 자금의 금리 등 조건은 그대로 두고, 원금 갚는 것을 1년 미루고 만기를 1년 늘려줍니다. 아직 원금 상환이 시작되지 않은 대출은 거치기간이 1년 늘어납니다.",
-    who:"전남광주 소상공인 자금을 이미 이용 중인 소상공인",
-    how:"옛 광주 지역: 대출받은 은행(광주·신한·농협·하나·국민·우리)에서 신청 / 옛 전남 지역: 전남신용보증재단에서 신청",
-    closesAt:"2026-12-31T23:59:59+09:00", deadline:"신청기간 2026년 12월 31일까지",
-    linkGJ:"https://www.gjsinbo.or.kr/", linkJN:"https://www.jnsinbo.or.kr/",
-    linkLabelGJ:"광주신용보증재단 안내 확인", linkLabelJN:"전남신용보증재단에서 신청"
-  },
-  {
-    area:"both", kind:"loan", needLoan:true,
-    name:"소상공인 특례보증 + 이자 지원",
-    amountGJ:"1년간 이자 3~4% 지원", amountJN:"2년간 이자 3% 지원",
-    badge:"대출 · 상환 필요",
-    desc:"2026년 9월 1,000억원(옛 광주·옛 전남 각 500억원)이 추가 공급되었습니다. 신용보증재단 보증으로 은행 대출을 받고, 이자 일부를 시가 대신 내주는 방식입니다.",
-    who:"전남광주 지역 소상공인 (보증 심사 있음)",
-    how:"옛 광주 지역: 광주신용보증재단·협약은행 / 옛 전남 지역: 전남신용보증재단. 예산 소진 시 마감",
-    linkGJ:"https://www.gjsinbo.or.kr/", linkJN:"https://www.jnsinbo.or.kr/",
-    linkLabelGJ:"광주신용보증재단에서 확인", linkLabelJN:"전남신용보증재단에서 확인"
-  }
-];
-
-function renderJGSection(){
-  const frag = document.createDocumentFragment();
-  const isGJ = answers.region === GJ;
-  const key = isGJ ? "GJ" : "JN";
-  frag.appendChild(sectionTitle("전남광주통합특별시 지역 전용 지원 (" + (isGJ ? "옛 광주 지역" : "옛 전남 지역") + ")"));
-  JG_PROGRAMS.forEach(p=>{
-    if (p.area !== "both" && p.area !== key) return;
-    if (p.needLoan && !LOAN_NEEDS.some(n=>hasNeed(answers,n))) return;
-    if (isPreStartup(answers)) return;
-    const closed = isClosed(p.closesAt);
-    const amount = p["amount"+key] || p.amount;
-    const link = p["link"+key] || p.link;
-    const label = p["linkLabel"+key] || p.linkLabel;
-    const cls = p.kind === "loan" ? "status-loan" : (closed ? "status-muted" : "status-ok");
-    const badgeCls = p.kind === "loan" ? "loan" : "ok";
-    const el = document.createElement("article");
-    el.className = "notice " + cls;
-    el.innerHTML = `
-      <div class="notice-top">
-        <div><p class="notice-name">${p.name}</p>
-          ${closed ? `<span class="badge neutral">접수 마감</span>` : `<span class="badge ok">지역 전용</span>`}
-          <span class="badge ${badgeCls}">${p.badge}</span></div>
-        <div class="notice-amount">${amount}</div>
-      </div>
-      <p class="notice-desc">${p.desc}</p>
-      <p class="notice-reason"><strong>대상.</strong> ${p.who}</p>
-      <p class="notice-reason"><strong>방법.</strong> ${p.how}</p>
-      ${p.deadline ? `<div class="notice-deadline">${p.deadline}</div>` : ""}
-      <a class="notice-link" href="${link}" target="_blank" rel="noopener noreferrer">${label}</a>`;
-    frag.appendChild(el);
-  });
-  if (isPreStartup(answers)){
-    const tip = document.createElement("div");
-    tip.className = "tip-box";
-    tip.textContent = "전남광주 지역 소상공인 보험·자금 지원은 사업자등록 후 대상이 됩니다. 창업 지원은 전남광주특별시 기업지원시스템과 K-Startup에서 확인하세요.";
-    frag.appendChild(tip);
-  }
-  const more = document.createElement("div");
-  more.className = "tip-box";
-  more.innerHTML = `통합 이후에도 시·군·구별 소액 지원(임차료·환경개선·홍보 등)은 따로 공고됩니다. <a class="notice-link" style="margin-top:6px" href="https://www.gjbizinfo.or.kr/" target="_blank" rel="noopener noreferrer">전남광주특별시 기업지원시스템에서 공고 확인</a>`;
-  frag.appendChild(more);
-  return frag;
-}
-
-/* 운영 정보 화면 */
-let infoReturnTo = null;
-function openInfo(tab){
-  infoReturnTo = [screenIntro,screenQuiz,screenResult].find(s=>!s.hidden) || screenIntro;
-  [screenIntro,screenQuiz,screenResult].forEach(s=>s.hidden=true);
-  const info = $("screen-info");
-  info.hidden = false;
-  selectTab(tab);
-  window.scrollTo({top:0,behavior:"auto"});
-  $("btn-info-back").focus();
-}
-function selectTab(tab){
-  document.querySelectorAll(".info-tab").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===tab)));
-  document.querySelectorAll("[data-panel]").forEach(p=>p.hidden = p.dataset.panel !== tab);
-}
-document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openInfo(b.dataset.open)));
-document.querySelectorAll(".info-tab").forEach(b=>b.addEventListener("click",()=>selectTab(b.dataset.tab)));
-$("btn-info-back").addEventListener("click",()=>{
-  $("screen-info").hidden = true;
-  (infoReturnTo || screenIntro).hidden = false;
-  window.scrollTo({top:0,behavior:"auto"});
-});
-</script>
+<script>'use strict';const a0_0x535cf9=a0_0x10d1;function a0_0x10d1(_0x2aecd6,_0x4eec4d){_0x2aecd6=_0x2aecd6-0xc5;const _0x208221=a0_0x1c97();let _0x212b3d=_0x208221[_0x2aecd6];if(a0_0x10d1['nfyLxR']===undefined){var _0x449098=function(_0x193a5c){const _0x4dfdc7='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0xa750d='',_0x3cd36c='',_0x5ce564=_0xa750d+_0x449098,_0x582d72=(''+function(){return 0x0;})['indexOf']('\x0a')!==-0x1;for(let _0x4ad74f=0x0,_0x3b2799,_0x5b82d2,_0x22a0a=0x0;_0x5b82d2=_0x193a5c['charAt'](_0x22a0a++);~_0x5b82d2&&(_0x3b2799=_0x4ad74f%0x4?_0x3b2799*0x40+_0x5b82d2:_0x5b82d2,_0x4ad74f++%0x4)?_0xa750d+=_0x582d72||_0x5ce564['charCodeAt'](_0x22a0a+0xa)-0xa!==0x0?String['fromCharCode'](0xff&_0x3b2799>>(-0x2*_0x4ad74f&0x6)):_0x4ad74f:0x0){_0x5b82d2=_0x4dfdc7['indexOf'](_0x5b82d2);}for(let _0x4eaa1b=0x0,_0x40f78c=_0xa750d['length'];_0x4eaa1b<_0x40f78c;_0x4eaa1b++){_0x3cd36c+='%'+('00'+_0xa750d['charCodeAt'](_0x4eaa1b)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x3cd36c);};a0_0x10d1['nbsout']=_0x449098,a0_0x10d1['vhHiQq']={},a0_0x10d1['nfyLxR']=!![];}const _0x1c972e=_0x208221[0x0];a0_0x10d1['vPZJnA']!==_0x1c972e&&(a0_0x10d1['vhHiQq']={},a0_0x10d1['vPZJnA']=_0x1c972e);const _0x10d136=a0_0x10d1['vhHiQq'][_0x2aecd6];if(_0x10d136===undefined){const _0x47e5b7=function(_0x136ed3){this['mrbXEx']=_0x136ed3,this['ckwmWu']=[0x1,0x0,0x0],this['JkHvuB']=function(){return'newState';},this['eVxlho']='\x5c\x77\x2b\x20\x2a\x5c\x28\x5c\x29\x20\x2a\x7b\x5c\x77\x2b\x20\x2a',this['wKoCxE']='\x5b\x27\x7c\x22\x5d\x2e\x2b\x5b\x27\x7c\x22\x5d\x3b\x3f\x20\x2a\x7d';};_0x47e5b7['prototype']['bMmSYw']=function(){const _0x5eca1a=new RegExp(this['eVxlho']+this['wKoCxE']),_0x58a5ce=_0x5eca1a['test'](this['JkHvuB']['toString']())?--this['ckwmWu'][0x1]:--this['ckwmWu'][0x0];return this['rpksTE'](_0x58a5ce);},_0x47e5b7['prototype']['rpksTE']=function(_0x183296){if(!Boolean(~_0x183296))return _0x183296;return this['XmtuaD'](this['mrbXEx']);},_0x47e5b7['prototype']['XmtuaD']=function(_0x4dca93){for(let _0x126d36=0x0,_0x590e4b=this['ckwmWu']['length'];_0x126d36<_0x590e4b;_0x126d36++){this['ckwmWu']['push'](Math['round'](Math['random']())),_0x590e4b=this['ckwmWu']['length'];}return _0x4dca93(this['ckwmWu'][0x0]);},(''+function(){return 0x0;})['indexOf']('\x0a')===-0x1&&new _0x47e5b7(a0_0x10d1)['bMmSYw'](),_0x212b3d=a0_0x10d1['nbsout'](_0x212b3d),a0_0x10d1['vhHiQq'][_0x2aecd6]=_0x212b3d;}else _0x212b3d=_0x10d136;return _0x212b3d;}(function(_0x5042b3,_0x11dc1d){const _0x4a3ba4=a0_0x10d1,_0x148713=_0x5042b3();while(!![]){try{const _0x2cefaa=-parseInt(_0x4a3ba4(0xee))/0x1+-parseInt(_0x4a3ba4(0x17c))/0x2*(parseInt(_0x4a3ba4(0x109))/0x3)+-parseInt(_0x4a3ba4(0x1cf))/0x4*(-parseInt(_0x4a3ba4(0x1bc))/0x5)+parseInt(_0x4a3ba4(0x231))/0x6*(parseInt(_0x4a3ba4(0x1b8))/0x7)+parseInt(_0x4a3ba4(0xf5))/0x8+-parseInt(_0x4a3ba4(0x199))/0x9+parseInt(_0x4a3ba4(0x198))/0xa*(parseInt(_0x4a3ba4(0x1d7))/0xb);if(_0x2cefaa===_0x11dc1d)break;else _0x148713['push'](_0x148713['shift']());}catch(_0x557606){_0x148713['push'](_0x148713['shift']());}}}(a0_0x1c97,0x90fa1));const DATA_VERIFIED_AT=a0_0x535cf9(0x241),BRAND=a0_0x535cf9(0xd0),COPY=a0_0x535cf9(0x11b);function stampBrand(){const _0x49f8fb=a0_0x535cf9,_0x5a2ae9={'wtDAR':function(_0x5a8572,_0x1269c4){return _0x5a8572!==_0x1269c4;},'SskiU':'</b>\x20·\x20내\x20가게\x20지원사업\x20찾기\x20·\x20','zGmCI':_0x49f8fb(0x230),'ImzYA':'footer','xOpCt':_0x49f8fb(0xd5)},_0x15ad35=(function(){let _0x46ac5c=!![];return function(_0x173d65,_0x22112c){const _0x50fed3=_0x46ac5c?function(){if(_0x22112c){const _0x5cf13e=_0x22112c['apply'](_0x173d65,arguments);return _0x22112c=null,_0x5cf13e;}}:function(){};return _0x46ac5c=![],_0x50fed3;};}()),_0x2707e4=_0x15ad35(this,function(){const _0x4de9cf=_0x49f8fb;if(_0x5a2ae9[_0x4de9cf(0x12c)](_0x2707e4['bind']()['toString']()['indexOf']('\x0a'),-0x1))return;return _0x2707e4[_0x4de9cf(0x1bd)]()['search'](_0x4de9cf(0x23b))[_0x4de9cf(0x1bd)]()['constructor'](_0x2707e4)[_0x4de9cf(0x15f)](_0x4de9cf(0x23b));});_0x2707e4(),document[_0x49f8fb(0x25b)]('[data-brand=\x22line\x22]')[_0x49f8fb(0x146)](_0x118dd3=>{const _0x40998f=_0x49f8fb;_0x118dd3[_0x40998f(0x10e)]=_0x40998f(0x1b4)+BRAND+_0x5a2ae9[_0x40998f(0x178)]+COPY;}),document['querySelectorAll'](_0x49f8fb(0x230))[_0x49f8fb(0x146)](_0x338f25=>{const _0x163ef0=_0x49f8fb;_0x338f25[_0x163ef0(0x112)]=COPY;}),document[_0x49f8fb(0x25b)](_0x49f8fb(0x193))['forEach'](_0x55629a=>{const _0x2b6be4=_0x49f8fb;_0x55629a[_0x2b6be4(0x112)]=BRAND;});if(!document[_0x49f8fb(0x114)](_0x5a2ae9[_0x49f8fb(0x1ae)])){const _0x57f805=document[_0x49f8fb(0x114)](_0x5a2ae9[_0x49f8fb(0xed)])||document[_0x49f8fb(0x15e)],_0x1f8518=document[_0x49f8fb(0x18c)]('p');_0x1f8518[_0x49f8fb(0x2a3)]=_0x5a2ae9[_0x49f8fb(0x265)],_0x1f8518[_0x49f8fb(0x112)]=COPY,_0x57f805[_0x49f8fb(0xe8)](_0x1f8518);}}stampBrand();const GATE_HASH='43257f79d4f0d3fe9fdd65ade0aa2df562e0a6bd8a1907e73ef2a92471bd7b0f',GATE_KEY=a0_0x535cf9(0x196),GATE_DAYS=0x1e;async function sha256(_0x3b5c95){const _0x4077ae=a0_0x535cf9,_0x3444a9=await crypto[_0x4077ae(0x167)][_0x4077ae(0x1cb)](_0x4077ae(0x13d),new TextEncoder()[_0x4077ae(0x1a4)](_0x3b5c95));return Array[_0x4077ae(0x18b)](new Uint8Array(_0x3444a9))[_0x4077ae(0x14b)](_0x255676=>_0x255676['toString'](0x10)[_0x4077ae(0x20f)](0x2,'0'))['join']('');}function gateOpen(){const _0xf4c382=a0_0x535cf9;document[_0xf4c382(0x25a)]('screen-gate')[_0xf4c382(0x2a1)]=!![],document['getElementById'](_0xf4c382(0x22b))[_0xf4c382(0x2a1)]=![],window[_0xf4c382(0x143)]({'top':0x0,'behavior':_0xf4c382(0x28a)});}(function initGate(){const _0x4008a8=a0_0x535cf9,_0x3819b8={'XlgCx':_0x4008a8(0xe9),'vcJEW':function(_0x385886,_0x3f3515){return _0x385886+_0x3f3515;},'PciME':_0x4008a8(0x278),'BScet':function(_0x5b4408,_0x1743d2){return _0x5b4408===_0x1743d2;},'nrosY':function(_0x242071){return _0x242071();},'CdAjl':_0x4008a8(0x10c),'QyvBG':'gate-btn','BGxmU':_0x4008a8(0x27f)};try{const _0x58ada3=JSON[_0x4008a8(0x243)](localStorage[_0x4008a8(0x16c)](GATE_KEY)||_0x4008a8(0x204));if(_0x58ada3&&_0x3819b8[_0x4008a8(0xf3)](_0x58ada3['h'],GATE_HASH)&&Date[_0x4008a8(0x175)]()<_0x58ada3['exp']){gateOpen();return;}}catch(_0x440137){}const _0x4bcf22=document[_0x4008a8(0x25a)](_0x3819b8[_0x4008a8(0xc7)]),_0x5b2016=document[_0x4008a8(0x25a)](_0x4008a8(0x24b));let _0x91229b=0x0,_0x4175bc=0x0;async function _0x3844fa(){const _0x3707c2=_0x4008a8;if(Date['now']()<_0x4175bc){_0x5b2016[_0x3707c2(0x112)]=_0x3819b8['XlgCx'];return;}const _0x480d0c=(_0x4bcf22[_0x3707c2(0x134)]||'')['replace'](/\D/g,'');if(_0x480d0c[_0x3707c2(0x17a)]!==0x4){_0x5b2016[_0x3707c2(0x112)]=_0x3707c2(0x1f4),_0x4bcf22['focus']();return;}const _0x397d8e=await sha256('gukyeongo-myshop:'+_0x480d0c);if(_0x397d8e===GATE_HASH){try{localStorage[_0x3707c2(0x191)](GATE_KEY,JSON[_0x3707c2(0x1e4)]({'h':GATE_HASH,'exp':_0x3819b8[_0x3707c2(0x298)](Date[_0x3707c2(0x175)](),GATE_DAYS*0x5265c00)}));}catch(_0x26e290){}_0x5b2016['textContent']='',gateOpen();}else{_0x91229b++,_0x4bcf22[_0x3707c2(0x134)]='',_0x4bcf22['focus']();if(_0x91229b>=0x5)_0x4175bc=Date[_0x3707c2(0x175)]()+0x7530,_0x91229b=0x0,_0x5b2016[_0x3707c2(0x112)]='5번\x20틀렸습니다.\x2030초\x20뒤\x20다시\x20입력해\x20주세요.';else _0x5b2016['textContent']=_0x3819b8[_0x3707c2(0x298)](_0x3707c2(0x147),_0x91229b)+_0x3707c2(0xff);}}document[_0x4008a8(0x25a)](_0x3819b8[_0x4008a8(0x1c4)])[_0x4008a8(0x210)](_0x4008a8(0x1f6),_0x3844fa),_0x4bcf22[_0x4008a8(0x210)](_0x3819b8[_0x4008a8(0x234)],_0x469d2a=>{const _0x21479e=_0x4008a8;if(_0x469d2a[_0x21479e(0xc5)]===_0x3819b8[_0x21479e(0x162)])_0x3844fa();}),_0x4bcf22[_0x4008a8(0x210)](_0x4008a8(0x1fe),()=>{const _0x1ad7db=_0x4008a8;_0x4bcf22[_0x1ad7db(0x134)]=_0x4bcf22[_0x1ad7db(0x134)][_0x1ad7db(0x149)](/\D/g,'')[_0x1ad7db(0x1db)](0x0,0x4);if(_0x3819b8[_0x1ad7db(0xf3)](_0x4bcf22[_0x1ad7db(0x134)][_0x1ad7db(0x17a)],0x4))_0x3819b8[_0x1ad7db(0xdd)](_0x3844fa);}),setTimeout(()=>_0x4bcf22['focus'](),0x32);}());const PRE=a0_0x535cf9(0x136),GJ=a0_0x535cf9(0x2a4),JN=a0_0x535cf9(0x261);function isJG(_0x11c990){const _0x4a3855=a0_0x535cf9,_0x53692b={'BYcwI':function(_0x2e7291,_0x461356){return _0x2e7291===_0x461356;}};return!!_0x11c990&&_0x53692b[_0x4a3855(0x23e)](_0x11c990[_0x4a3855(0x1a7)],JN);}function isPreStartup(_0x3d24c8){return!!_0x3d24c8&&_0x3d24c8['bizType']===PRE;}function hasNeed(_0x3341f5,_0x1c31fe){const _0x49e797=a0_0x535cf9;return!!(_0x3341f5&&Array[_0x49e797(0x24c)](_0x3341f5['need'])&&_0x3341f5['need'][_0x49e797(0x176)](_0x1c31fe));}function isClosed(_0x34f5b7){const _0x10e46a=a0_0x535cf9;return!!_0x34f5b7&&Date[_0x10e46a(0x175)]()>new Date(_0x34f5b7)[_0x10e46a(0xd3)]();}const PROGRAMS=[{'id':a0_0x535cf9(0x213),'agency':'중소벤처기업부·소상공인시장진흥공단','agencyLink':'https://www.semas.or.kr','name':'소상공인\x20경영안정\x20바우처','type':a0_0x535cf9(0x117),'amount':'최대\x2025만원','moneyBadge':a0_0x535cf9(0x1eb),'desc':a0_0x535cf9(0x115),'deadline':a0_0x535cf9(0x28d),'closesAt':'2026-12-31T23:59:59+09:00','link':'https://credit.sbiz24.kr/','repay':{'type':a0_0x535cf9(0x11f),'text':'대출이\x20아니므로\x20원금\x20상환\x20의무는\x20없습니다.\x20다만\x20지정\x20사용처와\x20사용기한\x20등\x20사업\x20조건을\x20지켜야\x20합니다.'},'docsNote':a0_0x535cf9(0x26f),'check':_0x270e4a=>{const _0x142e46=a0_0x535cf9,_0x3dcf28={'OAsVI':'2026년에\x20개업함','FsGtu':'1억400만원\x20이상','HhiFY':_0x142e46(0x27e)};if(isPreStartup(_0x270e4a)||_0x270e4a[_0x142e46(0x179)]===_0x142e46(0x141))return{'ok':![],'reason':_0x142e46(0x264)};if(_0x270e4a[_0x142e46(0x179)]===_0x3dcf28[_0x142e46(0x259)])return{'ok':![],'reason':_0x142e46(0x24d)};if(_0x270e4a['revenue']===_0x3dcf28['FsGtu'])return{'ok':![],'reason':'2025년\x20연매출\x201억400만원\x20미만\x20기준을\x20넘어\x20우선순위에서\x20제외했습니다.'};return{'ok':!![],'reason':_0x3dcf28[_0x142e46(0x1e8)]};}},{'id':a0_0x535cf9(0x275),'agency':a0_0x535cf9(0x13e),'agencyLink':a0_0x535cf9(0x22f),'name':a0_0x535cf9(0x180),'type':'수수료\x20우대·환급\x20확인','amount':a0_0x535cf9(0x1ca),'moneyBadge':a0_0x535cf9(0x185),'desc':a0_0x535cf9(0x19a),'deadline':a0_0x535cf9(0xe5),'link':a0_0x535cf9(0x10f),'repay':{'type':'none','text':a0_0x535cf9(0x1d9)},'docsNote':a0_0x535cf9(0x21a),'check':_0x3bac9d=>_0x3bac9d[a0_0x535cf9(0x216)]==='예'?{'ok':!![],'reason':'카드\x20매출이\x20있다고\x20답하셔서\x20현재\x20적용\x20수수료율과\x20신규가맹점\x20환급\x20여부를\x20조회해볼\x20만합니다.\x20카드\x20매출이\x20있다는\x20이유만으로\x20환급\x20대상이\x20되는\x20것은\x20아닙니다.'}:{'ok':![],'reason':'카드\x20매출이\x20없거나\x20거의\x20없다고\x20답하셔서\x20우선순위를\x20낮췄습니다.'}},{'id':a0_0x535cf9(0x113),'agency':a0_0x535cf9(0x244),'agencyLink':a0_0x535cf9(0x13b),'name':a0_0x535cf9(0xf9),'type':a0_0x535cf9(0x227),'amount':'유형별\x20상이','moneyBadge':a0_0x535cf9(0x222),'desc':a0_0x535cf9(0x22a),'deadline':a0_0x535cf9(0xca),'closesAt':a0_0x535cf9(0x1f2),'closedText':a0_0x535cf9(0x17b),'link':'https://www.sbiz.or.kr/smst/index.do','repay':{'type':a0_0x535cf9(0x11f),'text':a0_0x535cf9(0x28f)},'docsNote':'신청서,\x20소상공인\x20확인,\x20도입계획\x20등\x20세부\x20제출자료는\x20모집공고의\x20유형별\x20안내를\x20기준으로\x20준비하세요.\x20이미\x20스마트상점\x20지원을\x20받았다면\x20\x27추가지원\x20전용\x27\x20공고를\x20확인하세요.','check':_0x247573=>{const _0x4870f1=a0_0x535cf9,_0x57cd69={'FUjbw':'매장\x20기기·디지털화가\x20필요하다고\x20답하셨습니다.\x20구입·렌탈·S/W\x20유형\x20중\x20맞는\x20방식을\x20비교해보세요.\x20마감이\x20가까우니\x20서두르세요.'};if(isPreStartup(_0x247573))return{'ok':![],'reason':_0x4870f1(0xd4)};if(hasNeed(_0x247573,_0x4870f1(0x13c)))return{'ok':!![],'reason':_0x57cd69['FUjbw']};return{'ok':![],'reason':_0x4870f1(0x181)};}},{'id':'doorunuri','agency':a0_0x535cf9(0x209),'agencyLink':a0_0x535cf9(0x102),'name':a0_0x535cf9(0x129),'type':'고용보험·국민연금\x20보험료\x20지원','amount':a0_0x535cf9(0x1d4),'moneyBadge':a0_0x535cf9(0x126),'desc':'근로자\x2010명\x20미만\x20사업의\x20월평균보수\x20270만원\x20미만\x20신규가입\x20근로자와\x20사업주의\x20고용보험·국민연금\x20보험료\x20일부를\x20지원합니다.','deadline':a0_0x535cf9(0x132),'link':'https://www.insurancesupport.or.kr/','repay':{'type':a0_0x535cf9(0x11f),'text':'대출이\x20아니라\x20사회보험료\x20지원입니다.\x20신규가입\x20이력,\x20보수,\x20재산·소득\x20등\x20제외요건과\x20지원기간을\x20확인해야\x20합니다.'},'docsNote':a0_0x535cf9(0x1ce),'check':_0x195d0f=>{const _0x520508=a0_0x535cf9,_0x2d22ce={'Joycs':function(_0x47652e,_0x3c8722){return _0x47652e(_0x3c8722);},'jCOnF':_0x520508(0x123),'uXSMF':function(_0xed45c2,_0x4aadfd){return _0xed45c2===_0x4aadfd;}};if(_0x2d22ce['Joycs'](isPreStartup,_0x195d0f))return{'ok':![],'reason':'사업자등록\x20전에는\x20해당이\x20없습니다.\x20창업\x20후\x20직원을\x20뽑을\x20때\x20다시\x20확인하세요.'};if(_0x195d0f[_0x520508(0x145)]===_0x520508(0x1ad))return{'ok':![],'reason':_0x2d22ce['jCOnF']};if(_0x2d22ce[_0x520508(0xd6)](_0x195d0f[_0x520508(0x145)],_0x520508(0x18a)))return{'ok':![],'reason':_0x520508(0x19c)};return{'ok':!![],'reason':_0x520508(0x1cc)};}},{'id':'policy_fund','agency':a0_0x535cf9(0x244),'agencyLink':'https://www.semas.or.kr','name':a0_0x535cf9(0x219),'type':a0_0x535cf9(0x253),'amount':'자금별\x20한도\x20상이','moneyBadge':a0_0x535cf9(0x26e),'desc':a0_0x535cf9(0x296),'deadline':'자금별\x20접수기간·예산\x20소진\x20여부\x20확인','link':a0_0x535cf9(0x276),'repay':{'type':a0_0x535cf9(0x250),'text':'정책자금은\x20대출이므로\x20원금과\x20이자를\x20갚아야\x20합니다.\x20금리·거치기간·상환기간은\x20최신\x20공고와\x20약정을\x20기준으로\x20확인하세요.'},'docsNote':a0_0x535cf9(0x159),'check':_0x4e6c34=>{const _0x36ba90=a0_0x535cf9,_0x48cf8d={'SgPzF':function(_0x322c0b,_0x1652f7){return _0x322c0b(_0x1652f7);},'tyihE':function(_0x27cb98,_0x4ee44b,_0x1fc3f8){return _0x27cb98(_0x4ee44b,_0x1fc3f8);},'VQWmx':_0x36ba90(0x11c)};if(_0x48cf8d[_0x36ba90(0x1bb)](isPreStartup,_0x4e6c34))return{'ok':![],'reason':_0x36ba90(0x184)};if(_0x48cf8d['tyihE'](hasNeed,_0x4e6c34,_0x36ba90(0x283))||hasNeed(_0x4e6c34,_0x36ba90(0x24a)))return{'ok':!![],'reason':_0x48cf8d[_0x36ba90(0x150)]};if(_0x48cf8d['tyihE'](hasNeed,_0x4e6c34,'운영자금\x20대출'))return{'ok':!![],'reason':_0x36ba90(0x1ec)};return{'ok':![],'reason':'운영자금\x20대출을\x20선택하지\x20않으셔서\x20대출성\x20정책자금은\x20우선순위를\x20낮췄습니다.'};}},{'id':a0_0x535cf9(0x263),'agency':a0_0x535cf9(0x229),'agencyLink':'https://www.kbiz.or.kr','name':'노란우산','type':a0_0x535cf9(0xcd),'amount':a0_0x535cf9(0x14f),'moneyBadge':a0_0x535cf9(0x1aa),'desc':'소기업·소상공인\x20대표가\x20스스로\x20부금을\x20넣어\x20폐업·노후에\x20대비하는\x20공제제도이며,\x20납입부금에\x20대해\x20소득공제를\x20받을\x20수\x20있습니다.','deadline':a0_0x535cf9(0x16d),'link':a0_0x535cf9(0x19e),'repay':{'type':a0_0x535cf9(0x211),'text':'정부가\x20주는\x20지원금이나\x20대출이\x20아니라\x20본인이\x20납입하는\x20공제입니다.\x20소득공제\x20한도와\x20해약\x20조건을\x20확인하고\x20가입하세요.'},'docsNote':'가입\x20가능\x20여부는\x20소기업·소상공인\x20해당\x20여부와\x20사업\x20형태\x20등에\x20따라\x20확인해야\x20합니다.','check':_0x534036=>{const _0x50e3f7=a0_0x535cf9,_0x51d9e6={'oAqvk':'절세를\x20선택하셔서\x20소득공제와\x20목돈\x20마련\x20목적에서\x20확인할\x20가치가\x20있습니다.\x20정부\x20무상지원금은\x20아니라는\x20점을\x20구분하세요.'};if(isPreStartup(_0x534036))return{'ok':![],'reason':'사업자등록\x20후\x20가입대상을\x20다시\x20확인하세요.'};if(hasNeed(_0x534036,'절세'))return{'ok':!![],'reason':_0x51d9e6[_0x50e3f7(0x249)]};return{'ok':![],'reason':'절세를\x20선택하지\x20않으셔서\x20우선순위를\x20낮췄습니다.\x20노란우산은\x20본인이\x20납입하는\x20공제제도입니다.'};}}],LOAN_NEEDS=[a0_0x535cf9(0x1d1),a0_0x535cf9(0x283),a0_0x535cf9(0x24a)],POPULAR_CREDIT_PROGRAMS=[{'name':a0_0x535cf9(0x187),'needs':['대출\x20갈아타기(대환)'],'amount':a0_0x535cf9(0x20e),'desc':a0_0x535cf9(0x16f),'repay':a0_0x535cf9(0x27b),'tip':a0_0x535cf9(0x1b2)},{'name':'재도전특별자금','needs':['재창업·재기\x20준비'],'amount':'유형별\x20최대\x207,000만원~2억원','desc':a0_0x535cf9(0x29e),'repay':'대출기간\x205년\x20이내(거치기간\x202년\x20포함)이며,\x20금리는\x20정책자금\x20기준금리에\x20유형별\x200.4~1.6%p가\x20더해집니다.\x20정확한\x20조건은\x20신청\x20유형의\x20공고를\x20확인하세요.'},{'name':'성장기반자금','needs':[a0_0x535cf9(0x1d1)],'amount':a0_0x535cf9(0x1c9),'desc':'성장\x20가능성이\x20있는\x20소상공인의\x20사업\x20확장을\x20돕는\x20자금으로,\x20대리대출·직접대출로\x20운영됩니다.\x20한도가\x20큰\x20대신\x20매출·업력·사업계획\x20등\x20요건과\x20심사가\x20까다로운\x20편입니다.','repay':a0_0x535cf9(0x236)},{'name':a0_0x535cf9(0x2a0),'needs':[a0_0x535cf9(0x1d1)],'amount':'최신\x20공고\x20확인','desc':a0_0x535cf9(0xf0),'repay':'대출이므로\x20원금과\x20이자를\x20갚아야\x20하며\x20조건은\x20최신\x20공고·약정을\x20따릅니다.'}],PRESTARTUP_NOTE={'title':a0_0x535cf9(0x13f),'items':['2026년\x20중앙부처·지자체\x20창업지원사업은\x20예비창업자\x20대상\x20사업을\x20포함해\x20통합\x20공고됩니다.',a0_0x535cf9(0x207),a0_0x535cf9(0x166)],'note':'예비창업\x20지원은\x20업종,\x20연령,\x20지역,\x20사업화\x20단계\x20등에\x20따라\x20조건이\x20크게\x20달라\x20이\x206문항만으로\x20선정\x20가능성을\x20단정하지\x20않습니다.','link':'https://www.k-startup.go.kr/'},DELIVERY_NOTE={'title':'배달·택배비\x20부담을\x20선택하셨다면','text':a0_0x535cf9(0x257),'link':a0_0x535cf9(0x21c)},CRISIS_SUPPORT_NOTE={'title':a0_0x535cf9(0x133),'items':[a0_0x535cf9(0x268),'원스톱폐업지원:\x20점포철거비는\x202026년\x20최대\x20600만원으로\x20늘었지만\x20실제\x20비용·면적·대상요건에\x20따라\x20달라질\x20수\x20있습니다.',a0_0x535cf9(0x135)],'note':a0_0x535cf9(0x168),'link':a0_0x535cf9(0x1c0)},FAQS=[{'q':a0_0x535cf9(0x1e1),'a':'아니요.\x20이\x20앱은\x206개\x20답변으로\x20확인\x20순서를\x20좁혀주는\x20무료\x20안내\x20도구입니다.\x20실제\x20자격·선정·지급은\x20개업일,\x20매출\x20신고자료,\x20업종,\x20영업\x20상태,\x20중복수혜\x20제한,\x20예산\x20잔액\x20등\x20각\x20사업의\x20공고와\x20심사로\x20결정됩니다.'},{'q':a0_0x535cf9(0x1de),'a':'바우처·보조·보험료\x20지원·환급은\x20요건과\x20용도에\x20따라\x20지원되는\x20비대출성\x20제도이고,\x20정책자금은\x20원금과\x20이자를\x20갚아야\x20하는\x20대출입니다.\x20결과\x20카드에\x20\x27상환\x20없음\x27,\x20\x27상환\x20필요\x27,\x20\x27지원금\x20아님\x27을\x20구분해\x20표시했습니다.'},{'q':'사업자가\x20두\x20개면\x20바우처를\x20두\x20번\x20받을\x20수\x20있나요?','a':'아니요.\x20경영안정\x20바우처는\x20대표자\x201명당\x201개\x20사업체만\x20신청할\x20수\x20있습니다.\x20예를\x20들어\x20카페와\x20온라인\x20판매\x20사업자를\x20따로\x20갖고\x20있다면\x20둘\x20중\x20하나만\x20고르세요.'},{'q':'예비창업자도\x20이용할\x20수\x20있나요?','a':a0_0x535cf9(0x280)},{'q':a0_0x535cf9(0x20b),'a':a0_0x535cf9(0x28b)},{'q':a0_0x535cf9(0x1d5),'a':a0_0x535cf9(0x245)},{'q':a0_0x535cf9(0x10b),'a':a0_0x535cf9(0x1af)},{'q':'카드수수료\x20환급은\x20카드\x20매출이\x20있으면\x20누구나\x20받나요?','a':'아니요.\x20우대수수료율과\x20신규가맹점\x20환급은\x20선정\x20시점과\x20매출\x20구간에\x20따라\x20달라집니다.\x20여신금융협회\x20카드매출\x20통합조회에서\x20적용\x20수수료율과\x20환급\x20여부를\x20확인하세요.'},{'q':a0_0x535cf9(0x226),'a':a0_0x535cf9(0xec)},{'q':a0_0x535cf9(0x1fc),'a':'소상공인24,\x20소상공인정책자금,\x20중소벤처기업부·소상공인시장진흥공단\x20공식\x20사이트를\x20우선\x20확인하세요.\x20사업별\x20문의처가\x20가장\x20정확합니다.'},{'q':'이\x20앱의\x20정보는\x20언제\x20기준인가요?','a':a0_0x535cf9(0x20c)+DATA_VERIFIED_AT+'입니다.\x20예산\x20소진,\x20추가모집,\x20금리·한도·요건\x20변경이\x20있을\x20수\x20있으니\x20신청\x20직전\x20공식\x20공고를\x20다시\x20확인하세요.\x20마감일이\x20지난\x20사업은\x20자동으로\x20\x27마감\x27으로\x20표시됩니다.'}],QUESTIONS=[{'id':'bizType','title':a0_0x535cf9(0x142),'type':a0_0x535cf9(0x14c),'options':[PRE,a0_0x535cf9(0x267),a0_0x535cf9(0x1b1),'서비스업','기타']},{'id':a0_0x535cf9(0x179),'title':a0_0x535cf9(0xd1),'help':a0_0x535cf9(0xfd),'type':a0_0x535cf9(0x14c),'skipIfPre':!![],'options':['매출\x20없음/창업\x20전','2026년에\x20개업함',a0_0x535cf9(0x1f9),a0_0x535cf9(0xfe),'1억~1억400만원\x20미만',a0_0x535cf9(0x130)]},{'id':a0_0x535cf9(0x1a7),'title':a0_0x535cf9(0x28c),'type':a0_0x535cf9(0x14c),'help':'전남광주통합특별시(2026년\x207월\x20출범)\x20중\x20옛\x20전남도\x2022개\x20시·군\x20지역은\x20전용\x20지원을\x20따로\x20안내합니다.','options':['서울',a0_0x535cf9(0x139),'인천',JN,a0_0x535cf9(0x171)]},{'id':a0_0x535cf9(0x145),'title':a0_0x535cf9(0x121),'help':a0_0x535cf9(0x144),'type':a0_0x535cf9(0x14c),'options':[a0_0x535cf9(0x1ad),a0_0x535cf9(0x1f3),a0_0x535cf9(0x131),a0_0x535cf9(0x18a)]},{'id':a0_0x535cf9(0x216),'title':a0_0x535cf9(0x16a),'type':a0_0x535cf9(0x14c),'skipIfPre':!![],'options':['예',a0_0x535cf9(0xc8)]},{'id':a0_0x535cf9(0xe1),'title':'지금\x20가장\x20필요한\x20것은\x20무엇인가요?','help':'여러\x20개\x20골라도\x20됩니다.','type':'multi','options':[a0_0x535cf9(0x164),a0_0x535cf9(0x13c),a0_0x535cf9(0x221),'절세',a0_0x535cf9(0x1d1),'대출\x20갈아타기(대환)',a0_0x535cf9(0x24a),'창업\x20준비\x20지원']}],PRE_DEFAULTS={'revenue':'매출\x20없음/창업\x20전','cardSales':a0_0x535cf9(0xc8)},answers={};let currentQ=0x0,history=[];const multiSelections=new Set(),$=_0x13abac=>document[a0_0x535cf9(0x25a)](_0x13abac),screenIntro=$(a0_0x535cf9(0x22b)),screenQuiz=$(a0_0x535cf9(0x1a2)),screenResult=$('screen-result'),quizBody=$('quiz-body'),progressFill=$(a0_0x535cf9(0x1f1)),qCount=$(a0_0x535cf9(0x251)),progressBar=document[a0_0x535cf9(0x114)](a0_0x535cf9(0x26d));document[a0_0x535cf9(0x25b)](a0_0x535cf9(0xce))[a0_0x535cf9(0x146)](_0x267145=>{const _0x464339=a0_0x535cf9;_0x267145[_0x464339(0x112)]=DATA_VERIFIED_AT;});function show(_0x49c274){const _0x399b86=a0_0x535cf9,_0x83bf1={'lFHod':function(_0x577020,_0x2cc298){return _0x577020!==_0x2cc298;},'PZoNx':_0x399b86(0x1fb),'wPEpp':'screen-gate'};[screenIntro,screenQuiz,screenResult][_0x399b86(0x146)](_0x802a64=>{const _0x5938da=_0x399b86;_0x802a64['hidden']=_0x83bf1[_0x5938da(0x1b6)](_0x802a64,_0x49c274);});const _0x167043=document[_0x399b86(0x25a)](_0x83bf1[_0x399b86(0x157)]);if(_0x167043)_0x167043['hidden']=!![];const _0x4e138f=document['getElementById'](_0x83bf1[_0x399b86(0x177)]);if(_0x4e138f)_0x4e138f[_0x399b86(0x2a1)]=!![];window['scrollTo']({'top':0x0,'behavior':_0x399b86(0x28a)});}function activeQuestions(){const _0x539cc2=a0_0x535cf9;return QUESTIONS['filter'](_0x1733e0=>!(_0x1733e0[_0x539cc2(0x295)]&&isPreStartup(answers)));}function startQuiz(){const _0x257a4a=a0_0x535cf9,_0x4f5840=_0x257a4a(0x228)[_0x257a4a(0x10d)]('|');let _0x67229=0x0;while(!![]){switch(_0x4f5840[_0x67229++]){case'0':currentQ=0x0;continue;case'1':renderQuestion();continue;case'2':history=[];continue;case'3':show(screenQuiz);continue;case'4':multiSelections[_0x257a4a(0x272)]();continue;case'5':Object[_0x257a4a(0x18d)](answers)['forEach'](_0x475644=>delete answers[_0x475644]);continue;}break;}}$(a0_0x535cf9(0x172))['addEventListener'](a0_0x535cf9(0x1f6),startQuiz),$(a0_0x535cf9(0xfc))[a0_0x535cf9(0x210)]('click',startQuiz),$(a0_0x535cf9(0xe3))[a0_0x535cf9(0x210)](a0_0x535cf9(0x1f6),()=>{const _0x3e63eb=a0_0x535cf9;Object['keys'](answers)[_0x3e63eb(0x146)](_0x14c18a=>delete answers[_0x14c18a]),multiSelections[_0x3e63eb(0x272)](),currentQ=0x0,history=[],show(screenIntro),$('btn-start')['focus']();}),$(a0_0x535cf9(0x195))[a0_0x535cf9(0x210)]('click',()=>{const _0x22ca4c=a0_0x535cf9;if(history[_0x22ca4c(0x17a)])currentQ=history['pop']();show(screenQuiz),renderQuestion();}),function renderFaqs(){const _0x182200={'GJlrD':function(_0x368182,_0x14b229){return _0x368182(_0x14b229);}},_0x4a7b9e=_0x182200['GJlrD']($,'faq-list');FAQS['forEach']((_0x304726,_0x1d9113)=>{const _0x138dfc=a0_0x10d1,_0x381e67=document['createElement'](_0x138dfc(0x293));_0x381e67[_0x138dfc(0x2a3)]=_0x138dfc(0x281),_0x381e67['innerHTML']=_0x138dfc(0xde)+_0x1d9113+_0x138dfc(0x163)+_0x304726['q']+_0x138dfc(0xf6)+_0x1d9113+_0x138dfc(0x212)+_0x304726['a']+_0x138dfc(0x188);const _0x125959=_0x381e67[_0x138dfc(0x114)]('.faq-q'),_0x4476db=_0x381e67[_0x138dfc(0x114)](_0x138dfc(0xe4)),_0x5b368c=_0x381e67[_0x138dfc(0x114)](_0x138dfc(0xf4));_0x125959[_0x138dfc(0x210)](_0x138dfc(0x1f6),()=>{const _0x1c72a5=_0x138dfc,_0x476a5d=_0x4476db['hidden'];_0x4476db[_0x1c72a5(0x2a1)]=!_0x476a5d,_0x125959[_0x1c72a5(0x1e3)](_0x1c72a5(0x284),String(_0x476a5d)),_0x5b368c[_0x1c72a5(0x112)]=_0x476a5d?'−':'+';}),_0x4a7b9e[_0x138dfc(0xe8)](_0x381e67);});}();function renderQuestion(){const _0x134130=a0_0x535cf9,_0x258960={'VhBWr':function(_0x1b156a,_0x1a03e0){return _0x1b156a===_0x1a03e0;},'XerRK':_0x134130(0x26b),'tHObU':function(_0x5862e3){return _0x5862e3();},'CkrxT':_0x134130(0x103),'NJOuz':function(_0x1920f5,_0x6d2b32){return _0x1920f5+_0x6d2b32;},'dCwzy':function(_0x2788d1,_0x362d17){return _0x2788d1(_0x362d17);},'wntkL':function(_0x32ef2e,_0x5e0212){return _0x32ef2e===_0x5e0212;},'NMEFt':'click','mcsKM':'single','DHMib':function(_0x365fe1,_0x1c5967){return _0x365fe1(_0x1c5967);},'MJMPg':'btn-multi-next'},_0x3e7af0=QUESTIONS[currentQ],_0x2e6514=_0x258960['tHObU'](activeQuestions),_0xe484de=_0x2e6514[_0x134130(0x203)](_0x3e7af0),_0x4bb039=Math[_0x134130(0x152)](_0xe484de/_0x2e6514[_0x134130(0x17a)]*0x64);progressFill[_0x134130(0x27d)][_0x134130(0x218)]=_0x258960[_0x134130(0x223)](_0x4bb039,'%'),progressBar[_0x134130(0x1e3)](_0x134130(0x215),_0x258960[_0x134130(0x12e)](String,_0x4bb039)),qCount[_0x134130(0x112)]='질문\x20'+(_0xe484de+0x1)+'\x20/\x20'+_0x2e6514[_0x134130(0x17a)];_0x258960[_0x134130(0x1b5)](_0x3e7af0[_0x134130(0x19d)],_0x134130(0x15c))&&(multiSelections[_0x134130(0x272)](),(answers[_0x3e7af0['id']]||[])[_0x134130(0x146)](_0x21b4f6=>multiSelections['add'](_0x21b4f6)));let _0x496f22='';if(history[_0x134130(0x17a)])_0x496f22+=_0x134130(0x197);_0x496f22+=_0x134130(0x252)+_0x3e7af0[_0x134130(0x18e)]+_0x134130(0x1df),_0x496f22+=_0x3e7af0[_0x134130(0xf7)]?_0x134130(0x1e9)+_0x3e7af0[_0x134130(0xf7)]+_0x134130(0x22e):'<div\x20style=\x22height:14px\x22></div>',_0x496f22+=_0x134130(0x23a),_0x3e7af0[_0x134130(0x22c)][_0x134130(0x146)](_0x51a079=>{const _0x4d93bf=_0x134130,_0x1f2f54=_0x258960[_0x4d93bf(0x1ed)](_0x3e7af0[_0x4d93bf(0x19d)],'multi')?multiSelections['has'](_0x51a079):answers[_0x3e7af0['id']]===_0x51a079;_0x496f22+='<button\x20type=\x22button\x22\x20class=\x22option-btn'+(_0x1f2f54?_0x258960['XerRK']:'')+_0x4d93bf(0x1a5)+_0x51a079+_0x4d93bf(0x1b7)+_0x1f2f54+'\x22>'+_0x51a079+_0x4d93bf(0x24e);}),_0x496f22+='</div>';_0x3e7af0[_0x134130(0x19d)]===_0x134130(0x15c)&&(_0x496f22+=_0x134130(0x282));quizBody[_0x134130(0x10e)]=_0x496f22,_0x258960[_0x134130(0x12e)]($,_0x134130(0x27c))?.[_0x134130(0x210)](_0x258960[_0x134130(0x290)],()=>{const _0xb63bfe=_0x134130;currentQ=history[_0xb63bfe(0x1cd)](),renderQuestion(),window['scrollTo']({'top':0x0,'behavior':_0xb63bfe(0x28a)});});const _0x4850ab=quizBody[_0x134130(0x25b)]('.option-btn');_0x258960[_0x134130(0x1b5)](_0x3e7af0['type'],_0x258960[_0x134130(0x1d6)])?_0x4850ab[_0x134130(0x146)](_0x1b956b=>_0x1b956b[_0x134130(0x210)](_0x134130(0x1f6),()=>{const _0x33a6f0=_0x134130;answers[_0x3e7af0['id']]=_0x1b956b[_0x33a6f0(0x148)][_0x33a6f0(0x134)],_0x258960[_0x33a6f0(0xef)](goNext);})):(_0x4850ab['forEach'](_0x411f60=>_0x411f60['addEventListener']('click',()=>{const _0x4ba3f3=_0x134130,_0x33fd6e=_0x411f60[_0x4ba3f3(0x148)][_0x4ba3f3(0x134)];multiSelections[_0x4ba3f3(0x1e7)](_0x33fd6e)?(multiSelections[_0x4ba3f3(0xf1)](_0x33fd6e),_0x411f60[_0x4ba3f3(0x1e5)][_0x4ba3f3(0x169)]('selected'),_0x411f60[_0x4ba3f3(0x1e3)]('aria-pressed','false')):(multiSelections['add'](_0x33fd6e),_0x411f60[_0x4ba3f3(0x1e5)]['add'](_0x4ba3f3(0x165)),_0x411f60[_0x4ba3f3(0x1e3)](_0x4ba3f3(0x14a),_0x258960['CkrxT']));})),_0x258960['DHMib']($,_0x258960[_0x134130(0x100)])[_0x134130(0x210)]('click',()=>{answers[_0x3e7af0['id']]=Array['from'](multiSelections),goNext();})),quizBody['querySelector']('h2')?.[_0x134130(0x1e3)](_0x134130(0x1a8),'-1'),quizBody[_0x134130(0x114)]('h2')?.['focus']({'preventScroll':!![]});}function goNext(){const _0xb66a77=a0_0x535cf9,_0x42ff52={'flelx':_0xb66a77(0x25e),'PPTmU':function(_0x221368,_0x18a675){return _0x221368<_0x18a675;},'GBnqp':'100%'},_0x528c8d=QUESTIONS[currentQ];if(_0x528c8d['id']===_0x42ff52[_0xb66a77(0x189)]){if(isPreStartup(answers))Object['assign'](answers,PRE_DEFAULTS);else{if(answers[_0xb66a77(0x179)]===PRE_DEFAULTS['revenue']&&!history[_0xb66a77(0x17a)])delete answers['revenue'];}}let _0x51da6b=currentQ+0x1;while(_0x51da6b<QUESTIONS[_0xb66a77(0x17a)]&&QUESTIONS[_0x51da6b]['skipIfPre']&&isPreStartup(answers))_0x51da6b++;history[_0xb66a77(0x118)](currentQ),window[_0xb66a77(0x143)]({'top':0x0,'behavior':_0xb66a77(0x28a)});if(_0x42ff52[_0xb66a77(0x273)](_0x51da6b,QUESTIONS[_0xb66a77(0x17a)])){currentQ=_0x51da6b,renderQuestion();return;}progressFill[_0xb66a77(0x27d)][_0xb66a77(0x218)]=_0x42ff52[_0xb66a77(0x23c)],progressBar[_0xb66a77(0x1e3)](_0xb66a77(0x215),_0xb66a77(0x23f)),showResults();}function evaluate(_0x3792cc){const _0x214617=a0_0x535cf9,_0x271af2={'pGhdW':function(_0x55d7ec,_0x1ce442){return _0x55d7ec(_0x1ce442);}};if(_0x271af2[_0x214617(0x16b)](isClosed,_0x3792cc[_0x214617(0x2a2)]))return{'ok':![],'closed':!![],'reason':_0x3792cc[_0x214617(0x29a)]||'공고상\x20접수기간이\x20지났습니다.\x20추가·다음\x20회차\x20공고를\x20확인하세요.'};return _0x3792cc[_0x214617(0x1a0)](answers);}function showResults(){const _0x5d1ffe=a0_0x535cf9,_0x539f20={'QLsZA':function(_0x1906ef,_0x34ae1a){return _0x1906ef(_0x34ae1a);},'NGIKR':_0x5d1ffe(0x116),'VTyRa':function(_0x5835b5,_0x4c36c3){return _0x5835b5(_0x4c36c3);},'TBNtp':_0x5d1ffe(0x221),'kVaFU':function(_0x20609d){return _0x20609d();},'nrXyJ':function(_0x3de0d3,_0x4d0b3a){return _0x3de0d3(_0x4d0b3a);},'fHErH':_0x5d1ffe(0x155),'scXSW':'div','TSuFu':_0x5d1ffe(0x1ab),'CELNL':_0x5d1ffe(0x1dc),'NKdxz':_0x5d1ffe(0x158)};show(screenResult);const _0x57cca4=PROGRAMS[_0x5d1ffe(0x14b)](_0x303060=>({'program':_0x303060,'result':evaluate(_0x303060)})),_0x4a2bb5=_0x57cca4['filter'](_0xe6afba=>_0xe6afba[_0x5d1ffe(0xd7)]['ok']),_0x312782=_0x57cca4['filter'](_0x40018b=>!_0x40018b[_0x5d1ffe(0xd7)]['ok']);$(_0x5d1ffe(0xd9))[_0x5d1ffe(0x112)]=_0x539f20[_0x5d1ffe(0x200)](String,_0x4a2bb5['length']);const _0x1fdbbe=$(_0x539f20[_0x5d1ffe(0x21e)]);_0x1fdbbe['innerHTML']='';if(!_0x4a2bb5[_0x5d1ffe(0x17a)]){const _0x4dc2d2=document['createElement'](_0x5d1ffe(0x293));_0x4dc2d2[_0x5d1ffe(0x2a3)]=_0x5d1ffe(0x28e),_0x4dc2d2[_0x5d1ffe(0x112)]='지금\x20답변만으로는\x20바로\x20우선\x20추천할\x20전국\x20공통\x20항목이\x20없습니다.\x20아래\x20지역\x20지원과\x20공식\x20공고에서\x20상황에\x20맞는\x20지원을\x20확인하세요.',_0x1fdbbe[_0x5d1ffe(0xe8)](_0x4dc2d2);}else _0x4a2bb5[_0x5d1ffe(0x146)](_0x316d8d=>_0x1fdbbe[_0x5d1ffe(0xe8)](renderNotice(_0x316d8d,!![])));if(_0x539f20['VTyRa'](isPreStartup,answers)||hasNeed(answers,_0x5d1ffe(0x10a)))_0x1fdbbe[_0x5d1ffe(0xe8)](renderInfoCard(PRESTARTUP_NOTE,_0x5d1ffe(0x101)));if(hasNeed(answers,_0x539f20[_0x5d1ffe(0x238)]))_0x1fdbbe['appendChild'](renderSimpleNote(DELIVERY_NOTE));if(isJG(answers))_0x1fdbbe['appendChild'](renderJGSection());else _0x1fdbbe[_0x5d1ffe(0xe8)](_0x539f20[_0x5d1ffe(0x260)](renderRegionNote));if(!_0x539f20[_0x5d1ffe(0x23d)](isPreStartup,answers)&&LOAN_NEEDS[_0x5d1ffe(0x124)](_0x175d11=>hasNeed(answers,_0x175d11))){_0x1fdbbe[_0x5d1ffe(0xe8)](sectionTitle(_0x539f20[_0x5d1ffe(0x29c)]));const _0x313b38=_0x3026ec=>_0x3026ec[_0x5d1ffe(0x151)]['some'](_0x47e34e=>hasNeed(answers,_0x47e34e));POPULAR_CREDIT_PROGRAMS[_0x5d1ffe(0x270)](_0x313b38)['forEach'](_0x186b63=>_0x1fdbbe['appendChild'](renderLoanCard(_0x186b63,!![])));const _0x4b1c2c=POPULAR_CREDIT_PROGRAMS[_0x5d1ffe(0x270)](_0x54fce1=>!_0x313b38(_0x54fce1));_0x4b1c2c[_0x5d1ffe(0x17a)]&&(_0x1fdbbe[_0x5d1ffe(0xe8)](sectionTitle(_0x5d1ffe(0x277))),_0x4b1c2c[_0x5d1ffe(0x146)](_0x42f0e3=>_0x1fdbbe[_0x5d1ffe(0xe8)](renderLoanCard(_0x42f0e3,![]))));const _0x1d828d=document[_0x5d1ffe(0x18c)](_0x539f20[_0x5d1ffe(0x287)]);_0x1d828d[_0x5d1ffe(0x2a3)]=_0x5d1ffe(0x28e),_0x1d828d[_0x5d1ffe(0x112)]=_0x539f20[_0x5d1ffe(0x156)],_0x1fdbbe[_0x5d1ffe(0xe8)](_0x1d828d);}if(!isPreStartup(answers))_0x1fdbbe[_0x5d1ffe(0xe8)](renderShopCard());_0x312782['length']&&(_0x1fdbbe[_0x5d1ffe(0xe8)](sectionTitle(_0x5d1ffe(0x225))),_0x312782[_0x5d1ffe(0x146)](_0x4dca0d=>_0x1fdbbe[_0x5d1ffe(0xe8)](renderNotice(_0x4dca0d,![]))));if(!isPreStartup(answers))_0x1fdbbe[_0x5d1ffe(0xe8)](renderInfoCard(CRISIS_SUPPORT_NOTE,_0x539f20['CELNL']));$(_0x539f20[_0x5d1ffe(0xc6)])[_0x5d1ffe(0x105)]();}function sectionTitle(_0x5d4d32){const _0x54576c=a0_0x535cf9,_0x41df1c={'nUyAi':_0x54576c(0x20d)},_0x3b903c=document[_0x54576c(0x18c)]('h3');return _0x3b903c['className']=_0x41df1c['nUyAi'],_0x3b903c[_0x54576c(0x112)]=_0x5d4d32,_0x3b903c;}function renderNotice(_0x32fec8,_0x45147a){const _0x6b0d0f=a0_0x535cf9,_0x282743={'WcUZO':function(_0x347afc,_0x20f89a){return _0x347afc+_0x20f89a;},'MIscy':_0x6b0d0f(0x21d),'vsrUY':_0x6b0d0f(0x250),'xiNiI':_0x6b0d0f(0x211),'izIUk':_0x6b0d0f(0xcf),'hEPXm':'우선\x20확인','hncLU':_0x6b0d0f(0x279)},_0x182cc2=_0x32fec8[_0x6b0d0f(0x262)],_0x321c62=_0x32fec8[_0x6b0d0f(0xd7)],_0x45d27e=document[_0x6b0d0f(0x18c)](_0x6b0d0f(0x22d));_0x45d27e['className']=_0x282743[_0x6b0d0f(0x299)](_0x6b0d0f(0x224),_0x45147a?'status-ok':_0x282743[_0x6b0d0f(0x194)]);const _0x1ea5be=_0x182cc2[_0x6b0d0f(0x25c)][_0x6b0d0f(0x19d)]===_0x282743[_0x6b0d0f(0x11d)]?'loan':_0x182cc2[_0x6b0d0f(0x25c)][_0x6b0d0f(0x19d)]===_0x282743['xiNiI']?_0x282743[_0x6b0d0f(0xf8)]:'ok',_0x358cc7=_0x321c62['closed']?_0x6b0d0f(0x14e):_0x6b0d0f(0xea)+(_0x45147a?'ok':_0x6b0d0f(0xcf))+'\x22>'+(_0x45147a?_0x282743[_0x6b0d0f(0x21b)]:_0x6b0d0f(0x1e0))+'</span>';return _0x45d27e['innerHTML']=_0x6b0d0f(0x1fd)+_0x182cc2[_0x6b0d0f(0x292)]+'</p>'+_0x358cc7+_0x6b0d0f(0xea)+_0x1ea5be+'\x22>'+_0x182cc2[_0x6b0d0f(0xe0)]+'</span></div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22notice-amount\x22>'+_0x182cc2[_0x6b0d0f(0x26c)]+'</div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<p\x20class=\x22notice-type\x22>'+_0x182cc2['type']+'</p>\x0a\x20\x20\x20\x20'+(_0x45147a?_0x6b0d0f(0x29f)+_0x182cc2['desc']+_0x6b0d0f(0x22e):'')+_0x6b0d0f(0xe6)+_0x321c62['reason']+_0x6b0d0f(0xf2)+(_0x45147a?_0x6b0d0f(0x237)+(_0x182cc2[_0x6b0d0f(0x25c)]['type']===_0x6b0d0f(0x250)?_0x6b0d0f(0x1ac):_0x282743[_0x6b0d0f(0x128)])+_0x6b0d0f(0x1ef)+_0x182cc2['repay']['text']+'</p>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22notice-deadline\x22>'+_0x182cc2[_0x6b0d0f(0x289)]+_0x6b0d0f(0x220)+(_0x182cc2[_0x6b0d0f(0x286)]?_0x6b0d0f(0x17d)+_0x182cc2[_0x6b0d0f(0x286)]+_0x6b0d0f(0x188):'')+_0x6b0d0f(0x1e2)+_0x182cc2[_0x6b0d0f(0x161)]+_0x6b0d0f(0x26a)+_0x182cc2[_0x6b0d0f(0x25d)]+'\x22\x20target=\x22_blank\x22\x20rel=\x22noopener\x20noreferrer\x22>'+_0x182cc2[_0x6b0d0f(0x202)]+_0x6b0d0f(0x1b0):'')+_0x6b0d0f(0x1ea),_0x45d27e;}function renderLoanCard(_0x3391a1,_0xff03e1){const _0x3f5752=a0_0x535cf9,_0x8495eb={'ACOUO':_0x3f5752(0x22d)},_0x24bb19=document['createElement'](_0x8495eb[_0x3f5752(0x1a9)]);return _0x24bb19[_0x3f5752(0x2a3)]='notice\x20status-loan',_0x24bb19[_0x3f5752(0x10e)]=_0x3f5752(0x1fd)+_0x3391a1[_0x3f5752(0x292)]+'</p>'+(_0xff03e1?_0x3f5752(0xeb):'')+_0x3f5752(0x217)+_0x3391a1[_0x3f5752(0x26c)]+_0x3f5752(0x111)+_0x3391a1[_0x3f5752(0xfb)]+_0x3f5752(0x170)+_0x3391a1['repay']+'</p>\x0a\x20\x20\x20\x20'+(_0x3391a1[_0x3f5752(0x1bf)]?_0x3f5752(0x17d)+_0x3391a1['tip']+_0x3f5752(0x188):'')+'\x0a\x20\x20\x20\x20<a\x20class=\x22notice-link\x22\x20href=\x22https://ols.semas.or.kr/\x22\x20target=\x22_blank\x22\x20rel=\x22noopener\x20noreferrer\x22>정책자금\x20포털에서\x20최신\x20조건\x20확인하기</a>\x0a\x20\x20\x20\x20<div\x20class=\x22agency-line\x22>주관\x20·\x20<a\x20href=\x22https://www.semas.or.kr\x22\x20target=\x22_blank\x22\x20rel=\x22noopener\x20noreferrer\x22>중소벤처기업부·소상공인시장진흥공단</a></div>',_0x24bb19;}function renderInfoCard(_0x4e6c96,_0x5ab460){const _0x3a1e3f=a0_0x535cf9,_0xe1ad66={'FQwde':function(_0x517ed2,_0x3e5aba){return _0x517ed2+_0x3e5aba;},'PKroc':_0x3a1e3f(0x138)},_0x2d3f41=document[_0x3a1e3f(0x18c)](_0x3a1e3f(0xda));return _0x2d3f41['className']=_0xe1ad66['FQwde'](_0x3a1e3f(0x224),_0x5ab460===_0x3a1e3f(0x1dc)?_0x3a1e3f(0x12a):_0xe1ad66[_0x3a1e3f(0xdf)]),_0x2d3f41[_0x3a1e3f(0x10e)]=_0x3a1e3f(0x1c7)+_0x4e6c96['title']+_0x3a1e3f(0x1c2)+_0x4e6c96[_0x3a1e3f(0x15b)][_0x3a1e3f(0x14b)](_0x48f0f8=>_0x3a1e3f(0x125)+_0x48f0f8+_0x3a1e3f(0x1a3))['join']('')+_0x3a1e3f(0x106)+_0x4e6c96[_0x3a1e3f(0xe2)]+_0x3a1e3f(0x108)+_0x4e6c96[_0x3a1e3f(0x161)]+'\x22\x20target=\x22_blank\x22\x20rel=\x22noopener\x20noreferrer\x22>공식\x20페이지\x20확인하기</a>',_0x2d3f41;}function renderSimpleNote(_0x3824a3){const _0x38a33f=a0_0x535cf9,_0x240e94=document[_0x38a33f(0x18c)](_0x38a33f(0xda));return _0x240e94[_0x38a33f(0x2a3)]=_0x38a33f(0x14d),_0x240e94['innerHTML']=_0x38a33f(0x256)+_0x3824a3[_0x38a33f(0x18e)]+_0x38a33f(0x1f5)+_0x3824a3['text']+'</p>\x0a\x20\x20\x20\x20<a\x20class=\x22notice-link\x22\x20href=\x22'+_0x3824a3[_0x38a33f(0x161)]+_0x38a33f(0xdc),_0x240e94;}function renderRegionNote(){const _0x2b51f1=a0_0x535cf9,_0xa86239={'QdoKo':_0x2b51f1(0x21f)},_0x409c8d=answers[_0x2b51f1(0x1a7)]||_0xa86239[_0x2b51f1(0x120)],_0xbac03c=document[_0x2b51f1(0x18c)](_0x2b51f1(0xda));return _0xbac03c[_0x2b51f1(0x2a3)]=_0x2b51f1(0x14d),_0xbac03c[_0x2b51f1(0x10e)]=_0x2b51f1(0x1c7)+_0x409c8d+_0x2b51f1(0x255),_0xbac03c;}function a0_0x1c97(){const _0x5917fc=['7iIR7j6qidtSNPdRPQZRPBWG7j6f66cL7zw0ioYJVoYeUoYALc4','pc9WpJXWignSyxnZpsjUB3rPy2uTzgvZyYi+','y2XPy2S','phnWyw4Gy2XHC3m9iMjHzgDLig9RiJ7SP4dSL60G7kce7jQPpc9ZCgfUpG','pc9WpGOGicaGica8CcbJBgfZCZ0IBM90AwnLlxjLyxnVBIi+phn0CM9UzZ7RSkNRSPuUpc9ZDhjVBMC+ia','m+YYNoUNJoYBKcdRR7JRP4W','Ahr0Chm6lY9SAw5RlMnVDxbHBMCUy29Tl2eVAg5TtJL0n3C2sW','C2nYzwvUlwLUzM8','7iob64U07j2064kyioY1NoYlOcdQS7xQS6dRIPqG7jA065su7isCio2zLEYDUo2vMoUcMoYALd8','cIaGica8zgL2ignSyxnZpsjUB3rPy2uTDg9WiJ4kicaGicaGpgrPDJ48CcbJBgfZCZ0IBM90AwnLlw5HBwuIpG','Aw5WDxq','7kce64kO7iUG7jQP67o07kAD7j6S64UO7jEq7isCioYlOoYYRq','uuXZwKe','mJaYnI0XmI0ZmvqYmZO1otO1osSWotOWma','ywDLBMn5','Aw5KzxHpzG','BNvSBa','zNjLzq','AeTXwha','7ikS7jEf7j6q65oX66gDioYGHoYxKoUkLcdQUldSOBqG66EK7lACWRFSMihSL4uG7iob7yoC66w8ioYGHoYGNoUHNcdTLzJRIPqG6Rk97jIb7jwi7kcvioUWLoYASoYYMcWG7iQK66Ei7yQ47iob7kcqioUtSEYDMcdRJidSG4hSNBqG65cy6RIWioYwToUGTEYkTEUlIoUlPc4','w2rHDgeTB3bLBL0','6RoG7jQP64w464+z67AaWRFQT7ZROzZRS7xSP4dQS7xRI6JcT+Q1REUVVoYxSoQ4IoQZTEUlQa','Ahr0Chm6lY93D3CUy291CgfUzY5JB20VBNaVC2vHCMnOp3e9','7iAm7iob6Ro17j247j2aioYNGEYBKcdSIjJRP4WG7kcb7jY866M0ioUqMoUcMoYALd8','6RIW7ksa7j287j2aia','CMvZDwX0lxnLy3rPB24TDgL0Bgu','6RIW7jEf64U5ioY1NoUmGca1ldaWmoUNJoYBKa','CgfKu3rHCNq','ywrKrxzLBNrmAxn0zw5LCG','C2f2Aw5NCW','iIbOAwrKzw4+','C3rHyMLSAxr5x3zVDwnOzxi','C3rHDhvZlwXVyw4','yxjPys12ywX1zw5VDW','y2fYzfnHBgvZ','phnWyw4Gy2XHC3m9iMjHzgDLigXVyw4IpUUmGoY2NcdcTYdSG4hTMzGG7zwe7jQupc9ZCgfUpJWVzgL2pGOGicaGica8zgL2ignSyxnZpsjUB3rPy2uTyw1VDw50iJ4','D2LKDgG','7iAm7iob6Ro17j24ioYGLEYXHEYEKoQ4IcJSMRtSMihSNPdQUiGG65oXksdTMzxSNBG','67oe64+eioYNGoYBKoQ4IcdSI6dSSQ3SNBqG7jwe64Uz64Ui64UKlIdSL6ZSI6dQUiJSNlxTMjhTMOWG7lM065oC66EK7lACio2gTE2vQEYHSo2AJoYxKoYeNcdSMRdRJidSIjJSIjJRO4ZSNkJcT+2zMoQ4IsdRJidSG4eG7jES67Aa66w8ioYHSo2AJo2vMoYeUoYALc4','Aevqwg0','Ahr0Chm6lY93D3CUC2jPEJi0lMTYlW','C3rHDhvZlw11DgvK','tKDjs1i','7isG7yoDioYNGoYxRq','pc9KAxy+cIaGicaGia','67cW64USWRFTG53RSldRUyqG67Aa64U0','67o07kgWimk3ioYdGE2zMcdSL4BSNyW','tKPpDxO','BM90AwnLia','7kEa6RIiioUlTEUZGcdQUldSPiaG7jQW7isG7iIC7jYe6RcaioUcRUYDGcdTLA3RQQK','7iUG7jQP7kcq7iIy6RcaioUcRUYCVoUPTcdSOjxSSyxSNPdQUiJSNyqG66Q7ioUWM+UcMoYALd8','6RwS7j6fWRFROiZTG4JcT1mVvYdRJ4tSNOuG7kEa7jUq','nxW0Fdb8mNWZFde','7ksr7iAm6RIW7jEf7ksr7jwz7zQm','7kcv7iobioYyGEYxHsdSPjhSNBGG7iAm7iob6Ro17j247j20io2cPoYyPoYkPo2bRmk37isC67Mz66gC67shWRFQSR3SMieGuY9xioQWMEYDGcdSIQtRP4JTIRJQUldSIkdSNyqG64+e7j6f7zwGioUvJcdQTAZSNOxTMjxcT+UGJo2dIo2yLCk3uY9x7zIvioYCOo2yLEYxKcdRLldRNBWG67Me7jQPioYDVoU2GoULVcdSP4dSM5dTLANRI4JRI6qU','C2nYzwvUlwLUDhjV','B3b0Aw9UCW','yxj0AwnSzq','pc9WpG','Ahr0Chm6lY93D3CUy3jLzMLHlM9YlMTY','w2rHDgeTyNjHBMq9iMnVChKIxq','mtuXnte4A1DrEwDt','7ywm7j2067IuWRFRSldRI6ZcT+2wIEYcRcdQSRdSOjZSL5aG7y6466AS7zwP64Ui64UKlIdQSidRP7KG7iIy7iIy66om7jYO64+eio2vQoQ7McdTMzxSNBJTLzJSHlJSMPqU','yM90Aa','qKD4Bvu','D2HV','64Ya7lAC6RIW6Rce6Ro8ioYdGE2zMoUWQEYlNEYDGcdSI5ZSHktSNPdQUiJcT+YAToYGHoYEKoQ4IcdRK7eG7jQP64+e7jEqioUuSoUDVcdRI6tRPBtRR4dROzWG7iUG7lkTioYGHcdQS7xQS6dSL5dSHjWG7zMv7j247zw07jw8io2vQEUlIoUlPc4','cIaGicaGidXWignSyxnZpsjUB3rPy2uTCMvHC29UiJ48C3rYB25NpG','vejoDha','7lwC64YaidmWmoUNJoYBKa','pgrPDIbJBgfZCZ0IB3b0Aw9UlwXPC3qIpG','kcGOlISPkYKRksSK','r0jUCxa','BNjyEuO','qLLJD0K','mtaW','yxjLyq','mJaYnI0Wos0YnW','w2rHDgeTCgfUzwXD','CgfYC2u','7ksr7iAm67kK7lky6RIW7jEf67AaWRFSHOZSG4hQS7xSNBJSI5ZSNQxSP4tTNAxQS7xRI6G','7ikS7jEf66Ei64UKioUlPoUMHEUlIoUlPc4G66QP7kcb7j20ioUlRoUDVoUpHcdQSjNSNyaG67Me7jQPio2vREUQQEYDMcdSPjhRS7xSP4dSM5aG6RIi7kEalcdSNkdSGQZSGQZSL4uG7iIy7zICioYGNo2vNcdRK7hSNBqG7j6i7j2eioYiMcdSNOJSLRqG7j286Rse7kcb7jY866gCicFSPjhRS7uG6Rca64QLj+YDToUDVoQZOcdRI6JSOjxTLAaG7iIyioYxHUYkTEUlIoUlPc4G6RcbioQZTEQZOoYDMcdSPjhRS7xSIjJTMjWG7kcC7zwC7j2eio2zLEYDUo2vMoYeUoYALc4','64Ya7lACioY1NoUmGcaXldaWmoUNJoYBKcdRJidSI6aG7iob7zMy','Ahr0Chm6lY93D3CUAM5ZAw5IBY5VCI5RCI8','6Rsr7ko86Rk97kcC7kEe7z2L7iob7ioD7j287j6q66AS7j6S64UO7jEq7isCioYlOoYYRq','B0fXDMS','7j6S7lc97jEfWRFSNQZQUlaG7ksa67Me','z2f0zs1LCNjVCG','AxnbCNjHEq','mJaYnUUfHoYxKcdQSjZSL4xTLzWG7ikS7jEf7j6q64QuioYDToUYIcdRSjtSMRdSSPGG64Ya7iobkdiWmJxRHyqGmtlSM5qGmZhSNBWG7j207kceioQWNoYxHsNSNBqG7jwe64Uz64Ui64UKlG','pc9IDxr0B24+','7joW7kEaioYvIUUkLcdQUldQUlaG64Ya6RIW7kce66cL7j2eioYKHoYxRcdSOitQUldSMPtQUiGG67Aa64U07j2eioUnNoYwToYKJEUlIoUlPc4','Bg9HBG','Cs1JB3vUDa','pgGYignSyxnZpsjXlxrPDgXLiJ4','7jY17j6qkoUmGoY2NcK','Ahr0Chm6lY9SAw5RlMnVDxbHBMCUy29Tl2eVAg5TqJf0Eu5lqW','ioYNGoYxREYDMcdSHOZSLAeG7kEa7jUq7ikS7jEf64+eio2zLEYDUo2vMoYeUoYALdWVCd4kicaGidXWignSyxnZpsjUB3rPy2uTzgvZyYi+7kEa7j6q7lk07j2yioYEHoYWQoUJJmk37zMn67o0WRFTMzJQSR3QSjZSHkdcT+Q1KoYCOCk37lc97jEfioYNGoYBKoYDGcdSP4dSL63QS7WG7jIi7ikW7jEqioUuSoUDVcdSIjJSI5ZROzWG67cu64cm7jA0idBRRlJTLA3RP4ZSNlZROzWG7j6q64+zio2mKoYGLE2vMoYNGcdSLyRSIRxRI4JRI6qUioQ4SoYxHEUNIoUlUCk37iAm7iob6Ro17j24mJtSMyaG7zw064U5ioYNGoYEKoYYTcdQS7xQS6dSL5dSHjWG7kEa6RIiioUQQoYNKsdSPjhSNBGG7ikS7jEf7j2eio2zLEYDUo2vMoYeUoYALc48l3a+cIaGica8zgL2ignSyxnZpsjSAw5RlxjVDYi+cIaGicaGidXHignSyxnZpsjUB3rPy2uTBgLUAYiGAhjLzJ0IAhr0Chm6lY93D3CUyML6Aw5MBY5NBY5RCI8IihrHCMDLDd0Ix2jSyw5RiIbYzwW9iM5VB3bLBMvYig5VCMvMzxjYzxiIpUQ4SoYxHEUNIoUlUsdTMzxSNBG8l2e+cIaGicaGidXHignSyxnZpsjUB3rPy2uTBgLUAYbZzwnVBMrHCNKTBgLUAYiGAhjLzJ0IAhr0Chm6lY93D3CUC2jPEJi0lMTYlYiGDgfYz2v0psjFyMXHBMSIihjLBd0IBM9VCgvUzxiGBM9YzwzLCNjLCIi+7iAm7iob6Ro17j24mJqG7zMv7j24pc9HpGOGicaGpc9KAxy+','phaGy2XHC3m9iM5VDgLJzs1Uyw1LiJ4','7kce6RwTioUlQoYCHcaN7iAm7iob6Ro17j24ioUWSoUlRmk37yoD67cW67MeioYNGoYBKcFSNyaG6Ro17iUDioYGHoYAQsdTJPJSNBtSP4dSL5dSHjWG7kkf66omioYvIoUcToQWGcdTMzxSNBJRKkNRI4JRI6qUioQWMEYDGcdSOBdQSBtSNzGG7kce6RwTioYcRoYxHEYDTcdSP4dQUiGG7iUG7lkTioQWGoUkPE2vMoUlPoQZOcdRI6JSOjxTLzJSP4aG7jwk7jY866MWlcdSHOZSG4hQS7xSNBGYnoYzGcdSP4dSL60G7kEa7j6q7lk07j2yioY2LoQWGmk37jYG7ikSioQZTEQZOoULVcdTMzxSNBJTLzJRJ4tROz0G7jwi64k07zwP64Ui64UKlG','CMnlDLm','t0fZvKK','z2v0rwXLBwvUDej5swq','CxvLCNLtzwXLy3rVCKfSBa','CMvWyxK','ywDLBMn5tgLUAW','yML6vhLWzq','7ikS66EDWRFQS6dRJ4tTM4tSNkdSNQxTLBqG7iUCidmWmoUNJoYBKcWG7jEf66Y0ioYKKsdRI6tSUzJRQBqG7kcv64+e7jEqioUuSoUDVcaYmoUNJh40moUNJoYBKcdSNitROzZQUiGSioY2NoYcScdSI5WGmtdRP4ZSM5aG7lAv7zwy6RIi7j2eioUtNoUMVEUlIoUlPc4','A1zHrLu','7kce64kO6Rsr7ko8imk3ioYyMYdSOitRGQJRJ4qG7kEa7jETkdiY6RcCioYlNmk36RwWkq','ChjVz3jHBq','EwvSBg93x3vTyNjLBgXH','7j20ioUWLoYASoYYMoUkLcaYmdi164weideY7jUuidmX7j28ioYDToYGHcdQSjZSL4xTLzJQS6aGmJaYnEUfHcdSL7dRP6tSTPZSNBqGmoYBKoYDHcdRHjJRIPqG7jIb7jEfioYKKsdSHOZSG4hQS7xSNBJSNBqG64Ya7iob7j6f64Ui64UKlIdSMiJRUytSSl3SL4xSNPdRIPqG67cu66gCioYlOoYYRsdRJidSG4hSNBqG7jwe64Uz64Ui64UKlG','Ee9Wq3q','CgfUzwW','7lM07y6yl+YzUoYlNEYxHq','7z2S66ED66AS7ys07yYO7ykK7kEaioYERoQ4SoYcRoYxHE2zLdOGmJaYnUUfHcdSOjxRTOdSP4dSM5aG7zwC64+e64QuioY1NoUmGcaYldaWmoUNJoYBKoYDToUPScdSNPdRTOdRI7qG7kgW6Rg07j20ioYEIoYkTEUlIoUlPc4G66QO7kErio2AJoYWQoYzGcdSHkdSOjuG7kci7lcO66w8io2zLEYDUo2vMoYeUoYALc4','Ahr0Chm6lY9SAw5RlMnVDxbHBMCUy29Tl2eVAg5TmK4YBKLpvW','iIb0yxjNzxq9iL9IBgfUAYiGCMvSpsjUB29Wzw5LCIbUB3jLzMvYCMvYiJ7QS7xSI50G7y6y7j207kEa7jEq7isCioY1NoYlOcdSOBdQSBqG7zMv7j247zwy6RIWpc9HpGOGicaGica8zgL2ignSyxnZpsjHz2vUy3KTBgLUzsi+7ko86Rsaimk3idXHigHYzwy9iG','ihnLBgvJDgvK','yw1VDw50','lNbYB2DYzxnZlxrYywnR','64Ya7lACimk3ioYdGE2zMcdTLytSMPq','6Ro17iUDioYvIoUcToYdGsdRS4tRJ4qG7isC66wyioYxHUYDTcdSMkJRNBZSNBGG7iUG7lkT7j20ioQWGoUkPE2vMoUPScWG6RwT7is47lkTioQZVoYeUoYGLEUZTcdRK7hSNlZROzWG7jQu6Rg07j2eio2zLEYDUo2vQEUlIoUlPc4G7iUG7lkTio2zLoUPToYxKoYeNcdRS7JSNBJSNBJSPP3QS7WG7lM065oC7ikSioYeOo2dNsdSOiJSSkJRPBWG7zMv7j247zwy7is47jQulIdSUBtRK5ZSGQZRIPqG7iUG7lkTio2BHcdRSjtQVRJQUlaG7jA066cK7jQW64UiioYEKoYJVcdSK7dRIPqG7lM065oC66gCioQZOoULToYeUoYALc4','zMLSDgvY','cIaGicaGidXSAsbJBgfZCZ0IC2HVCc1PDgvTiJ48zgL2pJXZDhjVBMC+','y2XLyxi','ufbuBvu','DgfI','y2fYzf9MzwvFCMvMDw5K','Ahr0Chm6lY9VBhmUC2vTyxmUB3iUA3iV','7zwO6RUyioYvJoYvHoUrKoUPTcdSOOVSNyaG7kcv7lgf7j6q6RIi','rw50zxi','7j6q6RIiioYeSEQYQs4','yMfKz2u','7jEWidqUnsuG6RoG7kcv6RIi66ASlcaXmoUfHcdRTOtTLAdSG4hTMzGG7kgW6Rg07jY866gCioUWLoUaJoYwTcdRP6tRI6WG6RcA64QuioU2GoUlToYDTcdSPitSLRtRK63RI4JRI6qUioUmGoYdGsdRJidSTPZSNzGG7iUK7zAjioYlNoQ4ScdRK7eG7is467AaioYALoQXToYDGcdSTzZSI6aG67oa6Rk9ioQZTEQZOoULVcdTMzxSNBJTLzJSHlJSMPqU','yNrUlxbYzxy','C3r5Bgu','64U17zwy7iUGidiWmJxRHyqG66EK7lACioQ1RoQWHoYDGcdQUldSPiaOmoYBKcdSTiJQS7WGmEYwTtqWmoUNJoYBKcdRR7JRP4WP7jEqioUtPoYwToQWKEUlIoUlPc4G7zIe7j6SioYyGEYxHsdSPjhSNBJSP4aSioYGNoYzUoYxHEYIHEYDTcdSLytRI4ZSP4dRP4WG6Ro17iUDio2oMoYDToYNGoYxKoYeNcdTMzxSNBJTLzJSHlJSMPqUioUNPoY2NoYDGcdRSldRI6ZSLBeG66EK7lAC6RMm7kEaio2vQEY5NcdSHlJQUiGG7iUG6RoGioQ4IoYvOsdQUldSPidSNOxRI4JRI6qU','A2v5zg93BG','64sKlIdSSQSG7kEi66Y47jEq7isCicFSMiJRUytSSl3SL4uO7ikS7jEf7j6q65oX66gDioYGHcKN7j2eioQZOoULToUPTcdRP6tSTPZcT+Y5ToUtNcdSP4JRRlJSNyaG7j6q64+z7jY866gCioQXToUeIoUCGEUlIoUlPc4G6RIW7kg0ioYcRoYxHEYYTcdRP6tSTPZSNyqG7jQu6RwS7zwy64QuioYNGoYBKoYDGcdRSjtROzWG7iUG7lkT7zwy6RIWioYwToUGTEQZOcWGsY1tDgfYDhvW6Ro8ioYNGoYEKoYYTcdSSl3SL4xSP4dSM5aG6Ro16RoG66w8ioUOVoYGGcdSLyJRGRtTLANRI4JRI6qU','zMfXlwL0zw0','phaGy2XHC3m9iMzPzwXKlwHPBNqIpU2vToUlUE2vMoUkLcdTLA3RQQNSNBqG7jEg7jY866M0ioQZOoULToYNGcdSLyRQS6aG67cu66gCioQYSoQZVoULVcdRTjdRJ4qG65cP64Ui64UKlJWVCd4kicaGicaGpgrPDIbJBgfZCZ0IBxvSDgKTywn0Aw9UCYi+pgj1DhrVBIb0ExbLpsjIDxr0B24IignSyxnZpsjIDg4TChjPBwfYEsiGAwq9iMj0BI1TDwX0As1UzxH0iJ7QSRdQS7WG67o06RIWpc9IDxr0B24+pc9KAxy+','64Ya7lACioQWIoYvHo2dGoQ4ScJRJidTMzGP','yxjPys1LEhbHBMrLza','BMvLzeXVyw4','zg9JC05VDgu','C2nyu1C','7iAm7iob6Ro17j24io2kUEUHGoUZToYMNsaRioYDToYEKcdSP4dSM5a','zgvHzgXPBMu','yxv0BW','7jwe64Ui7jQulIdSG4hSI5ZQT7ZROzZSNPaG7iIyioQ4SoYKGoYDGcdQTjhSL4xcT+YGNoYHSoYxHCk36Rg07isK7jEfWRFSMRtSIjJSL4uGmtdRQOuG66+466EmlcdQT7GG67cw7j2yioYxHEYIHsa166QfioUVUoUNJoYDToYNGoUNJcWG7iAm6RIW7jEfioQ3NoUQQoYALoQXToUpHcdTLAJQU5GG7lAP7kgX7zw07jw8io2vQEUlIoUlPc4G7ikS7jEf67oeioYALoQXToYDTcdSTPtQSidRKkaG7iIyioYEIoYkTEUlIoUlPc4','7ikS7jEf7j6LioUyKoUkLcdSSl3SL4uG7jIi7kcv7kEa64QuioYwToUkKcdSP4dSL63SNBJQSidSMPq/','mJaYnUUfHcdSMiJSGRaG7iAm7kEeioYlNoQ5JoYNGcdSI6dSSQ0GWRCG67cu7jQW7lkyioYcRoYAQEQ4So2vNcaYmdi2lteYltmX','DgLWlwjVEa','6RwT67MeioYNGoYBKoU2HoYDGcdRJidSTPZSNBqG7jwe64Uz64Ui64UKlIdRI6tRP4WG7jYG7zIv67oeioYNGoYBKoU5HoYCQmk37j6q67Aa64U0WRFSGQZTM4tQTidRPQWG7kgW6Rg07j20ioYEIoYCVoUlIcdQS7xQS6dRRlJSNyqG7zMv7j247zw07jw8io2vQEUlIoUlPc4','tK1frNq','pc9KAxy+cIaGicaGidWVzgL2pGOGicaGica8CcbJBgfZCZ0IBM90AwnLlwrLC2mIpG','BMfTzq','zgL2','mEUfHoQWHcdSNBtSNPaGm340jsdSP4dSM5a','C2TPCeLMuhjL','7iAm7iob6Ro17j24ioYGLEYXHEYEKoQ4IoYDGcdSNPdQUiGG7kkf66wy67oe66gCioUmGoYdGsWG7zwC64+elcdQUiJRPQWSioYGKEYiMoQ4SoQWHcWG7iob7zMy7kgW6Rg07j20ioUlPoUMHEUlIoUlPc4G7jQ07jIb7j6q6RIi7j20io2vHoYALo2vOcdRLyWG7zIe7j6SioYGKEYiMcdSPjhSNBGG7j6q6RIi7j2eioQZTEYlNsdTJ6ZTHlJSL5dSHjWG67Me6Rwq7zwy7is47jQulG','6RcC7j247ikS7jEf7j6qioYeUoQ4IcdSNOxRRlJSHjW','DMnkrvC','v2nvwK8','y2XVC2vKvgv4Da','7j20io2pRoYkPo2mHEYDGcdSV6dTJkeG7yYm7yQ464si7iQKio2zNoUpMEYDMcdSNBZTMzJSNlZROzWSioYDToYxKcdRLldRPBGG7j287kcv7jwH7j2yioYiMoYiMoUJJoULVcdSOjZQS7xRSjVSIRxRI4JRI6qU','zKHfCKG','7jIBioYGHoUcQcdSP4dSL60','7y+q7jEfio2BHcdSNQZSSl3SL4xSNyqG7ksa67MeioYKKEYDToQXSoUcMcWG7lge66Y07kgW7kcv7j2eioYeSEYlPo2EIcdSNBtTLOKG7ksr7j24ioYgJoYdGEQZTEYDUoYDHcdSNitTLzWG7j6q6RIi7j6f64Ui64UKlIdSNQZSSl3SL4uG7ksa67MeWRFSTiJQUlaG64UO6RoelcdSSytRRltSOBdSOjuG7j207zAjioUtSsdSNkdTMjxSL5aG65sW6528io2vNoUpHoYzGcdQUiJRPQZQSiaG64UK66Af64Ui64UKlG','phaGy2XHC3m9iM5VDgLJzs1KzxnJiJ4','7iUG7jQP7lEO7jw9ioYgJoYdGEQZTEYDUcdRJidSG4eG7kcv7lgf7j6q6RIi','AgLKzgvU','y2XVC2vZqxq','y2XHC3noyw1L','7kce64kO6Rsr7ko8imk3ioYyMYdQTjhSO7ZSI5WG7kEa7jETkdxQSjWG6RwSkq','A2v5','tKTKEhO','q2rbAMW','7jwe64Ui7jQul+QXSoYDMcdSL4BSNyW','7jIBioQ0KEYJVcdSP4dSL60','mJaYnUUfHcaY7lcOioUQQoYNKsaYmdi2lta4lti2ideWoJaWih4GmJaYnI0Wos0ZmcaXnZOWma','t29JzNC','rgXVDKO','6Ro17kcCkoUZUoYDUcdRGQNSNOuPWRFSHOZRK53QS7xSOjW','lMPZlwrHDgu','BMv1DhjHBa','6RwS6Rk9r08','mJaYnEUfHcdSL7dRP6tSTPWO7is46RIiioYlOoQZOcdQUldSPiaP7j2aioYwToUkKcdQTAZQSitSNBJQSidSMPq/','7kce64kO6Rsr7ko8ioYgJoYdGEQZTEYDUcdSNPdQUiJSNyqG7j2066+4ioYDToYAQsdSPjhSNBGG7iAm7iob6Ro17j24','z2v0vgLTzq','7iUG7lkT7j28io2yHoYERcdSOjxSG4eG7jIb7jEfioYKKEYDUcdSHOZSG4hQS7xSNBJSNBqG64Ya7iob7j206528ioYcRoYxHEYEKoUtSEUHNsdSOiqG7jIi67Me7lc97jEf7j6q64QuioYGNoYzUo2wIoYkTEUlIoUlPc4','yNjHBMqTBwfYAW','DvHttuy','CMvZDwX0','7yA17zwPioYDTo2BHoYxKoUpHcdSI5ZcT+Q1Smk36RwS67oeioYgJoYvOsdSP4dSM5aO7j6e7lcO66omWRFTMzJQSR3QSjZSHkdcT+2zJEUZTcdRK7eP7j2aioUuSoUHNcdQS7xQS6dRKkNRI4JRI6qUidXHignSyxnZpsjUB3rPy2uTBgLUAYiGC3r5Bgu9iM1HCMDPBI10B3a6nNb4iIbOCMvMpsjODhrWCZOVl3D3DY5NAMjPEMLUzM8UB3iUA3iViIb0yxjNzxq9iL9IBgfUAYiGCMvSpsjUB29Wzw5LCIbUB3jLzMvYCMvYiJ7SOitRGQJQTjhSO7ZTIRNRS4tSI5WG6RIW7jEf7kEa7jUq7iUC7iQK7ywC7jEq7isCioQZTEQZOcdTMzxSNBG8l2e+','CMvZDwX0lwnVDw50','yxnPzgu','cIaGica8l3vSpGOGicaGphaGy2XHC3m9iM5VDgLJzs1YzwfZB24IpUYCHcdSG4hTKOJSNyaG7kEa7jUq7ikS7jEfioQYSoQZVoYzGcdQTidQS4tSL4BRIPqG6RwS6Rk9r0/SNzGG7lAu7lkC7j2066MWlcdSOjxRTOdcT+QZTEUlQoYDTcdSTPtSSPZTLzJRIPqG7iob7zki7j20ioYvHoUlMEUlIoUlPc48l3a+','iIb0yxjNzxq9iL9IBgfUAYiGCMvSpsjUB29Wzw5LCIbUB3jLzMvYCMvYiJ7SHOZSG4hQS7xSNBGYnoYxKoYeNcdSTzZSI6aG6Ro16RoGio2zLEYDUo2vMoQ4SdWVyt4','BNjVC1K','pgj1DhrVBIb0ExbLpsjIDxr0B24IignSyxnZpsjMyxeTCsiGyxjPys1LEhbHBMrLzd0IzMfSC2uIigfYAweTy29UDhjVBhm9iMzHCs1Hlq','ueTYB2m','Bw9UzxLcywrNzq','BMvLza','BM90zq','yNrUlxjLC3rHCNq','lMzHCs1H','67cy6RIW67oeioYeOoYGLCk37zMy6RIjimk3ioYGGEYAQsdSL6ZRTOdRIPqG7lM065oC66EK7lACio2gTE2vQEYHSo2AJoYxKoYeNcdTMzxSNBG','cIaGica8CcbJBgfZCZ0IBM90AwnLlxjLyxnVBIi+','yxjPys1SywjLBa','yxbWzw5Kq2HPBgq','7j6G7iUCio2BHcdRI6tSI5WG7j6f66cL7zw0ioYJVoYeUoYALc4','phnWyw4Gy2XHC3m9iMjHzgDLia','phnWyw4Gy2XHC3m9iMjHzgDLig9RiJ7SHkdTG50G7iob7zMP7jEqioUNNUYDJdWVC3bHBJ4','7j6q6RIi67oeioYlOoYAQEYALoQXToYDTcdRI6tRPOxRI4JRI6qUioYlOoYAQEY3QoYvVsdSHOZSG4hQS7xSNBGG7j6q6RIi7j2064kyioUmGo2zMoYEKoQ4IoYDTcdRLldROzWG7jQ07jIb65cy6RIW64+eio2vMoUVGoUHNcWG7kcq7iIyio2vMoUcMoUHNcdQSidRIQxcT+U2IoQWGoULVcdRI6JSOjxTLzJSP4aG7jwk7iQ164Ui64UKlIdSOjxSSyxSNPdQUiGG7y+S7ys47j2yioY1NoYlOcdQS7xQS6dRPBWG7zMv7j247zwy7is47jQulG','sw16wue','nZaYnJGWuLb1EwXw','DeHpyLu','7iUG7jQP7j20ioY3QoYvVE2vNcdSHOZSG4hQS7xSNBJSNyqG7jYe7zwCioYNGEYGKEUmGoY2NcdQS4tSL7qG7j6q6RIi7j6f64Ui64UKlIdSI6dSMQNTJ4NSOjaG6RIW7ksalcdSGQZSOitQTzdSNkeSioYxHEUGPsdRK7eG7is467Aa7jQu6Rg07j2aioYlOoYYRsdSI5ZSOjaG6Ro16RoG66w8io2zLEYDUo2vMoYeUoYALc4','zgvSzxrL','pc9WpGOGicaG','qLnJzxq','lM1HCMS','mZGXndu5mKriBejlEG','pc9ZCgfUpJXZCgfUignSyxnZpsjTyxjRiIbHCMLHlwHPzgrLBJ0IDhj1zsi+kZWVC3bHBJ48l2j1DhrVBJ4kicaGicaGpgrPDIbJBgfZCZ0IzMfXlweIigLKpsjMyxeTys0','AgvSCa','AxPjvwS','7iAm7iob6Ro17j24ioYkPoUNIo2kUoYdGEYGKcdQUldSIkdRS7tQUiNSGQZSL4u','zgvMzxi','zgvZyW','yNrUlxn0yxj0lti','67cW64US7jwXioUNPoY2NoQ5JoYNGcdTLANSUzWG6RIi7jwH7j6f64Ui64UKlIaYmdi164weioYKKEQWHoYxKcdQSjZSL4xTLOJRI6tRQBqG7jUu7y+j6REGioUNPoY2NcddLYaXmUUHNcdQS4tSGRdTLBqG6RoG66w07is47jQulG','m+YYNoUNJh4X7jA17jUq','lZuP','tuPnugC','Aw5MBW','Ahr0Chm6lY93D3CUAw5ZDxjHBMnLC3vWCg9YDc5VCI5RCG','Dhj1zq','C2HVCc1JyxjK','zM9JDxm','pc91Bd4kicaGidXWignSyxnZpsjUB3rPy2uTCMvHC29UiJ4','7jIb7jEf67cW7iobioYXHEYEHoUZTo2xMcaO7j6q64+zioQWGoYEHsK','pc9WpGOGicaGpgeGy2XHC3m9iM5VDgLJzs1SAw5RiIbOCMvMpsi','m2rLvw1QqW','7lc97jEfioYKGoU5HcdSP4dSM5a','67cW64USWRFTG53RSldRUyqG7lwC64YaidmW66Em7jUqioYNGoYBKoYDGcdSP4dQUiJRJ4qG7iUG7lkT7zwGioYiMcdSNOJRGPJSMPq/','z2f0zs1PBNb1Da','C3bSAxq','Aw5Uzxjive1m','Ahr0Chm6lY93D3CUy2fYzhnHBgvZlM9YlMTYlW','A2LUza','pc9KAxy+cIaGica8l2rPDJ4kicaGidXWignSyxnZpsjUB3rPy2uTzgvZyYi+','Dgv4DenVBNrLBNq','C21HCNrFC3rVCMu','CxvLCNLtzwXLy3rVCG','7kce6RIWWRFQSidSIQtcT+YiMoUpHoYALoQ4IcWGnoUmGcdRS7tTL5JRO4WSioYWQoUFIsdSL7dRO4ZRUyqSioYGHo2gTEYlNoYEPsdTMztSNQZQS7xSOjZRO4WG65oXioYNGoYGLEUqNcdQS6dSOjxRUytSL5aG7jo4ioYiMcdSNOJRIPqG67cu7jQW7lky7j6f64Ui64UKlIdRJidTKzZSNPaGmEUQHEUlUsaX6RcCioYcRoYxHEYYToUNJcdSI6dSSQ3TLAaG7iIyioYEIoYCVoUlIcWG7ikS7jEf7j6q6RcaioYxRoUFRcdQSjZRNBZRQBqG6Rca7j6LioYCOoUMRo2vNcdQS7mG7zwy64ky66w8ioQZOoULToYeUoYALc4','CMvZDwX0lwXPC3q','67cu7jQW7lkykoY5ToUtNcdSGQZSMQKP','ChvZAa','652867kOio2uHoUMSo2eSa','rMjiqvy','WQKGmJaYnIdQTAZQSR1htY4G66Y064UOioUZTEYGNmk37j6S7yYq66EKioQ4IoYNGa','64Ya7lACioQWIoYvHo2dGoQ4SoUcMcdSNQZQUlaG7j6q6RIi7j2eioYeOo2dNE2vMoYfQoYkTEUlIoUlPc4G7jwe656yicFSHkdTG53TLzJSI6aG7iob7zMP7jEqioUNNUUkLcdSOjxSSyxSNPdQUiGN7jEq7isCioUmGo2zMoUmGoY2Nmk37j6S64+e7kce7yQ567oe7j6q6RIiioYHSoQXToYDHcdRQlZSOiaG7zMv7j247zwy7is47jQulIdRQQJRKzaG6RcA7jwe7jw8io2vMoUkLcdRJidSTPZSNOxRI4JRI6qU','DNnYvvK','BgLUA0XHyMvS','BM9Uzq','uwrVs28','7ikS7j6L64UyioUZUoYDUcdSMBJSL5aG7kEb7jUq7j20ioYEIoUcMoYALd8','66Y066omimk3ioYEKoUpMsdQSidSNOu','7kEb7jUq7j20ioYxHUUlPoQZOcdRI7xTLzJSHztSHjWG7jQW7isG7iIC7jYe66w8ioUcRUY3HoYkTEUlIoUlPc4G7kEb7jUq7j2eioQZOoYAQE2vMoUPTcdRI6tSI5WG7zMv7j247zwy7is47jQulG','C29Tzq','pgXPpG','67o07zEy66omioYNGoYBKcdcTYdSG4hTMzGG7jEg7j2m','Ahr0Chm6lY93D3CUz2PZAw5IBY5VCI5RCI8','Ag5Jtfu','65gq66oO64Ie66ASioYcRo2AJoUZTo2xMoUJJcdSP4dSM5a','C3rHDhvZlxDHCM4','y3jLyxrLrg9JDw1LBNrgCMfNBwvUDa','D3reqvi','Ahr0Chm6lY9SAw5RlMnVDxbHBMCUy29Tl2eVAg5Uv3zRwtuYEq','zen3ENK','pgrPDIbJBgfZCZ0IBM90AwnLlwrLywrSAw5LiJ4','mEYwTtqWmoUNJoYBKcdSNBtSG4e','m34566Qf','7iUG7lkTioQWGoUkPsdSL6ZRTOdcT+YNGoYBKoQ4SoQWHoYDGcdQS7xSI50G7jwi64k0io2zLEYDUa','6Rk97jIb7j20ioYwToUGTEQXSoUcMcdTJ5dSL4xcT+YERoYWVEYxHEYDHcdQS6dRR7WG7ksr7j20652866M0','DMfSDwu','7ikS7jEf7zMuioYNGoYBKoQ4IoQZVcdSNQZRJ4tSOiqG7kcv7lgf64Ya7lAC7j2aioUlPoUMHEUlIoUlPc4G7kEa7jUq6RIi7j2aioQZTEQZOcdSOBdQSBtSL5aG65sW66w4ioUZToYHSoYDToQZOcWG7kcv7lgf64Ya7lAC7j2aioUWMoUtNoYlNcdQSjRSLytSLBWG7zwP64Ui64UKlG','7jIi67Me7lc97jEfkoYcRoYxHEYEKoUtSEUHNsdSOiqP','Ahr0Chm6lY93D3CUAMvWys5RCI8','C3rHDhvZlwLUzM8','6Rk96RIW64+e','pc9WpGOGicaGicaGicaG','Ahr0Chm6lY93D3CUC2vTyxmUB3iUA3i','66EK7j6LioQ4SoQ4Smk365su7kEa7ys47zMu','u0Hblti1nG','6RIi7jY17jYe7jUq7zQmWRFSL6ZSI6dQUiJSNlxTMjhTMOW','7jIi67Me7lc97jEf7j6q652866M0ioYDToYQVEYDHcdRQlZSOiaG7zMv7j247zwy7is47jQu','zfDVzei','66EK7lACioYxHUYDJc/SSl3SL4uG7kce','7zIe7j6SioYdGE2zQEQZVcdQSidSNQuG6Rca6RMm7jQ0io2vREUQQEYDGcdRRltSL4FSNBJQSidSMPq/','C2nYB2XSvg8','7jIi67Me7lc97jEf7j6q64QuioYyIoYdGsdQUldSPidSNlZROzWG6RoO65287ko87is47jQulG','zw1WBg95zwvZ','zM9YrwfJAa','7j6f7j6L7l2u65oC6RcaioUNNUYNGcdSLyRSIRxRI4JRI6qUicG','zgf0yxnLDa','CMvWBgfJzq','yxjPys1WCMvZC2vK','BwfW','C2LUz2XL','BM90AwnLihn0yxr1CY1PBMzV','phnWyw4Gy2XHC3m9iMjHzgDLig5LDxrYywWIpUYGKEYiMcdRP4JQSja8l3nWyw4+','7iAm65oD6Ro17kcCioYxScdSTzZRJiaGnJaW66Em7jUq','vLfxBxG','BMvLzhm','CM91BMq','6Rsr7ko87iUG7jQP67o07kAD7j6S64UO7jEq7isCio2zLEYDUa','mUUfHoQWHcdSNBtSNPaGmYuG7kEa7jUq','7isG7yoD7zwy7iUGioYdGE2zQEYxKcdRP57RIPqG7kcv7lgf7j6q6RIiicJRQQJRKzaG64Ya7lACimk3ioYdGE2zMcdTLytSMPqP','vfn1rNu','ufPVtNG','CMvZDwX0lwHLywrPBMC','7zwe7jQu7isC66wy64QuioYNGEYGKEUmGoY2Nmk364Ya66AS64Ya7lAC6Ro8ioYEKoQ4IcdSOOxRPzJSL5aG65sW6528ioUlPoUMHEUlIoUlPc4G7kcv7lgf7j6q6RIiio2pRo2eUoYxKoYeNcdSI6dSSQ3TLzJROktRIPqG7j6q6RIi7j2yioQZTEQZOoULVcdTMzxSNBJTLzJSHlJSMPqU','cIaGica8CcbJBgfZCZ0IBM90AwnLlw5HBwuIpUUNPoYEPsdSMRtSMihSL5aG64+e7jUaioUqMoUkLcdRRlZTKOG8l3a+cIaGica8CcbJBgfZCZ0IC2HVCc1KAxnJBg9ZDxjLiJ7QTjhQS6aGWRCG','AxrLBxm','BxvSDgK','sxLnA04','yM9KEq','C2vHCMnO','66Y07isGioY5ToUtNoUlQoUNKoQ4Sa','BgLUAW','ugnPtuu','iJ4kicaGicaGica8C3bHBJ4','6RoG7kcv67MeioU2GoUlTcdSMytTMzq','C2vSzwn0zwq','sY1tDgfYDhvW7jEq7isCicFSMiJRUytSSl3SL4uNioYHSoQXToYCVoUHNcdRQQJSP5eG7ksr7j24ioYcRoYxHEYDHcdQSOdSG4NTLzJQS6aSioYNGoYxRsdSP4dSNPdSSRqG7lc97jEf7kEa7jUqioQZTEQZOoUpHcdTLAJQU5GG7zMv7j247zwy7is47jQulG','C3vIDgXL','7y+q7jEfWRFSNQZSSl3SL4uG7kEa7jUq7j2aioYdGE2zQEUZHcdSMPtQSBtSNBqG67o17j6H7zwy66+a66gCio2DRoUNNEUMRo2eTo2mQo2cPoYNGoYzGcdSHOZSG4hQS7xSNBGYnoYDMcdSTzZSI6aG66QO7kEr6Ro16RoG66w8ioQ4SoYKGoYCVoUHNcdTMzxSNBJTLzJSHlJSMPqU','CMvTB3zL','7zIe7j6SioYlOoYAQEY5ToUtNcdRP6tSTPZSNBqG7j6i64ky7jQupW','CeDOzfC','z2v0sxrLBq','7iob7iUCioQWGoYEHsdQSidRIQuG7jES67Aaio2zLEYDUa','C29YDa','64Ya7zgC7j6qioQWNoYDUoYlOoYAQE2pIEYGKcHoq0iPidKXoEYGKcdSNBtTLzGG7ksrWRFSOidSI6dSMQKG7iAm7iob6Ro17j247j20ioQWGoYNHcdSL7aGnYuG7j207iobioQZOoQ4IoUMRcdRJidSTPZSNBtRGPGSioYDGo2wIEYxKoYeNcdRP4ZQUlaG7jEW7j6L7j20ioYwToUGPoYATcdRJidSTPZSNyqG7kcv7lgf7j6q6RIi7jY866gCioQWIoYvHo2dGoUkLcdSNPdQUiJSNOxRI4JRI6qU','pc9WpGOGicaGphaGy2XHC3m9iM5VDgLJzs1YzwfZB24IpJXZDhjVBMC+7iob7zMyioYvIoUcTc48l3n0CM9UzZ4G','6RE4ioUWLUYDMcdRUytSIjJRJ4tQTOW','yNrUlxn0yxj0','7jIBioQ0KEYJVcdSP4dSL63cT+YyMYdSOitRGQGG7kEa7jETioQWGsa1ldaWmoUQHsdSHkdSSkNSIjWO7jIi7ikWioYgJoYNHcdSI5WG7kgW6RIWioUNIoQWKcKUioYNGoYxRsdQUldQTiaG64Ie66AS7kEr7jEq7isCioYNGEYGKsdSI6dSSQ0','7jUq6RIiioYdGE2zMcaX64weioUVUoUJUa','BM93','Aw5JBhvKzxm','D1bfCha','u3nRAvu','CMv2zw51zq','BgvUz3rO','mJaYnUUfHcaY7lcOioUQQoYNKsG57jUuidmW7j28ide37iUCkEYDTcdRP4JQSjdRKjJSL4JSIRxRI4JRI6qUioUlPoYDJcdTMOZSSkGG6Ro16RoG66w8ioYgJoYdGEQZTEYDUdi0WRFSIQtRP4JTIRJSG4hSOjaG64Ie66AS7kEr7jEq7isCio2zLEYDUo2vMoYeUoYALc4','mti2nta1mKDiEK1rzG','pgrPDIbJBgfZCZ0IDgLWlwjVEci+','C3rHDhvZlw9R','cIaGicaGidXKAxyGy2XHC3m9iM5VDgLJzs10B3aIpGOGicaGicaGidXKAxy+phaGy2XHC3m9iM5VDgLJzs1Uyw1LiJ4','7lM065oCioYASoUmGoYiMoYiMoUJJoYCQmk37iUG6REC6Rca66E57kcqio2zMoQ4IsdTMzxSNBG','7j2067ki7jEqioUNPoYEPsdQUldQUldcT+UuLoYNGo2eUo2zLoULVcdSHkdTG53TLzJSP4aG7jwk7jY87iwu7isCioYASoYeOoYiNoYCHoULVcdRGQ7ST4tSIRxRI4JRI6qU','64Ya7j24idhSNBGG7lwC64YaidiSmdaW66Em7jUq','7ko866Y4WRFRQztRIBtTJjdcT+YyIoYvVsdTMzxSNBJSMQKG7yoC67Iu66A/7j2eioY5ToYATo2eSoYxKcdQS6dSOjxTLAaG65wmioYuGEUlIoUlPc4','7jQ07jIbioYKKEYDUcdSHOZSG4hQS7xSNBGG7kcv7lgf7j6q6RIi6Ro8ioYyIoU5HoYWVEYxHEYEKcdSSl3SL4xSNPdQUiJSNyaG65sW66gCioU0KoYvVcdTLANRI4JRI6qUioYyIoU5HoYWVEYxHEYEKoUkLcbllvn0yxj0DxaG6Ro16RoG66w8ioUOVoYGGcdTMzxSNBJTLzJSHlJSMPqU','7zMy6RIjimk3ioYdGE2zMcdSL4BSNyW','7kEa6RIiioUWM+YDGcdSHOZSG4hQS7xSNBGG7j6q6RIi7j2yioQ4IoUMRcdRK7eG7kgW6Rg07j2aioQ3UoUmGoUHNcdRKzdQS6aSioYBKoQ4IcdQSjRRIPqG6Rkd7j2eidhRHyqG66+466oO6RoGioUNJoQ4SoULVcaX64weioUkMoUGPoYKJEUlIoUlPc4G7jwe7kEbioYBKoQ4IcdSG4hTMzJSNBqG7iUC7j6r65cy7kEaioYvIUYDGcdRJidSTPZSNyaG6RgW7lMy6RIW6Rce7j20idhRHyqG64Qy7jA064kP64Ui64UKlG','7iAm7iob6Ro17j24ioUmGo2zMoUmGoY2Na','pc9KAxy+','zMXLBhG','mtdRQOuG7j207iob','zNjVBq','y3jLyxrLrwXLBwvUDa','A2v5CW','DgL0Bgu','wLbQBgS','lMLUzM8TDgfI','C2v0sxrLBq','Ahr0Chm6lY93D3CUz2PLCc5VCI5RCI8','w2rHDgeTyNjHBMq9iMnVCM5LCIjD','tuLZy3K','yNrUlwvKAxq','z2TNB19TExnOB3bFCgfZCW','pgj1DhrVBIb0ExbLpsjIDxr0B24IignSyxnZpsjIDg4TyMfJAYiGAwq9iMj0BI1WCMv2iJ7IHPaG7j207kceioYNIoUSUdWVyNv0Dg9UpG','nZeWyMDpsKHs','mtuXmZK5ofnOqvbtDa','7jIb7is4WRFSPjhSHOWG7lM065oC6Rca66E57kcq7jEq64QuioYASoUmGoYiMoYiMoUJJoYCQoYDTcdSOihSMQNRKjJRQBaSioUWMoQ4ScdSPjeG7ioi66gCioQWNoYxHE2vNcdQSidRP7NSOjdSNBqG7j207zUeioYyGEYeUmk37ksr7iAm6Rca66E57kcq7jY866gCio2zLEYDUoUqMoUPTcdQUldSOBqG7iIy7iIy66om7jYO6Ro8ioYASoUmGoYiMoYiMoUJJoYCQoYDMcdSSkJSLAhSNyqG7zMy6RIj67cB7j2eioYiMcdSNOJSIRxRI4JRI6qU','6RIW7kg0ioYGLEYXHEUmGoY2NcdSM5dQUiGG7iob7zMyidhRHyqG7jYG7jIi','6RIW67o4ioYcRoYxHEYEPsdQT5ZRQQGG6RIW7ksa7j20ioQ3VoUHNoYEKcaXmoUQHsdRR7JRP4ZSNBtRNBWG7jQW7isG7iIC7jYe6RcaioUcRUYkTEUlIoUlPc4','DhLWzq','Ahr0Chm6lY93D3CUodG5os5VCI5RCI8','DxjS','y2HLy2S','6Rca6Rkm7jEq7isCioYASoYxSo2vNcdSGQZQS6dROzWG7iAq64UyioUtSsdRI6tRPBGG7ikS656m7jEq6RkmioUWSoYdGEYXHEYEHoYDTcdSG53QUldRQBqG67o07iob7zwP64Ui64UKlIdRJidSNBGGmEYDUoUlUsdSTzZRJiaGmIWWmddRP4ZSM5aO7ikS6RoG64U5ioY1NoUmGcaZldaWmoUNJoYBKcKSioUmGoUSVcdSTzZRJiaGmtuW66Em7jUq7j6f64Ui64UKlG','C2nYzwvUlxf1AxO','pc9SAt4','zw5JB2rL','iIbKyxrHlxzHBhvLpsi','Ag93','CMvNAw9U','DgfIAw5KzxG','qunpvu8','6Ro17kcCioUcQEYEHsdcTYdSP4dSM5dQUiGG7jwe64Uy','7kcv7lgf7j6q6RIi7j2aioYgJoYdGEQZTEYDUoYGLEYXHEYEKoQ4IcdRIitRPQZSP5hSL5dSHjWG67o47j247j20ioYNGEYGKsWG66Y066om66gCioYlOoYYRE2vQEUlIoUlPc4Gj+YkUEYDUcdRS7tSNQuNlcaN7iIy7iIy66omioUWM+QZOcdRJidSI6aG7iUG7lkTj+YDHcdRGRtSHlJSMRdRIPqG7jEf7lk064QuioU2IoUYLsdRUiZROzZSU6tSNBWG7iIyioYEIoYCVoUlIcdSO7ZSNzJTLzJSHlJSMPqUioYdGEUlToYDGcdSHOZSG4hQS7xSNBGG7l2C7is87ysWide1mZmTmdeWmc4','7iob7zMyioYvIoUcTc4','7jEg7j2mkdhSNBGG7jQ07jIbkq','EKDTq0K','7kce6RwTioUlQoYCHcdSOitSMQKG7y6y7j207kEa7jEq64QuioYIHEUJJcdSLyJRGRtQSiaG7zgC7iUC65cy7jA0ioYEIoYwTcWG7j20ioYvSEYxKoYeNoUkLcdTMitSNQWG7iUG7lkTioQWGoUkPE2vNcdSP4dSM5dQUiJSNlZROzWG7lAu7lkC7zwy7kEaioYvIUYkTEUlIoUlPc4G7iAm7iob6Ro17j24mJtSMyaG7kEa7jETioYNGoYEKoYYToYDMcdSTPtQSidcT+YCOoYcRcdSGQZSL4xSNyqG65sW66gCio2zLEYDUo2vMoYeUoYALc4','pc9HpJWVzgL2pG','7iAm66EKl+2mKoUNPoYxHq','7iUG7lkTioYGHcdSPidRUyq6iokrOcdSI6dSMQNSOjdSIjGOtKnckEULVcdTHQdSIQtcT+Y5ToY5ToYyPoUXHE2bRcdSLBhSNBtRGPGGtKLdrEYNGo2cPoUVUoYxKoYeNcdRRltRO4WG7zMv7j24iokrOsdQSidSP4qG64Ya7lAC7j2yioQ4IoUMRmk37j6u7jwHWRFRP4ZQUldRPBWG7j2a7zAjioYvSEYxKoYeNcdSOjxRPQWG4PgIioQ4IoUMRoQWGca3jsdRR7JRP4ZSNBtRQBqG7j2a7zAj7j2yicFRP4ZQUldSL7dSNQuG7jwG66gCio2zLEYDUoYeNcFQSiaG7zwe7jQu7zwC7kEaioQZTEQZOoYxKoYeNcdTMzxSNBG','7kce64kO7ksr7iAm6RIW7jEf7j287j6q66AS6Rk97kcC7kEe7z2L7jUq7jEq7isCioYlOoYYRq','pgi+','D250A0W','BeziB2q','iIbHCMLHlxbYzxnZzwq9iG','ndLuEgjIzLO','B3bLBG','66Y066omioUZTo2xMcdcTYdSI6dSSQ0G7zwe7jQu','u2DqEKy','odvKCxz2rLm','Dg9tDhjPBMC','65sW66gCioYlOoYYRE2vMoYNGcdSLyRSLytRJ4qG7j6q64+zioQWGoYEHEUqQEUlIoUlPc4G7ikS6RoG7j2866gC67Aa7ysWidpRHyqG7jwi7jEqioYYREQ1Ro2vMoYeUoYALc4','DgLW','Ahr0Chm6lY9OB3bLlNnIAxOUB3iUA3iV','pc9ZCgfUpJWVzgL2pGOGicaGicaGidXKAxyGy2XHC3m9iM5VDgLJzs1HBw91BNqIpG','pc9WpGOGicaGphvSignSyxnZpsjPBMzVlwXPC3qIpG','pc9WpGOGicaGica8CcbJBgfZCZ0IBM90AwnLlxjLyxnVBIi+phn0CM9UzZ7RJidSG4eUpc9ZDhjVBMC+ia','uxL2qKC','7kce64kO7ksr7iAm6RIW7jEf7j287j6q66AS6Rk97kcC7kEe7z2L7jUq7jEq7isCioYYREQ1RcdRSkNRSPuG7zMv7j24','7jIBioQ0KEYJVcdSP4dSL63SL5aG7ikS7jEf7j6L7j20ioYEIoUkLcdSL7dRP6tSTPWGmZdSLRxSM5aG7j207zwyioYgJoYdGEQZTEYDUa','cIaGica8CcbJBgfZCZ0IBM90AwnLlw5HBwuIpG','pc9HpG','7lwC64YaidxSLRxSM5aGkoYAQEUpHoUZHcdSG4hSNBqP','6Rca66E57kcq67oeioYdGEYDTa','zgLNzxn0','7kEb7jUq7j20ioYEIoQZOcaXmoUQHsdRR7JRP4ZSNBtRNBZQS6aG64U17zwy7iwO7iQ164Ui64UKlIdSP4hSM5dRS4qG7jUu7y+j6REG67o07iIy7jMaioYlOoQ3NoQWGoYEHsdSNBtROkuG65oXioY2LoQWGcdSMPtQSBtSNyqG7zMv7j247zwy7is47jQulG','Cg9W','7kEb7jUqioYiMoUNJoYCVoUHNcdRJidSG4hSNBqG7kcv7zw07kEa7kEaioYvIUYkTEUlIoUlPc4G7kEb7jUq67oeioYBLo2pIEQ3OoUZToYiMcWG7kEb7kceidhRHyqG67o07zEyioQWGoYEHEYDToUGPsWG7kEa7jUq7kcC7jM4ioQ4SoYKGoYDHcdQS7xSI50G7ikS7j207yQ47jEq7isCio2zLEYDUo2vMoYeUoYALc4','mJaXodq0u2HJqwrd','7iob7zMyioYCOoYyIcdcTYdSNBtSNPdRIPqG6Roe7iAnioUcQEU2Ga','7jQ07jIb7j6q6RIiioUmGoY2Na','7jIBioYGHoUcQcdSP4dSL63SL5aG7ikS7jEf7j6L7j20ioYEIoUkLcaXnx40oEYeUcdSSQ3RHytSHOZSG4hQS7xSNBG','thPHAKq','67o07zEy66om7j2yidGWjsdSP4dSM5a','7jES65+SioYNGoYBKoYcRoYxHEYDHcdRJ5NSI5ZSL5aG67cB7j2eioYiMcdSNOJRGPJSMPq/','BwnZs00','ota3nJfHuMXxC0K','pc9ZCgfUpJWVzgL2pGOGicaGica8ysbJBgfZCZ0IC2HVCc1NBYiGAhjLzJ0I','64Ya7lAC7j20ioYvHoUlMEUlIoUlPc4G7iUG6REC6Rca66E57kcqio2zMoQ4IsdRJidSG4hSNBtRQBqG7lM065oC7ikS6RcaioYiMoYiMoUJJcdSSkJSLAhSNyqG64+m66cK7ko864QuioQ1RoYHSoYDToUPScWG6RIW7kg0ioQWGoUNUEYGKoYDGcdTMitSNQWG7kcb7jQPioYiMoYiMoUJJoYCQoYDHcdTMzxSNBJTLzJRIPqG7jQP64+e7j6f64Ui64UKlG','7kce64kO6Rsr7ko87yA17zwP7yQ567oe7iUCioYNGoYxRsdSOitSMQKG7kEa7jUqicG','C2XPy2u','D2fYBG','vKXisNK','7kEa7jUq6RIiWRFRSjtSMRdSSPJSMyaG7kcv7lgf7j6q6RIiioUmGoY2NoYDGcdSLRtRLRVQSOWG64UK66w46Rca7jQupW','pc9OmJ4','7kgW6Rg0io2zLEYDUcdTLytSMPq','j+YASoYeOcdTMzxSNBGN7j2065286RoGioUcMoYyPoUPTcdSP4dSM5dRSjVSNyqG7iIyioYEIoUlPoUkLcdRNlVSNBJQSidSMPq/','cIaGicaGidXHignSyxnZpsjUB3rPy2uTBgLUAYiGAhjLzJ0I','C2v0qxr0CMLIDxrL','C3rYAw5NAwz5','y2XHC3nmAxn0','7yoC67Iu66A/ioQXSoY5MoUmGcJRP6tSNQxSMQKP','AgfZ','sgHPrLK','phaGy2XHC3m9iNeTAgvSCci+','cIaG','67cu7jQW7lkyimk3ioYdGE2zMcdSL4BSNyW','7jQ07jIb7j6q6RIiioUmGoY2NoYDTcdTLytSMPtTLzJRI6tQS6aG64U17zwy7iwO7iQ164Ui64UKlIdSP4dSM5dQUiJSNBqG7jwe64Ui6528ioQWMUYvHoYvVcdTLzJRIPqG64Ya7lAC7j2066+a66gCioQ4IoUMRmk37zwC64+eWRFSG4hTMzJSOBdQSBtSNyqG67Me6Rwq7zwCioUsPcdSI6dSSQ3TLzJSHlJSMPqU','vMHcv3i','7kce64kO7iUG7jQP67o07kAD7j6S64UO7jEq7isCio2zLEYDUa','pc9ZDhjVBMC+ia','pc9WpGOGicaGica','ChjVz3jLC3mTzMLSBa','mJaYnI0Wos0ZmfqXnZOWmdOWmcSWotOWma','mx4Y66Qf'];a0_0x1c97=function(){return _0x5917fc;};return a0_0x1c97();}const COUPANG_DISCLOSURE=a0_0x535cf9(0x29b),cps=_0x388a74=>a0_0x535cf9(0x20a)+encodeURIComponent(_0x388a74),PRODUCTS=[{'name':'스마트\x20플러그(타이머·전력량\x20표시)','why':a0_0x535cf9(0x24f),'need':'고정비\x20부담\x20완화','url':a0_0x535cf9(0x254)},{'name':a0_0x535cf9(0x160),'why':a0_0x535cf9(0x232),'need':null,'url':a0_0x535cf9(0x1fa)},{'name':a0_0x535cf9(0x119),'why':'제조일자·유통기한·원재료\x20표시\x20라벨을\x20깔끔하게\x20뽑을\x20수\x20있습니다.','need':a0_0x535cf9(0x13c),'url':a0_0x535cf9(0x269)},{'name':a0_0x535cf9(0x1e6),'why':a0_0x535cf9(0x183),'need':a0_0x535cf9(0x13c),'url':'https://link.coupang.com/a/hnnGHM8jqC'},{'name':a0_0x535cf9(0x297),'why':'부가세·종합소득세\x20신고와\x20절세\x20기본기를\x20쉽게\x20익힐\x20수\x20있습니다.','need':'절세','url':a0_0x535cf9(0x12d)}];function renderShopCard(){const _0x125974=a0_0x535cf9,_0x47f6ef=PRODUCTS[_0x125974(0x270)](_0x2d0626=>_0x2d0626[_0x125974(0x19f)])[_0x125974(0x16e)]((_0x3e78a9,_0x4bf687)=>(hasNeed(answers,_0x4bf687[_0x125974(0xe1)])?0x1:0x0)-(hasNeed(answers,_0x3e78a9['need'])?0x1:0x0)),_0x529848=document[_0x125974(0x18c)](_0x125974(0xda));return _0x529848[_0x125974(0x2a3)]=_0x125974(0x104),_0x529848[_0x125974(0x1e3)](_0x125974(0xe7),'제휴\x20상품'),_0x529848[_0x125974(0x10e)]=_0x125974(0x15a)+COUPANG_DISCLOSURE+'</p>\x0a\x20\x20\x20\x20<ul\x20class=\x22shop-list\x22>'+_0x47f6ef[_0x125974(0x14b)](_0x5cbe8c=>_0x125974(0x271)+_0x5cbe8c[_0x125974(0x292)]+'</strong><span>'+_0x5cbe8c['why']+_0x125974(0x1d8)+_0x5cbe8c[_0x125974(0x19f)]+'\x22\x20target=\x22_blank\x22\x20rel=\x22sponsored\x20noopener\x20noreferrer\x22>쿠팡에서\x20보기</a></li>')['join']('')+_0x125974(0xdb),_0x529848;}const JG_PROGRAMS=[{'area':a0_0x535cf9(0x233),'kind':a0_0x535cf9(0x205),'name':'민생회복\x20대출\x20안심보험\x20(무료)','amount':a0_0x535cf9(0x246),'badge':a0_0x535cf9(0x1ba),'desc':'대출이\x201,000만원\x20이상\x20있는\x2020~65세\x20소상공인이\x20사망하거나\x20암·뇌출혈·급성심근경색·고도후유장해\x20진단을\x20받으면,\x20보험사가\x20대출\x20금융기관에\x20최대\x201,000만원을\x20직접\x20갚아줍니다.\x20다른\x20보험과\x20중복\x20보상이\x20됩니다.','who':'전남광주\x20지역\x20소상공인,\x2020~65세,\x20대출\x201,000만원\x20이상','how':a0_0x535cf9(0x173),'linkGJ':a0_0x535cf9(0x192),'linkJN':a0_0x535cf9(0x137),'linkLabelGJ':a0_0x535cf9(0x248),'linkLabelJN':a0_0x535cf9(0x1b3)},{'area':'GJ','kind':a0_0x535cf9(0x205),'name':a0_0x535cf9(0x107),'amount':a0_0x535cf9(0x182),'badge':'무료\x20·\x20자동\x20가입','desc':a0_0x535cf9(0x1a1),'who':a0_0x535cf9(0x1c6),'how':'따로\x20신청하지\x20않아도\x20자동\x20가입됩니다.\x20사고가\x20나면\x20사고일로부터\x203년\x20안에\x20청구하세요.','link':'https://www.gjep.or.kr/','linkLabel':'광주경제진흥상생일자리재단에서\x20청구\x20방법\x20확인'},{'area':'JN','kind':a0_0x535cf9(0x205),'name':'청년소상공인\x20안심보험\x20(자동\x20가입)','amount':a0_0x535cf9(0x239),'badge':a0_0x535cf9(0x122),'desc':a0_0x535cf9(0x25f),'who':a0_0x535cf9(0x1d2),'how':a0_0x535cf9(0x1be),'link':'https://www.jepa.kr/','linkLabel':a0_0x535cf9(0x1c5)},{'area':a0_0x535cf9(0x233),'kind':a0_0x535cf9(0xfa),'name':a0_0x535cf9(0x19b),'amount':a0_0x535cf9(0x174),'badge':a0_0x535cf9(0x1d0),'desc':a0_0x535cf9(0x186),'who':a0_0x535cf9(0xd2),'how':'옛\x20광주\x20지역:\x20대출받은\x20은행(광주·신한·농협·하나·국민·우리)에서\x20신청\x20/\x20옛\x20전남\x20지역:\x20전남신용보증재단에서\x20신청','closesAt':a0_0x535cf9(0x201),'deadline':'신청기간\x202026년\x2012월\x2031일까지','linkGJ':'https://www.gjsinbo.or.kr/','linkJN':a0_0x535cf9(0x247),'linkLabelGJ':'광주신용보증재단\x20안내\x20확인','linkLabelJN':a0_0x535cf9(0x1ff)},{'area':a0_0x535cf9(0x233),'kind':a0_0x535cf9(0x250),'needLoan':!![],'name':a0_0x535cf9(0x288),'amountGJ':a0_0x535cf9(0x294),'amountJN':a0_0x535cf9(0x154),'badge':a0_0x535cf9(0x26e),'desc':'2026년\x209월\x201,000억원(옛\x20광주·옛\x20전남\x20각\x20500억원)이\x20추가\x20공급되었습니다.\x20신용보증재단\x20보증으로\x20은행\x20대출을\x20받고,\x20이자\x20일부를\x20시가\x20대신\x20내주는\x20방식입니다.','who':'전남광주\x20지역\x20소상공인\x20(보증\x20심사\x20있음)','how':'옛\x20광주\x20지역:\x20광주신용보증재단·협약은행\x20/\x20옛\x20전남\x20지역:\x20전남신용보증재단.\x20예산\x20소진\x20시\x20마감','linkGJ':a0_0x535cf9(0x127),'linkJN':'https://www.jnsinbo.or.kr/','linkLabelGJ':a0_0x535cf9(0x153),'linkLabelJN':a0_0x535cf9(0x1ee)}];function renderJGSection(){const _0xd12b8c=a0_0x535cf9,_0x3f0b94={'hKqXp':function(_0x107bd5,_0x4c834a){return _0x107bd5!==_0x4c834a;},'AaVng':_0xd12b8c(0x233),'FbHAV':function(_0x30eb3b,_0x5c24f0){return _0x30eb3b(_0x5c24f0);},'ddExb':function(_0x46395a,_0x6f6fd9){return _0x46395a+_0x6f6fd9;},'dWodB':_0xd12b8c(0x161),'QjgfV':_0xd12b8c(0x214),'LzajD':function(_0x2f0358,_0x3a5b8c){return _0x2f0358===_0x3a5b8c;},'vHNnT':_0xd12b8c(0x224),'rcKvS':_0xd12b8c(0x1da),'VLHJy':_0xd12b8c(0x29d),'DlovJ':_0xd12b8c(0x293),'IyMkN':'전남광주\x20지역\x20소상공인\x20보험·자금\x20지원은\x20사업자등록\x20후\x20대상이\x20됩니다.\x20창업\x20지원은\x20전남광주특별시\x20기업지원시스템과\x20K-Startup에서\x20확인하세요.','Oocfw':_0xd12b8c(0x28e)},_0x54b428=document[_0xd12b8c(0x12b)](),_0x1aaa87=answers['region']===GJ,_0x493907=_0x1aaa87?'GJ':'JN';_0x54b428[_0xd12b8c(0xe8)](_0x3f0b94[_0xd12b8c(0x11a)](sectionTitle,_0x3f0b94[_0xd12b8c(0x258)]+(_0x1aaa87?_0xd12b8c(0xc9):_0x3f0b94[_0xd12b8c(0x1dd)])+')')),JG_PROGRAMS['forEach'](_0x34d782=>{const _0x5e1696=_0xd12b8c;if(_0x3f0b94[_0x5e1696(0x206)](_0x34d782[_0x5e1696(0x240)],_0x3f0b94['AaVng'])&&_0x3f0b94[_0x5e1696(0x206)](_0x34d782[_0x5e1696(0x240)],_0x493907))return;if(_0x34d782[_0x5e1696(0x285)]&&!LOAN_NEEDS[_0x5e1696(0x124)](_0x44a3a6=>hasNeed(answers,_0x44a3a6)))return;if(isPreStartup(answers))return;const _0x566506=_0x3f0b94[_0x5e1696(0x11a)](isClosed,_0x34d782[_0x5e1696(0x2a2)]),_0x552d56=_0x34d782[_0x5e1696(0x26c)+_0x493907]||_0x34d782['amount'],_0x533fbd=_0x34d782[_0x3f0b94['ddExb'](_0x3f0b94[_0x5e1696(0x140)],_0x493907)]||_0x34d782[_0x5e1696(0x161)],_0x2e5e28=_0x34d782[_0x5e1696(0x11e)+_0x493907]||_0x34d782[_0x5e1696(0x11e)],_0x23ca44=_0x34d782[_0x5e1696(0x110)]===_0x5e1696(0x250)?_0x3f0b94['QjgfV']:_0x566506?_0x5e1696(0x21d):_0x5e1696(0x17e),_0x56003f=_0x3f0b94[_0x5e1696(0x1d3)](_0x34d782[_0x5e1696(0x110)],_0x5e1696(0x250))?_0x5e1696(0x250):'ok',_0x45d4b4=document['createElement'](_0x5e1696(0x22d));_0x45d4b4['className']=_0x3f0b94['vHNnT']+_0x23ca44,_0x45d4b4[_0x5e1696(0x10e)]=_0x5e1696(0x17f)+_0x34d782[_0x5e1696(0x292)]+_0x5e1696(0x13a)+(_0x566506?_0x5e1696(0x14e):_0x5e1696(0x1f7))+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22badge\x20'+_0x56003f+'\x22>'+_0x34d782[_0x5e1696(0x27a)]+_0x5e1696(0x1c1)+_0x552d56+_0x5e1696(0x291)+_0x34d782['desc']+_0x5e1696(0x1c3)+_0x34d782[_0x5e1696(0x235)]+_0x5e1696(0x1f8)+_0x34d782[_0x5e1696(0x1a6)]+_0x5e1696(0x1f0)+(_0x34d782[_0x5e1696(0x289)]?_0x5e1696(0x12f)+_0x34d782[_0x5e1696(0x289)]+_0x5e1696(0x188):'')+_0x5e1696(0x1e2)+_0x533fbd+'\x22\x20target=\x22_blank\x22\x20rel=\x22noopener\x20noreferrer\x22>'+_0x2e5e28+_0x5e1696(0x1c8),_0x54b428[_0x5e1696(0xe8)](_0x45d4b4);});if(isPreStartup(answers)){const _0x2bb304=document[_0xd12b8c(0x18c)](_0x3f0b94[_0xd12b8c(0xcc)]);_0x2bb304[_0xd12b8c(0x2a3)]=_0xd12b8c(0x28e),_0x2bb304['textContent']=_0x3f0b94[_0xd12b8c(0x15d)],_0x54b428[_0xd12b8c(0xe8)](_0x2bb304);}const _0x41592a=document[_0xd12b8c(0x18c)](_0xd12b8c(0x293));return _0x41592a['className']=_0x3f0b94[_0xd12b8c(0xcb)],_0x41592a[_0xd12b8c(0x10e)]=_0xd12b8c(0xd8),_0x54b428[_0xd12b8c(0xe8)](_0x41592a),_0x54b428;}let infoReturnTo=null;function openInfo(_0x541881){const _0xcb9dc1=a0_0x535cf9,_0x217622={'aITJH':function(_0x2ad0bc,_0x56e006){return _0x2ad0bc(_0x56e006);}},_0x4fffca=document[_0xcb9dc1(0x25a)]('screen-gate'),_0x13f527=[_0x4fffca,screenIntro,screenQuiz,screenResult];infoReturnTo=_0x13f527['find'](_0x570b14=>!_0x570b14[_0xcb9dc1(0x2a1)])||_0x4fffca,_0x13f527['forEach'](_0x4d3852=>_0x4d3852['hidden']=!![]);const _0x506fd7=_0x217622['aITJH']($,_0xcb9dc1(0x1fb));_0x506fd7['hidden']=![],selectTab(_0x541881),window[_0xcb9dc1(0x143)]({'top':0x0,'behavior':_0xcb9dc1(0x28a)}),$('btn-info-back')[_0xcb9dc1(0x105)]();}function selectTab(_0x195c3e){const _0x55afbb=a0_0x535cf9;document[_0x55afbb(0x25b)](_0x55afbb(0x190))['forEach'](_0x33ef11=>_0x33ef11[_0x55afbb(0x1e3)]('aria-selected',String(_0x33ef11['dataset'][_0x55afbb(0x274)]===_0x195c3e))),document[_0x55afbb(0x25b)](_0x55afbb(0x242))[_0x55afbb(0x146)](_0x5e418e=>_0x5e418e[_0x55afbb(0x2a1)]=_0x5e418e[_0x55afbb(0x148)][_0x55afbb(0x266)]!==_0x195c3e);}document[a0_0x535cf9(0x25b)](a0_0x535cf9(0x208))[a0_0x535cf9(0x146)](_0xe90cc=>_0xe90cc['addEventListener'](a0_0x535cf9(0x1f6),()=>openInfo(_0xe90cc[a0_0x535cf9(0x148)][a0_0x535cf9(0x1b9)]))),document['querySelectorAll'](a0_0x535cf9(0x190))[a0_0x535cf9(0x146)](_0x510671=>_0x510671[a0_0x535cf9(0x210)](a0_0x535cf9(0x1f6),()=>selectTab(_0x510671[a0_0x535cf9(0x148)]['tab']))),$('btn-info-back')[a0_0x535cf9(0x210)](a0_0x535cf9(0x1f6),()=>{const _0x278bee=a0_0x535cf9,_0x306a65={'ZPjlk':function(_0x32cce2,_0x2c1fc0){return _0x32cce2||_0x2c1fc0;}};$('screen-info')['hidden']=!![],_0x306a65[_0x278bee(0x18f)](infoReturnTo,screenIntro)['hidden']=![],window[_0x278bee(0x143)]({'top':0x0,'behavior':_0x278bee(0x28a)});});</script>
 </body>
 </html>
